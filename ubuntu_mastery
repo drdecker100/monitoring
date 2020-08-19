@@ -1,0 +1,682 @@
+Ctrl+ Alt + T = open termainal
+
+Ctrl+ Alt + D = close terminal
+
+Ctrl + L = clear screen
+
+hostnamectl set-hostname VM
+
+-------------------------------
+FIRST COMMAND
+-------------------------------
+echo
+
+cal
+
+cal -y
+
+date
+
+history
+
+!! = run recent command
+
+!4 = run the 4th command in history
+
+---------------------------------
+HOW COMMAND ARE STRUCTURED
+---------------------------------
+Command, terminal and shell
+
+Commands(words) --> Shell(interpretor) --> Meaning
+
+Terminal == window to the shell
+
+unix(O.S only used by its copyrighters)
+
+Linux(open-source O.S)
+
+command= commandName -options inputs
+
+commandNames need to be on the shell's search path
+
+command operate on inputs
+
+echo $PATH = to see shell path
+
+which cal 
+
+date -u == short form
+
+date --universal  ==long form
+
+cal -A 1 12 2017
+
+cal 06 1989
+
+-----------------------------
+MANUAL PAGES
+-----------------------------
+1-user commands	2- system calls 	3- C library functions
+4- devices and special files	5- File formats and conventions
+6- Games 	7- Miscellaneous	8-System Administration
+
+man -k which
+
+man 1 which
+
+[  ] optional
+
+< > mandatory
+
+ | one or the other
+
+which [-a | -f] filename ...
+
+man -k "list directory contents" 
+
+help cd
+
+synopsis(how to use the command)
+
+-------------------------------
+Command INPUT , OUTPUT
+-------------------------------
+Standard Input(0) --> Standard Output(1); Standard Error(2)
+Command Arguments
+
+Standard output(whrer the main command goes) leads to terminal by default
+
+Redirection changes where the data goes
+
+Standard error(where the errors and logs) is logged separate and shows on termainal by default
+
+Piping: Can redirect the standard output of one command to the standard input of another in a process
+
+command arguments::input given to a command line to process that input with the help of given command. Argument can be in the form of a file or directory. Arguments are entered in the terminal or console after entering command.
+$0 = command or script; $1 to $9 = arguments 1 through 9 ;$# = total no. of args, $* = all args, $$ = PID of running script
+
+-----------------------------------
+Standard Output
+-----------------------------------
+cat 1>output.txt
+meow meow
+
+cat >output.txt
+meow meow
+
+cat 1>>output.txt   (new inputs overrides old inputs)
+
+cat >>output.txt	(new input is appended to old inputs)
+
+-----------------------------------
+Standard Error
+-----------------------------------
+cat 2> error.txt
+
+cat 2>> error.txt
+
+cat < input.txt (read the input to output(terminal by default)
+
+tty (teletype)
+
+In Linux, there is a pseudo-teletype multiplexor which handles the connections from all of the terminal window pseudo-teletypes (PTS). The multiplexor is the master, and the PTS are the slaves. 
+The multiplexor is addressed by the kernel through the device file located at /dev/ptmx.
+
+
+cat <input.txt > /dev/pts/1  
+
+-----------------------------------
+PIPING     
+-----------------------------------
+
+date > date.txt
+
+cut < date.txt -d " " -f 1
+
+date | cut -d " " -f 1 > today.txt
+
+----------------------------------
+TEE Command
+----------------------------------
+
+It basically breaks the output of a program so that it can be both displayed and saved in a file
+
+date | tee fulldate.txt | cut -d " " -f 1
+
+redirect (>) , you can no longer pipe, but you can continue piping with tee command
+
+Redirection of STDOUT breaks pipelines
+
+-----------------------------------
+xargs
+-----------------------------------
+*echo doesnt accept std input, only accept command line arguments
+
+it can take output of a command and passes it as argument of another command. 
+If no command is specified, xargs executes echo by default.
+
+date | xargs echo
+
+xargs convert std in into command line args
+
+----------------------------------------
+ALIAS
+----------------------------------------
+create hidden file 
+nano .bash_aliases
+
+alias getdates='date | tee /home/drdecker100/fulldate.txt | cut -d " " -f 1 | tee /home/drdecker100/shortdate.txt | xargs echo hello
+
+getdates
+
+cal -A 1 -B 1 
+
+----------------------------------------
+Structure of file System
+----------------------------------------
+Binaries are files that contain compiled source code (or machine code). 
+Binary files are the files which contain compiled source code (or machine code). 
+They are also called executable files because they can be executed on the computer.
+
+/bin stores common linux user command binaries.eg.date ,cal 
+
+/ root
+
+---------------------------------------
+Navigating the file system
+---------------------------------------
+drdecker100@VM:~$ 
+(drdecker100)= the user who is logged in
+
+(VM)= name of computer(hostname)
+
+(~) = home directory
+
+pwd = working directory
+
+ls -F = filetype
+
+ls -f = no order, no color
+
+ls -l = long formats
+
+drwxr-xr-x  (amount of hard-link to the file) user group file_size last_edited file/folder_name
+
+drwxr-xr-x 2 drdecker100 drdecker100 4096 Jul 25 14:15 Desktop
+
+d == directory ; rwx= read write execute for the user
+r-x(read and executing) for group; 
+r-x(read and executing) for everyone else;
+ 
+ls -lh = human readable
+
+cd = move around = change directory
+
+cd ~/Downloads
+
+cd Downloads
+
+cd = takes u to home folder directory
+
+ls -a = to see hidden files
+
+. = refers to current folder
+
+.. = refers to parent folder(or above where we are)
+
+blue color= directory
+green: executable or recognized data file
+cyan(sky blue) = symbolic link file
+yello with black background = Device
+Magenta(pink) = graphic image file
+Red = Archive file
+Red with black background = Broken link
+
+Absolute paths start at the base (/) directory
+
+Relative paths start from the current directory
+
+-----------------------------------------------
+file extensions in linux
+-----------------------------------------------
+
+file  tux.png
+
+file tux.jpg
+
+------------------------------------------------
+wildcards
+------------------------------------------------
+ls Documents Download Pictures
+
+ls *
+
+ls D*
+
+ls ?.txt [matches one place before.text]
+
+ls file[0-9a-zA-Z].txt
+
+
+-----------------
+GOOGLE 
+
+FACEBOOK
+
+AMAZON
+
+APPLE
+-----------------
+CISCO MERAKI
+
+VERIZON
+
+COMCAST
+
+CENTRILINK
+
+SPECTRUM
+------------------
+PROGRESSIVE
+
+NATIONWIDE
+
+
+------------------
+
+--------------------------------
+CREATING FILES
+--------------------------------
+touch file1.txt
+
+mkdir ~/Pictures/holiday
+
+mkdir -p bla/things/shablam
+
+mkdir "happy birthday"
+
+mkdir happy_birthday
+
+mkdir {jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec}_{2017,2018}
+
+touch {jan,feb,mar,apr,may,jun}_{2017..2018}/file{1..100}
+
+touch file{A..D}.txt
+
+---------------------------------
+DELETING FILES AND DIRECTORIES
+---------------------------------
+rm file1
+
+rm *.txt
+
+rm file*
+
+rm -r folder
+
+mkdir delfolder/deleteme{1,2,3}
+
+touch delfolder/deleteme{1,2,3}/file{1,2,3}
+
+ls delfolder/deleteme{1..3}
+
+ls * delfolder/deleteme{1,2,3}
+
+rm -ri delfolder  (i- interative, r -recursively)
+
+rmdir delfolder/*  (deleting folder when empty
+
+--------------------------------------------
+COPY
+--------------------------------------------
+cp file1.txt /delfolder/deleteme
+
+cp ~/Desktop/file.txt /delfolder/*
+
+cp file1.txt file2.txt
+
+cp destination/* .
+
+cp destination/* ..  (to parent file)
+
+cp -r copy_me/ destination/    (copies folder into destination folder)
+
+
+----------------------------------------------
+MOVING + RENAMING FILES AND FOLDERS
+----------------------------------------------
+mv oldname.txt newname.txt
+
+mv oldfolder/ newfolder
+
+mv newfolder/ ~/Documents/
+
+mv ~/Documnets/newfolder/ ./jackpot
+
+---------------------------------------------
+EDIT FILE
+---------------------------------------------
+nano diary.txt
+
+write a file = save a file
+
+^ = Ctrl
+
+M- = Alt, Esc or Cmd(depending on your layout)
+
+-----------------------------------------------
+LOCATE
+-----------------------------------------------
+locate *.conf
+
+locate -i *.CONF ( ignore case-senstive)
+
+locate -i --limit 5 *.conf
+
+locate -S
+
+locate -e *.conf [do check and to make sure they are in the database] == --existing
+
+sudo updatedb   [ to update db(done automatically daily) ]
+
+-----------------------------------------------
+FIND
+-----------------------------------------------
+
+find (fetches files and folder in current directory and the directories below it)
+
+doesnt need DB to work
+
+find . -maxdepth 2
+
+find . -type d    (directories only)
+
+find . -type f    (files only)
+
+find /etc . -maxdepth 3 -type d
+
+find . -name "*.txt"
+
+find / -type f -size +100k -size -5M | wc -l
+
+find / -type f size +100k -size -10M -exec cp {} ~/Desktop/copy_here \;
+
+find / -type f size +100k -size -10M -ok cp {} ~/Desktop/copy_here \;
+
+find haystack/ -type f -name "needle.txt" -exec mv {} ~/Desktop \;
+
+-----------------------------------------------
+VIEWING FILES
+-----------------------------------------------
+cat file1.txt
+
+cat file1.txt file2.txt > beautiful.txt
+
+cat file[1-5].txt > beautiful.txt
+
+tac alpha.txt (reverses a file vertically)
+
+rev alpha.txt (reverses a file hoizontally)
+
+less /etc/.conf
+
+cat /etc/.conf | less
+
+find | head -n 5
+
+find | tail -n 5
+
+head -n 20 /etc/cups
+
+---------------------------------------------
+SORTING FILES
+---------------------------------------------
+chmod +x random-word-generator
+
+./random-word-generator
+
+sort words.txt 				(sort the smallest first)
+
+sort -r words.txt
+
+sort -n numbers.txt | less    (to sort numerically)
+
+sort -nr numbers.txt | less
+
+sort -u numbers0-9.txt     (unique)
+
+sort -ur numbers0-9.txt    (reverse sorting)
+
+ls -l /etc | head -n 20 | sort -k 5nr
+
+ls -lh /etc | head -n 20 | sort -k 5hr
+
+-----------------------------------------------
+SEARCHING FILE CONTENT
+-----------------------------------------------
+
+grep e hello.txt
+
+grep -c e hello.txt
+
+grep -ic e gadsby_manuscript.txt
+
+grep -cv e gadsby_manuscript.txt
+
+ls -lF / | grep opt 
+
+man -k print | grep files 
+
+
+-----------------------------------------------
+FILE ARCHIVING AND COMPRESSION
+-----------------------------------------------
+1)making a tarball 2)compress
+
+tar -cvf ourarchive.tar file[1-3].txt
+
+tar -tf ourarchive.tar 
+
+tar -xvf ourachive.tar    [extracting from the tarball]
+
+gzip  ourarchive.tar
+
+file ourarchive.tar.gzip
+
+gunzip ourarchive.tar.gzip
+
+bzip2 ourarchive.tar
+
+bunzip2 ourarchive.tar.bz2
+
+zip ourthing.zip file1.txt file2.txt
+
+unzip ourthing.zip
+
+tar -cvzf ourarchive.tar.gz file[1-3].txt
+
+tar -cvjf ourarchive.tar.bz2 file[1-3].txt
+
+tar -xvzf ourarchive.tar.gz
+
+tar -xvjf ourarchive.tar.bz2 
+
+tar -xvJf ourachive.tar.xz
+
+---------------------------------------------------
+OPEN SOURCE SOFTWARE
+---------------------------------------------------
+4 FREEDOMS
++ the freedom to run prohrams as you wish
+
++ freedom to study how the programs works, and change it so it does your computing as you wish
+
++ freedom to redistribute copies so you can help your neighbours
+
++ freedom to distribute copies of modified versions to others 
+
+GPL)GNU public licence
+
+uname -o
+
+--------------------------------------------------
+Installing from source code
+--------------------------------------------------
+downlaod the coreutils package(contains ls source code)
+
+tar -xJf archive.tar.xz   [ to unzip xz file]
+
+cd /Download/file/src
+
+edit source code
+
+sudo apt-get install gcc [ to compile c code to binaries 
+
+cd ..
+
+bash configure [ creates a Makefile, responsible for the installation of the new software packagwe
+
+[A makefile is a file (by default named "Makefile") containing a set of directives used by a make build automation tool to generate a target/goal ]
+
+sudo apt-get install make
+
+sudo make install
+
+##Configure the software
+
+The configure script is responsible for getting ready to build the software on your specific system. 
+It makes sure all of the dependencies for the rest of the build and install process are available,
+ and finds out whatever it needs to know to use those dependencies.
+
+Unix programs are often written in C, so we’ll usually need a C compiler to build them. 
+In these cases the configure script will establish that your system does indeed have a C compiler, 
+and find out what it’s called and where to find it.
+
+##Build the software
+
+Once configure has done its job, we can invoke make to build the software.
+ This runs a series of tasks defined in a Makefile to build the finished program from its source code.
+
+The tarball you download usually doesn’t include a finished Makefile. 
+Instead it comes with a template called Makefile.in and 
+the configure script produces a customised Makefile specific to your system.
+
+https://thoughtbot.com/blog/the-magic-behind-configure-make-make-install
+
+make && sudo make install
+
+-------------------------------------------
+SOFTWARE REPOSITORIES
+-------------------------------------------
+lsb_release -a
+
+apt (advanced packaging tool) package manager for ubuntu
+
+apt-cache search docx |less
+
+apt-cache show apache2 | grep text
+
+var/lib/apt/lists
+
+----------------------------------------
+UPDATING CACHE AND UPGRADING SOFTWARE
+----------------------------------------
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+update the cache before upgrade
+
+---------------------------------------
+INSTALLING PACKAGES
+--------------------------------------
+
+sudo apt-get install x11-apps 
+
+xeyes -center blue
+
+nano /etc/apt/sources.list
+
+-------------------------------------
+UNINSTALLING SOFTWARE
+-------------------------------------
+
+sudo apt-get remove x11-apps [ to remove the package][leaves config files so not recommended]
+
+sudo apt-get purge x11-apps [ to remove the package and its configuration files ]
+
+sudo apt-get autoremove [remove any dangling dependencies on your system]
+
+
+var/cache/apt/archive
+
+sudo apt-get clean [ cleans all compressed package arcvhices in the archived cache directory]
+
+sudo apt-get autoclean [deletes package archives no longer accessible]
+
+------------------------------------------
+CREATING BASH SCRIPTS
+------------------------------------------
+
+nano our_script.sh
+
+#!/bin/bash [run this as a bash(bourne-again shell script) shell script]
+
+echo "Hello World!"
+
+#!/usr/bin/python3
+
+file our_script.sh
+
+zip -r myzip *
+
+tar -cvzf backup.tar.pz ~/{Documents,Downloads,Desktop,Pictures}
+
+chmod +x backup.sh  [ make it executable]
+
+------------------------------
+to add a directory as path
+nano .bashrc
+
+PATH = "$PATH:$HOME/bin"
+
+echo $PATH
+
+-------------------------------------
+SCHEDULED AUTOMATION USING CRON
+-------------------------------------
+
+crontab -e
+
+m h dom mon dow   command
+* *  *  *    SUN  echo "Hello World" >> ~/Desktop/hello.txt 
+
+* *  *  *    *    bash ~/Desktop/bin/backup
+
+script and crontab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
