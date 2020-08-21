@@ -1,0 +1,97 @@
+-------------------------------------------
+Initializing GIT
+-------------------------------------------
+mkdir project
+cd project
+git init demo
+
+------------------------------------------
+Git States
+------------------------------------------
+Working Area --- Staging Area -- Repository(.git folder) --Remote Repo
+
+WOrking Area contains all the files and folders for your application
+
+Repo contains all the commited /saved changes to the Git repo
+
+Staging area used to prepare for the next commited
+
+Remote Repo
+
+--------------------------------------
+FIRST COMMIT
+--------------------------------------
+nano README.md    (In working directory)
+
+git add README.md (moved to staging area)
+
+git commit -m "First file in demo repo"    (local repo)
+
+----------------------------------------
+REPO AND GIT FOLDER
+---------------------------------------
+
+ls -al
+
+.git [git folder]
+
+rm -rf .git [unmakes the directory as a git branch]
+
+
+-------------------------------------------
+STARTING WITH EXISTING PROJECT
+---------------------------------------------
+cd demo
+
+git init
+
+#adding both files to staging area
+git add *
+
+git commit   [open an editor]
+
+------------------------------------------
+COMMIT HISTORY WITH LOG AND SHOW
+------------------------------------------
+
+git log
+
+#commit id - SHA-1 identifier
+#author and #date
+
+git show
+# will show the last commit and a diff containing all the changes
+
+------------------------------------------
+EXPRESS COMMITS
+------------------------------------------
+
+git ls-files
+[to show all files being tracked]
+
+git -am "Updating README"
+
+------------------------------------------
+BACKING OUT CHANGES
+------------------------------------------
+git restore --staged READMe.md (to unstage area)
+
+git restore READMe.md     (to working directory, restore changes)
+
+------------------------------------------
+HISTORY AND MAKING NEW COMMANDS WITH ALIAS
+------------------------------------------
+git log --oneline --graph --decorate --all
+
+git config --global alias.hist "log --oneline --graph --decorate --all"
+
+git config --global --list
+
+git history
+
+--------------------------------------------
+RENAME AND DELETE FILES
+--------------------------------------------
+git mv example.txt demo.txt
+
+git commit -m "renaming example"
