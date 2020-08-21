@@ -5,6 +5,8 @@ It takes practice
 
 It is well with my soul
 
+Information and exposure
+
 
 
 
