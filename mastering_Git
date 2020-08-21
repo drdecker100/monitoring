@@ -67,7 +67,7 @@ EXPRESS COMMITS
 ------------------------------------------
 
 git ls-files
-[to show all files being tracked]
+#to show all files being tracked]
 
 git -am "Updating README"
 
@@ -95,3 +95,10 @@ RENAME AND DELETE FILES
 git mv example.txt demo.txt
 
 git commit -m "renaming example"
+
+
+git rm demo.txt
+
+git commit -m "deleting demo.txt"
+
+
