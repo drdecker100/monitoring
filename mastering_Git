@@ -8,7 +8,7 @@ git init demo
 ------------------------------------------
 Git States
 ------------------------------------------
-Working Area --- Staging Area -- Repository(.git folder) --Remote Repo
+Working Area --- Staging Area -- Repository(.git folder)/history --Remote Repo
 
 WOrking Area contains all the files and folders for your application
 
@@ -67,7 +67,7 @@ EXPRESS COMMITS
 ------------------------------------------
 
 git ls-files
-#to show all files being tracked]
+[to show all files being tracked]
 
 git -am "Updating README"
 
@@ -97,8 +97,447 @@ git mv example.txt demo.txt
 git commit -m "renaming example"
 
 
-git rm demo.txt
+---------------------------------------------
+MANAGING FILES OUTSIDE OF GIT
+---------------------------------------------
+touch myfile.txt
+mv LICENCE.md LICENCE.txt
 
-git commit -m "deleting demo.txt"
+git status #shows untracked
+
+git add -u   #picks up only the tracked changes(renaming)
+
+git add -A   #picks up all files(all type of modifications) 
+
+rm myfile.txt
+
+git add -u  #means update
+
+git commit -m "remove myfile.txt"
+
+
+----------------------------------------------------------
+EXCLUDING UNWANTED FILES
+----------------------------------------------------------
+nano application.log
+
+nano .gitignore
+   *.log   #one expression per line
+   
+git add -gitignore
+
+git commit -m "Adding ignore file"
+
+git status
+
+---------------------------------------------------------
+GIT DIFF
+---------------------------------------------------------
+
+git diff
+
+git difftool
+
+---------------------------------------------------------
+BRANCHING AND MERGE TYPES
+---------------------------------------------------------
+branches are the names or lables we give timelines in Git
+
+Types Of Merges
+>Fast Forward - Simplest case, like never branched , can be disbaled
+
+> Automatic - Noncoflicting merge detected, preserves both timelines,merge commit on destination
+
+> Manual - Automatic Merge Not Possible, conflicting merge state, changes saved in Merge commit
+
+-----------------------------------------------------------
+SPECIAL MARKERS
+-----------------------------------------------------------
+Like pointers
+
+HEAD > points to Last Commit of current branch > can be moved
+
+
+------------------------------------------------------------
+BRANCHING 
+------------------------------------------------------------
+git branch
+
+git checkout -b updates
+
+nano LICENCE.md
+
+git add .
+
+git commit -m "Adding updates to branch"
+
+git history (git log --oneline --graph --decorate --all)
+
+git diff updates master
+
+git difftool updates master
+
+git checkout master    
+
+git merge updates
+
+git history
+
+git branch -d updates   #to delete branch
+
+
+------------------------------------------------------------
+CONFLICT RESOLUTION
+------------------------------------------------------------
+git merge very_bad (master|MERGING)
+
+cat LICENCE.md
+
+git diff
+
+git mergetool   #to resolve conflicts
+
+git commit -m "Resolving conflict"
+
+git status   # a copy of the old merge file (.orig) is still in directory
+
+nano .gitignore 
+
+git commit -am "updating to exlcude merge files"
+
+rm LICENCE.md.orig
+
+-------------------------------------------------------------
+MARKING SPECIAL EVENTS WITH TAGGING
+-------------------------------------------------------------
+Tags are just labels that you can put at any arbitrary commit point
+
+git tag mytag
+
+git tag --list
+
+git tag -d mytag
+
+git tag -a v1.0 -m "Release 1.0"
+
+git show v1.0
+
+-------------------------------------------------------------
+SAVING WORK IN PROGRESS WITH STASHING
+-------------------------------------------------------------
+nano LICENCE.md
+
+git stash
+
+git stash list
+
+git commit -am "updating readme file"
+
+git stash pop
+
+git commit -am "updating licence file"
+
+--------------------------------------------------------------
+TIME TRAVEL WITH RESET AND REFLOG
+--------------------------------------------------------------
+3 ways of resetting = soft reset, mixed and hard
+
+— soft
+When we execute git reset --soft B with the intention of removing the commit C and pointing the master/HEAD to B.
+The master/HEAD will now point to B, but the index still has changed from C.
+
+— mixed
+Execute git reset --mixed B.
+On execution, master/HEAD will point to B and the index is also modified to match B because of the mixed flag used.
+If we run git commit at this point, nothing will happen since the index matches HEAD.
+
+— hard
+Execute git reset --hard B
+On execution, master/HEAD will point to B and modifies your working directory
+The changes added in C and all the uncommitted changes will be removed.
+
+
+git reset 6ad47df --soft
+
+git reset 6ad47df --mixed
+
+git reset 6ad47df --hard #most destructive, any changes are wiped out
+
+------------
+git log shows commit ids
+
+git reflog shows all different actions taken in repo
+
+--------------------------------------------------------------------
+LINKING TO OUR GITHUB REPO
+--------------------------------------------------------------------
+git remote manages all remote connections from our current local repository 
+to a remote or another repo someplace on the internet
+
+git remote -v  # to check whether a remote is set
+
+git branch -a  # to check all branches
+
+git remote add origin https://github.com/drdecker100/demo.git   #by convention,the first and primary repo is named origin 
+
+git remote rm origin # to unlink from github repo
+--------------------------------------------------------------------
+PUSHING CHANGES TO GITHUB
+--------------------------------------------------------------------
+git status
+
+git push -u origin master --tags  #-u tracking branch between the master branch on the local repo and the master branch on the remote repo
+
+#origin = name of the remote repo  
+#master = name of branch we will push up
+#--tags = to send all tags we have in our git repo
+
+git push --set-upstream origin master
+
+------------------------------------------------------------------
+GENERATING AN SSH KEY
+------------------------------------------------------------------
+cd ~
+
+ls .ssh
+
+mkdir .ssh
+
+cd .ssh
+
+pwd
+
+ssh-keygen -t rsa -C "drdecker100@gmail.com"  # -t=type ; -C=common name
+
+copy content of the public key (id_rsa.pub)
+
+-----------------------------------------------------------------
+VERIFYING SSH AUTHENTICATION WITH GITHUB
+-----------------------------------------------------------------
+
+Add SSH KEY in GITHUB
+
+verifying with ssh command
+
+ssh -T git@github.com
+
+git clone git@github.com:drdecker100/demo.git 
+
+
+----------------------------------------------------------------
+STARTING REMOTE WITH A STARTER REPO
+----------------------------------------------------------------
+
+creaste a repo and initialize with files- licence and readme files
+
+------------------------------------------
+Createa local copy with clone
+------------------------------------------
+git clone git@github.com:drdecker100/demo.git 
+
+#will clone the repo into a project folder named the repo name by default; 
+
+ls -al
+
+git remote -v
+
+git clone git@github.com:drdecker100/demo.git my_new_name
+
+rm -rf my-website
+------------------------------------------
+SEEDING THE REPO WITH SAMPLE CONTENT
+------------------------------------------
+www.initialzr.com
+
+cp -R ~/Downloads/initializr/* .
+
+ls -l 
+
+git status
+
+git add .
+
+git status 
+
+git commit -m "initial website files"
+
+---------------------------------------------
+PUBLISH BACK TO GITHUB(publish local changes)
+---------------------------------------------
+git push origin master  
+
+#origin remote reference  master-local branch
+
+#when we have tracking branches, the remote and local branches are optional
+
+git push
+
+
+---------------------------------------------------
+FETCH and PULL
+---------------------------------------------------
+pull --> fetch and merge
+
+
+--------------------------------------------------
+Updating Repo and Remote References
+--------------------------------------------------
+git remote -v
+
+git remote set-url origin git@github.com:drdecker100/demo.git
+
+git remote show origin
+
+#creating a new branch [ feature-lipsum ]
+
+#md file = markdown file
+
+
+------------------------------------------------------
+COMMIT DETAILS GOING DEEPER
+------------------------------------------------------
+GIT STATUS
+
+GIT PULL
+
+git show <sha-1>
+
+-----------------------------------------------------
+LOCAL BRANCHES
+-----------------------------------------------------
+git checkout -b remove-ipsom
+
+git push -u origin remove-ipsum
+ 
+--------------------------------------------
+merging locally
+--------------------------------------------
+git checkout master
+
+git pull
+
+git merge remove-ipsum
+
+git branch -d remove-ipsum
+
+git fetch -p #to removes any dead branches
+
+--------------------------------------------------
+LOCALLY SWITCH TO A BRANCH ON GITHUB
+--------------------------------------------------
+git fetch  #update our remote
+
+git pull
+
+git branch -a
+
+git checkout update-readme
+
+--------------------------------------------------
+CLEANING UP BY DELETING BRANCHES AND REFERENCES
+--------------------------------------------------   
+git pull --all # get updates from all remote repos
+
+git push origin :uodate-readme
+
+-------------------------------------------------
+PULL WITH REBASE
+-------------------------------------------------
+pwd
+
+#rebase rewinds the current commits that are on your branch
+#to a point to where your branch you're merging in originally diverged;
+#then playing back the commits that happened on the branch that you're wanting to bring in;
+#and after that, playing on top of that any commints that have happened on the branch that you are currently working on
+
+git fetch # to fetch update, but does not merge
+
+git pull --rebase #applying changes from Github before add changes locally
+
+git push
+
+------------------------------------------------
+GITHUB GRAPH
+------------------------------------------------
+git log --oneline --graph
+
+in github, insights, network
+
+------------------------------------------------
+SETTING THE DEFAULT BRANCH
+------------------------------------------------
+create branch develop in Github
+
+under settings, change default branch
+
+--------------------------------------------------
+SICIAL CODING-FORKING A GITHUB REPO
+--------------------------------------------------
+#forking a repo, then make some changes
+
+#go to the public repo you want to forking
+
+https://github.com/scm-ninja/starter-web
+
+automatically, adds to your profile
+
+-------------------------------------------------
+CREATING A BRANCH ON YOUR FORK 
+-------------------------------------------------
+// delete branch locally
+git branch -d localBranchName
+
+// delete branch remotely
+git push origin --delete remoteBranchName
+
+copy url from github
+
+locally, paste url
+
+git clone git@github.com:drdecker100/starter-web.git
+
+git checkout -b feature-readme
+
+nano README.md
+
+git add README.md
+
+git status
+
+git commit -m "Adding README file"
+
+git push -u origin feature-readme
+
+
+--------------------------------------------------
+PULL REQUESTS
+--------------------------------------------------
+submit these contributions to our upstream fork repo, click on
+"compare and pull request" 
+
+By default, the pull request is going to setup the relationship back to the upstream repo
+
+Happens when your repo is part of a fork, which it is.
+
+A pull request is the request from the upstream repo to pull in your changes
+
+
+------------------------------------------------
+SYNCHRONIZE CHANGES BACK TO YOUR FORK
+------------------------------------------------
+Click star to send us notifactions later
+
+git remode add upstream git@github.com:scm-ninja/starterweb.git
+
+ 
+------------------------------------------------
+transfer GITHUB ORGANIZATIONS
+------------------------------------------------
+under personal account, click on repo,settings, and then transfer button
+
+
+
+
+
 
 
