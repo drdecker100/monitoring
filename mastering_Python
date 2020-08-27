@@ -1,0 +1,161 @@
+1. Variables    2. Numbers    3. Mail     4. Logic        
+5. Data Structures     6. Loops       7. Functions
+8.Object oriented programs
+
+
+--------------------------------------------
+TO CHECK WHETHER PYTHON HAS BEEN INSTALLED
+--------------------------------------------
+In CMD, type python --version
+
+
+IDE= Integrated Developer Editor
+
+IDLE = Python's own IDE
+
+-------------------------------------------
+TOP SECRET OF TOP PROGRAMMERS
+-------------------------------------------
+
+Asking great questions
+
+[Help] Answer not being on screen when running Python script
+
+1)Observed Behaviour
+Script runs successfully but answer doesnt show up
+
+2)Expected Behaviour
+I expected the answer 2 to show up when i ran the script
+
+3)Link to Code[create a secret post on gist.github.com
+https://gist.github.com/Zadinator/6e
+
+4)Where I think the problem is
+Must be something different between script and shell
+Worked in the shell
+
+5)What I have tried
+i tried running the script with different numbers. No difference
+
+6)Errors and warnings
+None
+
+7)Version Info
+Python 3.5.2
+
+8)Screenshots
+N/A
+
+------------------------------------------
+WHAT IS A VARIABLE
+------------------------------------------
+Stores values. variable has a name and a value
+
+number = 1
+
+number
+#output value stored in variable name
+
+# variables are case-sensitive  number != Numbers
+
+#Dynamically typed language if the type of a variable is checked during run-time. 
+Common examples includes JavaScript, Objective-C, PHP, Python, Ruby, Lisp, and Tcl
+
+#Also means the type of variable can change unlike c, java that you have to state the type of variable
+
+#using type function to find the type of variable
+type(number)
+
+int
+#use lowercase variable names, with underscores(_)for spaces
+
+-----------------------------------------
+NUMBERS
+-----------------------------------------
+Basic Algebra 
+
+Integer is a whole number, float is a decimal number
+
+Mathematical Operators(+-*/%**//)
+/ = division , returns float(python 3)
+% = modulos , returns reminder
+** = exponentiation
+// = floor division 
+
+Float datatype for storing decimal numbers
+
+Order of computations using BODMAS(brackets order division multiplication addition subtraction)
+
+Python modules Import random , import math (Python documnetation under IDLE docs)
+
+#Creating a health portion
+
+import random
+
+#players current health
+health = 50
+
+#create a variable called difficulty and set it to easy mode(1=easy,2=medium,3=hard)
+difficulty = 1
+
+#create a variable called potion health
+potion_health = int(random.randint(25, 50)/difficulty)
+
+#store in health variable the vlaue of health and potion health
+health = health + potion_health
+
+#print function to output new health value onto screen
+print(health)
+
+----------------------------------------------------------
+STRINGS
+----------------------------------------------------------
+++ 3 ways to create strings
+name = " Donald"
+
+message = "John" says hi" #broken strings
+
+TO FIX
+message = ''' "John" says hi" '''
+
+message = """ "John" says hi" """
+
+
+print('Hello World')
+
+Input function (Python built-in functions)
+input([prompt]) --> the square brackets means the prompt is optional
+
+input()
+empty input
+
+#output empty input
+
+# the input always turns it into strings
+type(age) --> class 'str'
+
+#ask user for name
+name = input('enter your name: ')
+print(name)
+
+--------------------------------------------------------
+CONCATENATE stings
+-------------------------------------------------------
+#should be of the same data type
+
+A = "part one"
+B = "part two"
+
+A + B
+'part onepart two
+
+A * 3
+
+"=" *20
+
+B=1
+
+A+B , returns error
+
+A + str(B) 
+'part one1'
