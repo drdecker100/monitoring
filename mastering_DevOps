@@ -1,0 +1,165 @@
+DEVOPS
+
+#Origin
+Waterfall involves performing a series of sequential activities starting with requirements followed by
+analysis,design, coding, testing and implementation
+
+Andrew clay shaafer organised a sessrion called agile infrastructure transformation
+
+Traditionally the developers and operations were handled separately
+
+Dev = Plan, Code, Build, TEst
+
+Release
+
+Ops = Deploy, Operate, Monitor,  
+
+Patrick Dubois = HR, MGMT, FIN, SALES, DEV , OPS
+
+#Development teams want to add new features as quickly as possible
+
+#Operations teams focused on stability and resistant to change
+
+#Bringing Dev and Ops teams closer together means that delivering value quickly, quality and stability are shared goals
+
+#Understanding goals and how they are align to the overall mission helps to deliver the best outcomes
+
+#Many organizations lack this transparency
+
+#This could result in a huge amount of wasted effort and increated operational costs
+
+-----------------------------
+THREE WAYS
+#the first way - systems thinking
+#the second way - amplify feedback
+#third way  - culture of continuosus experimentation and learning
+
+business ----- customer
+
+5 focusing steps --> Identify , Exploit, Subordinate, Elevate, Repeat
+
+--------------------------------------
+CALMS
+acronym for Culture, Automation, Lean , measuring, s
+Culture -- a collective sense of purpose, people first, collaboration, continuous learning and self-improving(kaizen(japanese language)
+----------------
+Demings PDCA
+Plan - Articulate value and effort
+
+Do- Implement actions
+
+Check - Analyze outcomes
+
+Act - do next?
+------------------
+Key Point - look beyond current horizon
+
+---------------------------------------------------------
+Automation
+---------------------------------------------------------
+AUTOMATING REPETITIVE TIME CONSUMING AND ERROR PRONE TASKS 
+
+----automation strategies
+repeatable manual activities are time consuming, error prone and expensive 
+
+an automation strategy should be aligned with enterprise goals
+
+automating existing processes as-is or copying others use cases will be sub-optimal and risky
+
+consider all options before automating legacy services
+
+ -------------------------------
+ 9 types of DEvOps Automation
+ -------------------------------
+1. INFRASTRUCTURE 
+#Virtualization and cloud technologies enable unprecedented levels of Enterprise Agility
+Traditional ways offered resistance to innovation and scaling, unlike virtualization
+
+#Faciltates On-demand provision and auto-scaling
+
+#Defining infrastructure as code and using platforms to specifically manage security, environments
+deployment etc. maintains consistency and quality
+
+2. TEST
+# Test Automation is a fundamental aspect of DevOps
+
+#It helps to significantly improve the reliability of your systems
+
+#Without test automation, you are effectively building legacy
+
+3. BUILD
+#Involves compiling code, executing tests and static code analysis to enforce quality and reduce the risk of security vulnerabilities
+
+#delivery teams are notified of build features and are fixed immediately
+
+#Build artefacts are often uploaded to an enterprise wide repo for deployment
+
+4. DEPLOY
+#Build artefacts are automatically applied to a specified environment
+
+#This typically involves verifying the success of the deployment, 
+notifying stakeholders and rolling back to a known state if necessary
+
+#Containers and container orchestrators(e.g. Kubernetes) are commonly being used for deployment 
+
+5. PIPELINE
+#Refers to automating the sequential exectution of the various steps leading up to and including deployment
+
+#Orchestrating these tasks is commonly called the DevOps Pipeline"
+
+#Key to building consistency and confidence in the delivery processes
+
+6. MONITORING
+#Every layer of the architecture needs to be monitored for unexpected behaviour
+
+#Any issues need to be raised and workflow in place to route them to the appropriate teams
+
+#Monitoring solutions becoming increasing sophisticated with auto-remediation and self-healing
+
+7. METRICS
+#Systems need to be capable of measuring pre-defined Key Performance indicators(KPIs)
+
+#BaSELINing outcome based  KPIs as well as measures relating to the DevOps practices being followed is essential for continuous
+improvement
+
+8. SERVICE
+#Once an incident has been raised, ahole new set of workflows takes place.
+
+#Automating certain activities in the workflow, such as escalations and change documentaton,
+can speed up resolution time significantly and reduce business impact.
+
+9. COMMUNICATION
+#it is important to ensure delivery data and outcome metrics are visible via communication channels that support timely action.
+
+#these channels must expose information transparently to all stakeholders
+
+#Helps to avoid inaccurate interpretation and reporting --"The Watermelon Effect"
+
+
+
+
+------------------------------------------------
+DEVOPS CYCLE
+------------------------------------------------
+1. Plan
+
+2.  Code
+
+3.  Build
+
+4.   Test
+
+5.    Release
+
+6.     Deploy 
+
+7.   Operate
+
+8.     Monitor
+
+
+
+
+
+
+
