@@ -1,0 +1,212 @@
+#DOCKER
+#Tool designed to make it easier to create, deploy and run applications by using containers
+#Allows developer to package up an application with all of the oarrs ut needs , such as libraries and dependencies,and ship it all out as one package 
+
+#CONTAINER is simply to isolate a process that is running from other processes
+
+#NAMESPACE is the ID of the process of the container
+
+#C groups allow you to limit the usage of the resources like the CPU, memory and lots of resources to the container only
+
+#Container contains a process which runs in a namespace and has a set of rules(c groups) to control it
+
+Scratch is the base for any image you are going to build in docker
+
+On top of the base(parent to centos), we put a patent system(eg.centos)(child to base) ,and put some process or service(apache) to run on the system
+Scratch-> Centos-> Apache->Cache
+ 
+#Container 
+Infra> host OS> Docker > Cont.. A,B,C{libs,Apps}
+#Virtual Machines
+Infra > hypervisor>VMA,B,C{OS,libs,GuestOS}
+#
+Hypervisor > manager for the VMs
+
+#Differences
+With VMs , we are using more resources, because you need more memory(1Gig RAM) to spin up the OS
+With Docker, when you delete the container and the patent system(OS) is not affected
+
+#How do we build the image?
+Dockerfile is a plain text file, you define instructions to create an image
+>>FROM centos
+  (Meaning i want centos as the OS layer;gives you the binaries that is going to be used as base )
+(In this case scratch base is the default ,so deployed automatically)
+>>RUN yum -y install httpd
+(Running instructions, based on the patent system you choose,it will give you the ability to install packages)
+(The libraries that the application needs)
+CMD apachectl -DFOREGROUND
+(The command that will be triggered once the container gets created- to start the process)
+
+#Docker Architecture
+Once you install docker on your machine or your computer or in any server, then automatically that server becomes a docker host
+Hence your machine that has docker installed is actually capable to run containers and build images
+
+#Docker Host is the house of all created containers 
+
+#Docker Host Ecosytem
+Client-- REST API -- Server
+
+Server(docker daemon)
+That is the process that is started once you install docker 
+
+Client(docker CLI)
+Thats is How you interact with the docker server but you cannot talk to the server without an API.Basically dokng API calls to the server and its giving you back a response
+
+#Client can manage container, image, network and data volumes
+--------------------------------------------------------------------------------
+#LAYERING IN DOCKER
+---------------------------------------------------------------------------------
+Image is a template where you define all the binaries and libraries that the application will need.
+the container is the runtime of the image . Hence, can have one template as an image and just create multiple containers using that image.
+Layers inÂ  images are read only layers.Once you create and image ,you cannot modify any layer in that image.
+Instead you can create another image and start from the layer that you want
+Actually version images because we cant modify an image
+Basically, when you create a container you add a new layering on top of the image which is a read/write layer( that is you can modify the contents of the image in layer that was added)
+Spin up as many containers as you want from one image
+Docker INSTALLATION ON UBUNTU
+Create a ubuntu server EC2 instance on AWS or on VM locally
+--------------------------------------------------------------------------------
+Docker Official Image
+--------------------------------------------------------------------------------
+You can download pre-defined images from hub
+E.g docker pull nginx
+
+docker pull nginx:1.15.12
+To download previous version(tags)
+Docker Hub 
+Centralised repo for docker images
+docker pull mysql
+docker pull httpd
+docker pull mysql:5.7
+
+#To view images
+docker images
+
+#to delete an image
+docker rmi <name or id of the image> 
+# if tag is attached ,need to include tag
+------------------------------------------------------------------------------
+CREATING A CONTAINER
+------------------------------------------------------------------------------
+docker run -d nginx:alpine
+-d detach mode(in d background)
+
+#to delete a container
+docker rm <container id or name>
+
+#how to test if a container is working, we need to expose the port
+docker run -d  -p 9090:80 nginx:alpine
+
+#similar to port forwarding
+Pointing  port 9090 to port 80 on the container
+
+#To test, open a browser(client)
+127.0.0.1:9090 
+<private ip:9090>
+
+#to kill running container
+docker rm -f <container-id>
+docker rm --force <container-id>
+
+#Building Your Own Image
+-struggling to find a pre-defined image
+-create a Dockerfile
+- you can use any image in the Dockerfile regardless the host OS
+
+FROM centos
+(FROM centos:tag)
+RUN yum -y install httpd
+(Installing apache on centos, by default ,tge image doesnt come with sudo installed since it is light)
+
+# to build an image with the instruction in the Dockerfile
+docker build --tag centos_apache:v1 .
+docker images | grep centos
+
+#testing your image by creating a docker container
+
+#Container exited because there was no process
+docker ps --all (-a)
+docker run --name centos_test -d centos_apache:v1
+
+FROM centos
+RUN yum -y install httpd
+CMD apachectl -DFOREGROUND 
+(this will start the process inside the container and keep the container process alive)
+
+#to build image out of the Dockerfile
+docker build --tag centos_apache:v2 .
+
+#to run a container out of the image
+docker run --name centos_yescmd -d centos_apache:v2
+
+# to map the port of the machine to the port of the container
+
+#to run a container out of the image
+docker run -d -p 9090:80 --name centos_yescmd centos_apache:v2
+
+#test container with browser
+127.0.0.1:9090
+
+#to kill running container
+docker rm -f centos_yescmd centos_nocmd
+
+#Creating another Dockerfile
+nano Dockerfile2
+FROM nginx:alpine
+
+#to build image from dockerfile2
+docker build --tag nginx_custom:v1 --file Dockerfile2 .
+
+RUN echo "Overwrite homepage" > /usr/share/nginx/html/index.html
+
+#rebuild image
+docker build -t nginx_custom:v2 -f Dockerfile2 .
+
+#run container from image
+docker run -d -p 9090:80 --name nginx nginx_custom:v2
+
+----------------------------------------------------------------------
+#COPY FILES WITH COPY
+----------------------------------------------------------------------
+cp -r templates/startbootstrap-freelancer-master/ docker-images/
+
+mv startbbotstrap-freelancer/ html_code
+
+FROM centos 
+RUN yum -y install httpd
+COPY html_code /var/www/html
+CMD apachectl -DFOREGROUND
+
+docker build -t apache_with_code:v1 .
+
+docker run --name apache -d -p 9090:80 apache_with_code:v1
+
+#you can copy entire folder, file, code to image
+------------------------------------------------------------------
+#ADD INSTRUCTION(downloading files from Internet )
+------------------------------------------------------------------
+ADD <url to a code or folder> <destination on your container>
+
+FROM centos 
+
+RUN yum -y install httpd unzip
+
+ADD https://github.com/mdn/... /var/www/html/code.zip
+
+RUN cd /var/www/html/ && unzip code.zip &&& mv /var/www/html/beginner-html-site-styled-gh-pages/* /var/www/html
+
+CMD apachetcl -DFOREGROUND
+
+#build image 
+docker build -t apache_with_code:v2 -f Dockeefile3 .
+
+#run container
+docker run -d --name apache -p 9090:80 apache_with_code:v2
+
+#test with browser
+127.0.0.1:9090
+
+#_----------------
+
+
+
