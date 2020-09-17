@@ -1,4 +1,6 @@
+-------------------------------------------------
 #DOCKER
+--------------------------------------------------
 #Tool designed to make it easier to create, deploy and run applications by using containers
 #Allows developer to package up an application with all of the oarrs ut needs , such as libraries and dependencies,and ship it all out as one package 
 
@@ -14,8 +16,9 @@ Scratch is the base for any image you are going to build in docker
 
 On top of the base(parent to centos), we put a patent system(eg.centos)(child to base) ,and put some process or service(apache) to run on the system
 Scratch-> Centos-> Apache->Cache
- 
+----------------------------------------------- 
 #Container 
+-----------------------------------------------
 Infra> host OS> Docker > Cont.. A,B,C{libs,Apps}
 #Virtual Machines
 Infra > hypervisor>VMA,B,C{OS,libs,GuestOS}
@@ -206,7 +209,367 @@ docker run -d --name apache -p 9090:80 apache_with_code:v2
 #test with browser
 127.0.0.1:9090
 
-#_----------------
+-------------------------------------------------------
+ENV instruction
+------------------------------------------------------
+#ENV instruction sets the environment variable key to the value 
+FROM centos
+
+RUN yum -y install httpd unzip
+
+ENV HTML beginner-html-site-styled
+
+ADD https://github.com/mdn/$HTML/archive/gh-pages.zip /var/www/html/code.zip
+
+RUN cd /var/www/html/ && unzip code.zip && mv /var/www/html/$HTML-gh-pages/* /var/www/html && echo $HTML > /var/www/html/env.html
+
+CMD apachetcl -DFOREGROUND
+--------------------------
+WORKDIR instruction
+--------------------------
+FROM centos
+
+RUN yum -y install httpd unzip
+
+ENV HTML beginner-html-site-styled
+
+WORKDIR /var/www/html
+
+ADD https://github.com/mdn/$HTML/archive/gh-pages.zip ./code.zip
+
+RUN unzip code.zip && mv $HTML-gh-pages/* . && echo $HTML > ./env.html
+
+CMD apachetcl -DFOREGROUND
+
+------------------------------
+LABEL
+------------------------------
+#just a metadata
+LABEL maintainer=Ricardo
+LABEL vendor=companyB
+
+----------------------------
+VIEW INSIDE OF RUNNING CONTAINER
+----------------------------
+docker exec --tty --interactive apache10 bash
+
+---------------
+USER to change user
+---------------
+RUN useradd application && chown aplication:application /var/www/html -R 
+USER application
+RUN rm -rf code.zip $HTML-gh-pages
+USER root
+
+------------------------
+ARG
+-----------------------
+ARG user=application
+#build with args
+
+docker build -t apache_with_code:v8 -f Dockerfile3 --build-arg user=ricardo .
+
+
+------------------------
+CMD
+------------------------
+#core of the container
+#as long aa the process that you put into the CMD is alive ,then the conatiner will be alive
+
+------------------------
+OUTPUT from CMD
+------------------------
+Logs related to CMD
+#docker logs <container name>
+#creating a bash script
+#!/bin/bash
+echo "Starting httpd"
+apachectl -DFOREGROUND
+
+COPY cmd.sh /cmd.sh
+
+RUN chmod +x /cmd.sh 
+
+#giving executable permission to run script
+CMD /cmd.sh
+
+---------------------------------
+FROM centos
+
+ARG user=application
+ARG httpd_package
+
+RUN yum -y install $http_package unzip
+
+LABEL maintainer=Ricardo
+LABEL vendor=companyB
+
+ENV HTML beginner-html-site-styled
+
+WORKDIR /var/www/html
+
+ADD https://github.com/mdn/$HTML/archive/gh-pages.zip ./code.zip
+
+RUN unzip code.zip && mv $HTML-gh-pages/* . && echo $HTML > ./env.html
+
+RUN useradd $user && chown $user /var/www/html -R
+
+USER $user
+
+RUN rm -rf code.zip $HTML-gh-pages/
+
+USER root
+
+COPY cmd.sh /cmd.sh
+
+RUN chmod +x /cmd.sh
+
+CMD /cmd.sh
+
+--------------------------
+docker build -t apache_with_code:v11 -f Dockerfile3 --build-arg user=ricardo --build-arg httpd_package=httpd .
+--------------
+##Careful with CONTEXT(directory holding all our needed files)!
+
+---------------
+Incase we are not running the builder command in the directory holding our needed files
+docker build -t apache:v11 -f docker -images/Dockerfile3 docker-images/
+-------------
+#checking file size
+du -shc *
+du -sh templates/
+##using docker ignore file 
+-a hidden file that allows you to ignore folders or files in your context
+#creating a dcokerignore file
+vi .dockerignore
+#copy and paste files/folders into the dockerignore files
+templates
+#content should be as small as possible to improve performance
+
+--------------------------------
+BEST PRACTICES
+--------------------------------
+#One service per container
+#Build context should be small
+#Avoid unnecessary packages
+#less layers
+#less layers
+#has 4 layers
+
+FROM nginx:alpine
+
+RUN echo "1" >> /usr/share/nginx/html/test.html
+
+RUN echo "2" >> /usr/share/nginx/html/test.html
+
+RUN echo "3" >> /usr/share/nginx/html/test.html
+
+# has 3 layers
+
+FROM nginx:alpine
+
+ENV webfile /usr/share/nginx/html/test.html
+
+RUN \
+      echo "1" >> $webfile && \
+      echo "2" >> $webfile && \
+      echo "3" >> $webfile
+
+docker ps
+------------------------------
+#building an image with HTTP + SSLTLS+ PHP
+
+------------------------------
+FROM centos 
+
+RUN yum -y install httpd php php-mysql
+
+COPY html-ssl /var/www/html
+
+RUN echo "<?php phpinfo( ); ?>" > /var /www/html/test.php
+
+CMD apachectl -DFOREGROUND
+
+-------------------------------------
+#Generating self signed certificate and key TO CONFIGURE SSL
+-------------------------------------
+openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout docker.key -out docker.crt
+
+CommonName: <ip adddress of server or localhost>
+
+#creating ssl config file
+
+nano ssl.conf
+
+<VirtualHost *:443>
+              SSLEngine on
+              SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP
+              SSLCertificateFile    /etc/ssl/docker.crt
+              SSLCertificateKeyFile.     /etc/ssl/docker.key
+              Server Admin example@it.com
+              DocumentRoot "/var/www/html"
+              ServerName <ip address>
+              ErrorLog /var/www/html/error.log
+</VirtualHost>
+
+
+
+FROM centos 
+RUN \
+          yum -y install \
+          httpd \
+          php php-mysql \
+          mod_ssl \
+          openssl
+
+COPY html-ssl /var/www/html
+
+RUN echo "<?php phpinfo( ); ?>" > /var /www/html/test.php
+
+COPY docker.crt  /docker.crt
+
+COPY docker.key /docker.key
+
+COPY ssl.conf /etc/httpd/conf.d/default.conf
+
+CMD apachectl -DFOREGROUND
+
+----------------------
+Filtering Out by Name
+-----------------------
+docker ps -a -f=name=apache
+docker run -d -p 443:443 --name apache_ssl apache_ss1:v2
+
+#test ssl webpage
+https://35.171.121.237
+
+---------------------------------
+Dangling Images
+---------------------------------
+docker images
+# means you created the new build of the image , but it wasnt given a name or was given a same name
+#we use tags to prevent dangling images
+docker ps -a
+
+-----------------------------------
+How To Delete Dangling Images
+------------------------------------
+docker images --filter dangling=true
+
+docker images -f dangling=true -q
+
+#show only the id
+
+#to delete
+docker rmi $(docker dangling=true -q)
+
+#always build images with tags to prevent dangling images
+
+---------------
+Create an Image with Nginx + PHP7
+---------------
+
+#create a Dockerfile
+nano Dockerfile-Nginx
+
+#create nginx.repo to install ngunx from repo
+nano nginx.repo
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+
+#mkdir nginx && cd nginx
+
+#mkdir conf && cd conf && nano nginx.repo 
+
+# configure vhost config for nginx
+copy from github.com/lukearmstrong/7155390
+
+#create a nginx.conf file
+nano conf/nginx.conf
+
+-----------
+server {
+	listen 80;
+	server_name <ip address>;
+
+	access_log /nginx_php/access.log;
+	error_log  /nginx_php/error.log error;
+
+	root /nginx_php;
+	index index.php index.html;
+
+	location / {
+		try_files $uri $uri/ /index.php?$query_string;
+	}
+
+	location ~ \.php {
+		fastcgi_index index.php;
+		fastcgi_pass 127.0.0.1:9000;
+
+		include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	}
+
+	# Prevents caching of css/less/js/images, only use this in development
+	location ~* \.(css|less|js|jpg|png|gif)$ {
+		add_header Cache-Control "no-cache, no-store, must-revalidate"; 
+		add_header Pragma "no-cache";
+		expires 0;
+	}
+}
+-------------
+
+
+#create script to handle both php and nginx processes
+
+nano conf/start.sh
+
+#!/bin/bash
+# Starting php
+echo "* Starting php"
+/usr/sbin/php-fpm
+#Start nginx
+echo "Starting nginx"
+nginx -g daemon off;'
+
+#create test.php
+<? php phpinfo( ); ?>
+
+#to debug issues
+tail -f /nginx_php/error.log
+
+
+FROM centos
+
+COPY conf/nginx.repo /etc/yum.repos.d/nginx.repo
+
+RUN \
+       yum install -y nginx \
+       yum install -y https://centos7.iuscommunity.org/ius-release.rpm && \
+       yum -y install \ 
+            php71u-fpm \
+            php71u-common \
+            php71u-cli --enable repo=ius && clean all
+
+RUN mkdir /nginx_php
+
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY fruit /nginx_php
+
+COPY test.php /nginx_php
+
+COPY conf/start.sh /start.sh
+
+RUN chmod +x /start.sh
+
+CMD /start.sh
 
 
 
