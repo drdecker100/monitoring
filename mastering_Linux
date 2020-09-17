@@ -365,9 +365,12 @@ write a file = save a file
 
 M- = Alt, Esc or Cmd(depending on your layout)
 
------------------------------------------------
-LOCATE
------------------------------------------------
+------------------------------------------------------------------------------------------
+LOCATE 
+(The locate command is used to find files by their filename. 
+The locate command is lightning fast because there is a background process 
+that runs on your system that continuously finds new files and stores them in a database.)
+-------------------------------------------------------------------------------------------
 locate *.conf
 
 locate -i *.CONF ( ignore case-senstive)
