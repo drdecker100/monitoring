@@ -159,3 +159,1360 @@ A+B , returns error
 
 A + str(B) 
 'part one1'
+
+---------------------------------------------
+STRING FORMATTING
+---------------------------------------------
+A = 'part'
+
+B = 1
+
+print("{} - {}".format(A,B))
+
+print("{0} - {1}".format(A,B))
+
+print("{1} - {0}".format(A,B))
+
+--------------------------------------------
+DIR method
+-------------------------------------------
+print(dir())
+print(dir(string))
+print(dir(list))
+
+---------------------------------------------
+STRING METHODS
+---------------------------------------------
+string.method()
+
+"hello".count("e")
+
+text = "happy birthday"
+
+text.count("a")
+
+text.count("day")
+
+x = "Happy Birthday"
+
+x.lower()
+
+x.upper()
+
+x, 
+
+#returns intial value because string are immutable(cannot be changeg) , but can be overwritten
+
+x = x.upper()
+
+x.title()
+
+x.capitalize()
+#returns the capital of the first letter
+
+x.isalpha(), x.isupper() , x.istitle(), .isdigit(), .isalnum
+
+#because of space, .isalpha() will return false
+
+x = "happy birthday"
+x.index("birthday")            #returns the number of the first occurence of the letter or word  #case-sensitive
+x.index("jashdfasdsfs")
+#returns an error
+
+x.find("birthday")
+6
+
+x.find("adsfsfdsfgdgfsfsdfs")   #returns -1 if it cant be found, so preferred to index. it doesnt return error when the str is not found
+-1
+
+y = "000000haopybirthday000000"
+y.strip("0")
+'happybirthday'    #strip off both sides
+
+y.lstrip("0")
+'happybirthday0000000"
+
+y.rstrip("0")
+'00000000happybirthday'
+
+y.strip()   #strips the string off spaces
+len(y)
+
+name = input("WHatis your name?: ").strip()
+What is your name?: Zee  #with spaces
+
+print(name)
+len(name)   
+
+---------------------------------------
+SLICES
+---------------------------------------
+string = "ABCDEFG123456"
+
+#it is ITERABLE meaning you can go through it step by step, each step is called element of the string
+#each element has an index and starts from zero
+
+word = "supercalifragilisticexpialidocious"
+
+word[0]
+'s'
+
+word
+'supercalifragilisticexpialidocious'
+
+variable[start:end:step]   # up to end, but included
+
+word[0:5:1]
+'super'
+
+word[0:5:2]
+'spr'
+
+word[5:9] = 'cali'
+
+word[5:]
+'califragilisticexpialidocious'
+
+word[5::2]
+
+
+word[:7]
+'superca'  
+
+word[::-1]
+
+-------------------------------------------
+AUTOMATE SLICES
+-------------------------------------------
+word[-1]
+s 
+
+word[-5]
+c 
+
+word[word.index("cali"):word.index("frag")]
+cali
+
+word[word.find("cal"):word.find("frag")]
+cali
+-------------------------
+#get user email address
+email = input("Enter your email address: ").strip()
+
+#slice out username
+#drdecker100@gmail.com
+user= email[:email.index("@")]
+
+#slice out domain name
+domain = email[email.index("@") + 1:]
+
+#format message
+output = "Your usename is {} and your domain name is {}".format(user,domain)
+
+#display output message
+print(output) 
+--------------------------
+
+------------------------------------------------------
+LOGIC AND CONDITIONAL FLOW
+------------------------------------------------------
+Booleans Comparison Operators
+
+B = True
+C = False
+
+E = "True"
+type(E)
+class 'str'
+
+type(B)
+class 'bool'
+
+2 == 3      #equal to
+False
+
+2 < 3      #less than
+True
+
+2 != 3     #not equal to
+True
+
+4 >= 3	   #greather than or equal to
+True 
+
+---------------------------------------
+IF STATEMENTS
+---------------------------------------
+-aloows us to execute code if the condition is True.
+
+if condition :
+	code         #execute if condition is True
+--------------------	
+if True:
+    print("It worked")
+    
+if False:
+    print("It didnt work")
+
+--------------------
+num1 = 100
+num2 = 150
+
+if num1 > num2:
+    print("num1 is bigger than num2")
+else:
+    print("num2 is bigger than num1")
+----------------------
+num1 = 100
+num2 = 100
+
+if num1 > num2:
+    print("num1 is bigger than num2")
+
+elif num2 > num1:
+	print("num2 is bigger than num1")
+
+else:
+    print("both are equal")
+-------------------------------
+if condition1:
+	code
+elif condition2:
+	code2
+elif condition3:
+	code3
+else:
+	code4
+	
+-----------------------------------------
+LOGICAL OPERATORS
+-----------------------------------------
+comparison operators   > < = == compare expressions and elements
+
+logical operators combine and modify conditions
+
+not True
+False
+
+not 2 < 3
+False
+
+not 4 == 3
+True
+
+if not y < x:
+	print("It worked")
+--------	
+NOT gate had one input (output is inverse of input)
+---------
+"AND" Truth tabel has two inputs, returns True if both inputs are True
+
+1 and 1 
+1
+
+1 and 0
+0
+
+True and True
+True
+
+True and False
+False
+
+C = 10
+D = 5
+
+#wont print because condition is False
+if C > 10 and D > 1:
+	print("It worked")
+
+#will print because conditio is True	
+if not (C > 10 and D > 1):
+	print("It worked")	
+
+----------
+OR Truth Table has two inputs, returns True when one of the inputs is True or when both inputs are True
+
+True or True
+True
+
+True or False
+True
+
+False or False
+False
+
+C = 5
+D = -1
+
+if C > 1 or D > 1:
+	print("it worked")
+	
+ C = 6
+ D = 2
+ 
+ if (C > 5 and D > 5) or (C > 1 and D > 1):
+	print("it worked")
+	
+-------------------------------------------------------------------
+LISTS DATA STRUCTURE (list are mutable, can change their content
+-------------------------------------------------------------------
+our_list = [27,46,-5,17,99]
+print(our-list)
+
+type(our_list)
+class 'list'
+
+paakow = ["A","B","C",1,2,3 "Do","Rey","Mi",True,False]
+paakow[4]
+2
+
+paakow[-2]
+True
+
+---------
+SLICING
+---------
+paakow[0:3]
+[A,B,C]
+
+Nested list
+our_list = [1,2,[3,4,5],6,7,8]
+
+our_list[2]
+[3,4,5]
+
+our_list[2][1]
+4
+
+our =_list[2][0::2]
+[3,5]
+
+>>> jack = [5,6,7,8,"Ama"]
+>>> type(jack[-1])
+<class 'str'>
+
+len(jack)
+5
+
+L = [1,5,2,6,2,9]
+>> 2 in L 
+>> True
+
+>> 10 in L 
+>> False
+
+-----------------------------------------------------------
+# create list of users
+known_users = ["Alice","Bob","Kofi","Kwesi","Meggy","Ass","Boobs","Dee"]
+
+print(len(known_users))
+
+
+while True:
+    print("Hi! My name is Travis")
+    name = input("Enter your name: ").strip().captilize()
+
+    if name in known_users: 
+        print("Hello {}!!".format(name))
+
+    else:
+        print("name NOT recognised\n")
+
+------------------------------------------- 
+List Methods
+
+known_users.pop(index)      #worked with the index of the element
+known_users.pop(3)
+
+known.users.remove(name)	# removes the first occurence of the element, the item should be unique otherwise, you may need a loop
+
+del known_users[0]          #remove object in the first index
+
+-------------------------------------------
+Adding items to lists
+-------------------------------------------
+A = [3,1,45,6,79]
+
+A = A + 1 #returns error, cant concatenate int to list
+
+A = A + [1]
+[3,1,45,6,79,1]
+
+A = A + ["BCD"]
+[3,1,45,6,79,1,'BCD']
+
+A = A + list("BCD")
+A
+[3,1,45,6,79,1,'BCD','B','C','D']
+
+A = A + list(123)  # returns error because integers are not iterable. strings are iterable
+
+A = A + [1,2,3]
+A 
+
+A = A + list(str(123))
+A
+
+A = A + [5,6,7,8]
+[3,1,45,6,79,1,'BCD','B','C','D',5,6,7,8]
+
+A = A + [[5,6,7,8]]
+[3,1,45,6,79,1,'BCD','B','C','D',[5,6,7,8]]
+
+A.append([10,11,12,13])
+A 
+[3,1,45,6,79,1,'BCD','B','C','D',[5,6,7,8],[10,11,12,13]]
+
+#the append method returns an empty value
+A = [5,12,4,5]
+A = A.append(10)
+A 
+     #empty value
+type(A)
+<class 'NoneType'>
+
+A = []
+type(A.append(10))
+<class 'NoneType'>
+
+A.insert(index, element)
+A.insert(2,100)
+[5,12,100,4,5]	 
+
+A.insert(2,[10,20,30])
+[5,12,[10,20,30],100,4,5]
+
+#list are mutable (You do not need to re-assign with list methods, will return NoneType
+
+A = [1,2,3]
+A[0] =5
+A = [5,2,3]
+
+
+---------------------------------------------------------------------------
+TUPLES
+---------------------------------------------------------------------------
+#oNCE A tuple is created, you cannot change its contents 
+#it is immutable
+
+our_tuple = 1,2,3,"A","B","C"
+
+type(our_tuple)
+<class 'tuple'>
+
+our_tuple = (1,2,3,"A","B","C")
+type(our_tuple)
+<class 'tuple'>
+
+our_tuple[0:3]
+(1,2,3)
+
+#tuple object does not support item assignment
+our_tuple[2] = 100   #returns error
+
+#string are iterable but does not support assigment
+
+A = [1,2,3]
+
+tuple(A)
+(1,2,3)
+
+A = tuple(A)
+(1,2,3)
+
+(A,B,C) = 1,2,3
+A 
+1
+B 
+2
+C 
+3
+
+D,E,F = [1,2,3]
+D 
+1
+E 
+2
+F 
+3
+
+G,H,I = "789"
+G
+7
+H
+8
+I 
+9
+
+---------------------------------------------------------
+DICTIONARIES (DATA TYPE)
+---------------------------------------------------------
+students = {}
+students
+{}
+type(students)
+<class 'dict'>
+
+students = {"Dan":20, "Bob":30}
+students
+{'Dan': 20, 'Bob': 30}
+error_std = {Alice:20, Bob:30}
+Traceback (most recent call last):
+  File "<pyshell#6>", line 1, in <module>
+    error_std = {Alice:20, Bob:30}
+NameError: name 'Alice' is not defined
+students["Dan"]
+20
+
+#adding another key to the dictionary
+students["Fred"] = 40
+students
+{'Dan': 20, 'Bob': 30, 'Fred': 40}
+ 
+#to delete a item(key,value
+del students["Fred"]
+students
+{'Dan': 20, 'Bob': 30}
+ 
+#to read the keys of the dictionary
+students.keys()
+dict_keys(['Dan', 'Bob'])
+ 
+#it is iterable , but not indexable
+ 
+students.key()[0]
+Traceback (most recent call last):
+  File "<pyshell#21>", line 1, in <module>
+    students.key()[0]
+AttributeError: 'dict' object has no attribute 'key'
+>>> 
+#wont work, unless we turn it into a list
+students_keys = list(students.keys())
+students_keys
+['Dan', 'Bob']
+students_keys[1]
+'Bob'
+ 
+students.values()
+dict_values([20, 30])
+b = list(students.values())
+b
+[20, 30]
+b[1]
+30
+ 
+#Unlike a tuple and list, dictionaries are orderless
+students
+{'Dan': 20, 'Bob': 30}
+
+
+-----------------------------------------
+pass keyword just python to MOVE ON
+
+#students = {
+        "Don":["ID001",10,"A"],
+        "Ewe":["ID002",20,"B"],
+        "Ama":["ID003",30,"C"],
+        "Yaw":["ID004",40,"D"],
+        "Afi":["ID005",50,"E"]
+        }
+
+students = {
+        "Don":{"id":"ID001","age":10,"grade":"A"},
+        "Ewe":{"id":"ID002","age":20,"grade":"B"},
+        "Ama":{"id":"ID003","age":30,"grade":"C"},
+        "Yaw":{"id":"ID004","age":40,"grade":"D"},
+        "Afi":{"id":"ID005","age":50,"grade":"E"}
+        }
+
+
+print(students["Don"]["age"])
+
+print(students["Emma"]["id"] , students["Emma"]["grade"])
+
+
+------------------------------------------
+WHILE LOOPS!
+------------------------------------------
+repeats code over and over again while the condition is true.
+
+while True:
+	print("Hello")
+	
+while 2>1:
+	print("Hello")
+	
+num = 1
+
+while num <= 5:
+    print(num)
+    num = num + 1
+
+print("")    
+print(num)
+
+1
+2
+3
+4
+5
+ 
+6
+
+L =[]
+
+while len(L) < 3:
+    new_name = input("Please add anew name: ").strip().capitalize()
+    L.append(new_name)
+
+print("Sorry, list is full")
+print(L)
+
+-----------------------------------------------------------------
+
+from random import choice
+
+while True: 
+    #create a list of questions
+    questions = ["Why is my name Kwame?: ","How old am i?: ","What is a television?: "]
+
+    question = choice(questions)
+
+    #prompt for baby to ask question
+
+    answer = input(question).strip().lower()
+
+    #want code to run when the answer is not "just because"
+
+    while answer != "just because":
+        print("Noooooooooo\n")
+        answer = input("Why?: ")
+
+    print("Oh.. Okay\n")
+	
+--------------------------------------------------------------------
+FOR LOOPS
+--------------------------------------------------------------------
+A for loop is used for iterating over a sequence (that is either a list, a tuple, a dictionary, a set, or a string)
+
+type(range(6))
+<class 'range'>
+
+In Python, range outputs a range iterable
+
+range(6)
+range(0, 6)
+
+list(range(0, 6))
+[0,1,2,3,4,5]
+
+for number in range(1,4)
+	print(number)
+1
+2
+3
+
+for item in "abcd"
+	print(item)
+a
+b 
+c 
+d 
+
+for number in [1,2,3,4]
+	print(number)
+1
+2
+3
+4
+
+#number(variable) becomes the next iterable in for loop
+
+for number in range(1,7,2):
+	print(number)
+1
+3
+5
+
+students = {'male': ['1', '2', '3'], 'female': ['Kate', 'Ann', 'Naa']} 
+
+for value in students.values():
+	for name in value:
+		if "a" in name:
+			print(name)
+			
+for  key in students.keys():
+	for name in key:
+		if "a" in name:
+			print(name)
+			
+for key in students:
+	for name in key:
+		if "a" in name:
+			print(name)
+			
+##same results
+
+
+-------------------------------------------------------------------------
+List comprehension
+-------------------------------------------------------------------------
+SHORT cut to combine for loops and if statement to create a list
+
+even_numbers = [x for x in range(1,101) if x % 2 ==0]
+
+odd_numbers = [x for x in range(1,101) if x % 2 !=0]
+
+words = ["the","quick", "brown"]
+
+answer = [[w.upper(),w.lower(),len(w) for w in words]
+
+print(answer)
+
+------------------------------------------------------------------------
+BREAK, CONTINUE, PASS  (loop control statements)
+------------------------------------------------------------------------
+    else:
+        vowel_pos = 0
+        for letter in word:
+            if letter not in "aeiou":
+                vowel_pos = vowel_pos + 1
+            else:
+                break
+
+
+the break keyword breaks the loop and takes you back to the else statement
+
+Whereas, the continue keyword takes you to the loop above, in this case, the if statement
+
+# Using loops in Python automates and repeats the tasks in an efficient manner
+
+# The break statement is used to terminate the loop or statement in which it is present. 
+After that, the control will pass to the statements that are present after the break statement,
+if available.
+
+# Python program to  
+# demonstrate break statement  
+    
+s = 'geeksforgeeks'
+# Using for loop  
+for letter in s:  
+    
+    print(letter)  
+    # break the loop as soon it sees 'e'  
+    # or 's'  
+    if letter == 'e' or letter == 's':  
+        break
+    
+print("Out of for loop")  
+print() 
+
+# continue statement is opposite to that of break statement, 
+instead of terminating the loop, it forces to execute the next iteration of the loop.
+.When the continue statement is executed in the loop, the code inside the loop following the continue statement will be skipped 
+and the next iteration of the loop will begin.
+
+# Python program to  
+# demonstrate continue  
+# statement  
+    
+# loop from 1 to 10  
+for i in range(1, 11):  
+    
+    # If i is equals to 6,    
+    # continue to next iteration    
+    # without printing   
+    if i == 6:  
+        continue
+    else:  
+        # otherwise print the value  
+        # of i  
+        print(i, end = " ") 
+		
+#pass statement simply does nothing. The pass statement in Python is used when a statement is required syntactically but you do not want any command or code to execute. 
+#It is like null operation, as nothing will happen is it is executed. 
+#Pass statement can also be used for writing empty loops.
+
+# Python program to demonstrate 
+# pass statement 
+  
+  
+s = "geeks"
+  
+# Empty loop 
+for i in s: 
+    # No error will be raised 
+    pass
+  
+# Empty function 
+def fun(): 
+    pass
+  
+# No error will be raised 
+fun() 
+  
+# Pass statement 
+for i in s: 
+    if i == 'k': 
+        print('Pass executed') 
+        pass
+    print(i)
+
+----------------------------------------------------
+PIG LATIN TRANSLATOR
+----------------------------------------------------
+#get sentence from user
+original = input("Enter a sentence: ").strip().lower()
+
+#split sentence into words
+words = original.split()
+            
+#loop through words and convert to pig latin
+
+#if starts with vowel, just add "yay"
+
+#Otherwise, move the first consonant cluster to the end, and add "ay"
+
+new_words = []
+
+for word in words:
+    if word[0] in "aeiou":
+        new_word = word + "yay"
+        new_words.append(new_word)
+    else:
+        vowel_pos = 0
+        for letter in word:
+            if letter not in "aeiou":
+                vowel_pos = vowel_pos + 1
+            else:
+                break
+        cons = word[:vowel_pos]
+        the_rest = word[vowel_pos:]
+        new_word = the_rest + cons + "ay"
+        new_words.append(new_word)
+
+#stick back together
+output = " ".join(new_words)
+
+#output the final string
+print(output)
+
+-------------------------------------------------------
+Functions
+-------------------------------------------------------
+#Functions is ablock of organized and reusuable code that performs an action
+
+#defining a function
+
+def functionName(params):
+
+def add(x,y):
+	return x + y
+
+#calling a function
+add(5,3)
+
+#return a value
+8
+
+#can store in a variable
+answer = add(100,20)
+answer = 120
+
+#returning a value != printing a value
+retruing stores in variable name in memory, print just displays the output on screen
+
+a= print("hello")
+type(a)
+<class 'NoneType'>
+
+def rev(text):
+	return text[::-1]
+	
+rev('pen')
+
+rev([1,2,3,4])
+
+
+----------------------------------------------------
+Variable Scope( Global scope and local scope)
+----------------------------------------------------
+#Global scope
+#If a variable is in global scope, its called glocal varible and can be seen everywhere.
+
+#Functions create local scope , whereas loops and if statements don't 
+
+a =100   #global scope
+
+def f1():
+	print(a)
+
+def f2():
+	print(a)
+	
+f1()
+f2()
+	
+100     # because a is global variable
+100
+--------------
+def f1():
+	a=100
+	print(a)
+
+def f2():
+	print(a)
+	
+f1()
+f2()
+
+f2() returns error because variable a is local to function f1() only
+
+------------------
+a = 250
+
+def f1():
+	a = 100
+	print(a)
+	
+def f2():
+	a = 50
+	print(a)
+
+f1()
+f2()
+print(a)
+
+100
+50
+250
+---------------------
+a = 250
+
+def f1():
+	b = a + 10    
+	print(b)
+	
+def f2():
+	a = 50      #local
+	print(a)
+
+f1()
+f2()
+print(a)
+
+260
+50
+250
+----------------------------
+CHANGING THE GLOBAL VALUE
+----------------------------
+a = 250
+
+def f1():
+	global a    #you can't write global a = 100
+	a = 100     #global
+	print(a)
+	
+def f2():
+	a = 50      #local
+	print(a)
+
+f1()
+f2()
+print(a)
+
+100
+50
+100
+
+-------------------
+a = [1,2,3,4]
+
+def f1():
+	a = 10     # global
+	print(a)
+	
+def f2():
+	a = 50      # local
+	print(a)
+
+f1()
+f2()
+print(a)
+
+10
+50
+[1,2,3,4]
+
+--------------------
+a = [1,2,3]
+
+def f1():
+	a[0] = 5     #global
+	print(a)
+	
+def f2():
+	a = 50      #local
+	print(a)
+
+f1()
+f2()
+print(a)
+
+[5,2,3]
+50
+[5,2,3]  # the global value also change because we change the global value
+
+
+---------------------------------------------------------------
+KEYWORD ARGUMENTS & DEFAULT PARAMETERS
+---------------------------------------------------------------
+
+def about(name, age, likes):
+	sentence = "Meet {}! They are {} years old and they like {}".format(name, age, likes)
+	return sentence
+	
+about("Jack", 23 ,"Python")
+#positional word argument
+
+#argument "Jack" matches to parameter name
+#argument 23 matches to parameter age
+#argument "Python" matches to parameter likes
+
+about(age = 23, name = "Jack", likes = Python")
+
+#keyword arguments, each argument is associated with a keyword, which matches the marameter in the function definition
+#keyword argument has more flexiblity
+
+def about(name, age, likes = "Python"):
+	sentence = "Meet {}! They are {} years old and they like {}".format(name, age, likes)
+	return sentence
+	
+about("Jack",23)
+Meet Jack! They are 23 years old and they like Python
+
+about("Jack",23,"Football")
+Meet Jack! They are 23 years old and they like Football
+
+#default parameters must go to the end
+
+def about(name = "Don", age = 23, likes = "Python"):
+	sentence = "Meet {}! They are {} years old and they like {}".format(name, age, likes)
+	return sentence
+ 
+about()
+Meet Don! They are 23 years old and they like Python
+
+-------------------------------------------------------------------
+PACKING AND UNPACKING USING ARGS AND KWARGS( * args and **kwargs)
+-------------------------------------------------------------------
+overview and review
+
+print(1,2,3,4,5)    #passing 5 arguments to the print function
+>>>  1 2 3 4 5
+
+numbers = [1,2,3,4,5]
+print(numbers)		#passing 1 argument to the print function
+>>>  [1,2,3,4,5]
+
+#unpacking the argument 
+print(*numbers)
+>>>  1 2 3 4 5
+
+print("abc")
+abc
+
+print(*"abc")
+a b c 
+
+print("a","b","c")
+a b c 
+
+def add(x,y):
+	return x + y 
+	
+add(10,10)
+20
+
+*args
+def add(*numbers):  #pack in as many numbers as possible 
+					#pack the args into one tuple
+					#tuples are iterable, so we can iterate through them and add them
+					#packing is useful when you do not know how many arguments you are expecting
+					#making it flexible
+						
+	return
+
+def add(*numbers):       # def add(*args):
+	total = 0
+	for number in numbers:
+		total = total + number
+	return(total)   
+	
+add(1,2,3,4,5,6,7,8,9)
+45
+
+#same as 
+numbers = (1,2,3,4,5,6,7,8,9)
+
+--------------------------------------------------------------
+def about(name, age, likes):
+	sentence = "Meet {}! They are {} years old and they like {}".format(name, age, likes)
+	return sentence
+	
+dictionary = {"name":"Ziyad","age":23,"likes" = "Python"}
+about(**dictionary)
+Meet {}! They are {} years old and they like {}
+#that unpacks all the keywrd arguments
+
+about(name= "Ziyad", age = 23, likes = "Python")
+Meet {}! They are {} years old and they like {} 
+
+
+def foo(**kwargs):    #when we pack som arguments, we going to create a dictionary out of them
+		for key, value in kwargs.items()       #set of tuple, each has a key and value			
+			print("{}.{}".format(key, value)
+			
+
+foo(huda = "Female",ziyad = "male")
+ziyad:male
+huda:Female
+
+---------------------------------------------------------------
+board = [" "] * 9
+
+def print_board():
+    row1 = "|{}|{}|{}|".format(board[0], board[1], board[2])
+    row2 = "|{}|{}|{}|".format(board[3], board[4], board[5])
+    row3 = "|{}|{}|{}|".format(board[6], board[7], board[8])
+
+    print()
+    print(row1)
+    print(row2)
+    print(row3)
+    print()
+
+
+def player_move(icon):
+
+    if icon == "X":
+        number = 1
+    elif icon == "Y":
+        number = 2
+        
+    print("Your turn player {}".format(number))
+    
+    choice = int(input("Enter your number(1-9): ").strip())
+    if board[choice-1] == " ":
+       board[choice-1] = icon
+    else:
+        print()
+        print("That space is taken!")
+
+def is_victory(icon):
+    if (board[0] == icon and board[1] == icon and board[2] == icon) or\
+       (board[3] == icon and board[4] == icon and board[5] == icon) or\
+       (board[6] == icon and board[7] == icon and board[8] == icon) or\
+       (board[0] == icon and board[3] == icon and board[6] == icon) or\
+       (board[1] == icon and board[4] == icon and board[7] == icon) or\
+       (board[2] == icon and board[5] == icon and board[8] == icon) or\
+       (board[0] == icon and board[1] == icon and board[2] == icon) or\
+       (board[0] == icon and board[1] == icon and board[2] == icon):
+        return True
+    else:
+        return False
+
+def is_draw():
+    if " " not in board:
+        return True
+    else:
+        return False
+
+while True:
+    print_board()
+    player_move("X")
+    print_board()
+    if is_victory("X"):     #using a function as an boolean expression
+        print("X Wins! Congratulations!")
+        break
+    elif is_draw():
+        print("Its a draw!")
+        break
+    
+    player_move("Y")
+    if is_victory("Y"):
+        print_board()
+        print("Y Wins! Congratulations!")
+        break
+     elif is_draw():
+        print("Its a draw!")
+        break
+
+---------------------------------------------------------------------
+OBJECT ORIENTED PROGRAMMING(O.O.P)
+---------------------------------------------------------------------
+#each template to make a coin in program is a CLASS
+
+#Class -> Object
+
+#Object is an instance of a class
+
+#Object have states and actions(behaviors) they can do
+
+#To create states, we use class variables 
+#To create behaviors, we use methods 
+#Methods are the same as functions, we call them methods when using classes
+
+Class for a 10p Coin
+
+States                             Methods
+
+Value = 0.1							flip()
+Color = "Silver
+Number of edges = 1
+Diameter = 24.5 (mm)
+Thckness = 1.85 (mm)
+Heads = True
+
+#difference between objects and classes
+#classes are the base template from which all objects are made from
+
+#as object, they can have different behaviors
+
+#objects behave independently from each other
+
+--------------------------------------------------
+#defining class
+class Pound:
+
+    #create states- value ,color,edges,diameter,thickness, heads
+    value = 1.00
+    colour = "gold"
+    num_edges =1
+    diameter = 22.5 #mm
+    heads = True
+
+#making an object(instance of class)
+coin1 = Pound()
+
+print(type(coin1))
+
+print(coin1.value)
+
+coin1.colour = "greenish"
+
+print(coin1.colour)
+
+#create new object
+coin2 = Pound()
+print(coin2.colour)
+print()
+print(coin1.colour)
+------------------------------------------------
+CLASS METHODS
+------------------------------------------------
+#Constructor in class
+def __init__(self):    #self as parameter #used to refer to a specific instance of this class when we write the class code
+
+Constructors are generally used for instantiating an object.
+The task of constructors is to initialize(assign values) to the data members of the class when an object of class is created.
+In Python the __init__() method is called the constructor and is always called when an object is created.
+
+class GeekforGeeks: 
+  
+    # default constructor 
+    def __init__(self): 
+        self.geek = "GeekforGeeks"
+  
+    # a method for printing data members 
+    def print_Geek(self): 
+        print(self.geek) 
+  
+  
+# creating object of the class 
+obj = GeekforGeeks() 
+  
+# calling the instance method using the object obj 
+obj.print_Geek()
+
+
+-------------------------------------
+import random
+
+class Pound:
+
+    def __init__(self, rare = False):
+
+        self.rare = rare
+
+        if self.rare == rare:
+            self.value = 1.25
+        else:
+            self.value = 1.00
+            
+        self.color = "gold"
+        self.num_edges = 1
+        self.diameter = 22.5 #mm
+        self.thickness = 3.15 #mm
+        self.heads = True
+
+    def rust(self):
+        self.color = "greenish"
+
+    def clean(self):
+        self.color = "gold"
+
+    def flip(self):
+        head_options = [True,False]
+        choice = random.choice(heads_optons)
+        self.heads = choice
+
+    #python destructor
+    def __del__(self):
+        print("Coins Spent!")
+		
+-------------------------------------------------------------
+CLASS INHERITANCE AND POLYMORPHISM
+------------------------------------------------------------
+Inheritance allows us to define a class that inherits all the methods and properties from another class.
+
+Parent class is the class being inherited from, also called base class.
+
+Child class is the class that inherits from another class, also called derived class.
+-----------------------------
+Create a Parent Class
+--------------------------------
+Any class can be a parent class, so the syntax is the same as creating any other class:
+
+Example
+Create a class named Person, with firstname and lastname properties, and a printname method:
+
+class Person:
+  def __init__(self, fname, lname):
+    self.firstname = fname
+    self.lastname = lname
+
+  def printname(self):
+    print(self.firstname, self.lastname)
+
+#Use the Person class to create an object, and then execute the printname method:
+
+x = Person("John", "Doe")
+x.printname()
+
+----------------------------------
+Create a Child Class
+-----------------------------------
+To create a class that inherits the functionality from another class, send the parent class as a parameter when creating the child class:
+
+Example
+Create a class named Student, which will inherit the properties and methods from the Person class:
+
+class Student(Person):
+  pass
+ 
+---------------------------------
+#polymorphism
+#when a method has multiple forms inside a class, thats polymorphism
