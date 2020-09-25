@@ -1,4 +1,7 @@
 #to show computer system info from cmd line
 systeminfo
 
+#to check if docker is installed on machine
+docker --version
+
 #
