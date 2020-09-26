@@ -572,8 +572,74 @@ RUN chmod +x /start.sh
 CMD /start.sh
 
 --------------------------------------------------------------------
-#Creating and listing containers
 
+--------------------------------------------------------------------
+ls templates
+
+cp -r templates/fruit/ docker-images/nginx/
+
+cd docker-images/nginx/fruit
+
+
+--------------------------------
+
+Basics From Multistage Build
+
+---------------------------------
+
+#Helps you to retrieve a sowcific file from a previous stage
+
+mkdir multi-stage && cd multi-stage && nano Dockerfile
+
+#to give a size to a file/directory
+
+fallocate -l 10M file1
+
+#to pull alpine from docker
+
+#alpine is very small linux distro (5.5MB)
+
+docker pull alpine
+
+FROM centos as build
+
+RUN fallocate -l 10M /opt/1
+
+RUN fallocate -l 10M /opt/2
+
+RUN fallocate -l    5M /opt/jar
+
+FROM alpine
+
+COPY --from=build  /opt/jar /jarfile.jar
+
+---------------------------
+
+docker pull maven:3.6-alpine
+
+docker pull  openjdk:8-alpine
+
+
+
+nano Dockerfile-multistage
+
+FROM maven:3.6-alpine as builder
+
+COPY app-maven /app
+
+WORKDIR /app
+
+RUN mvn package
+
+FROM openjdk:8-alpine
+
+COPY --from=builder /app/target/my-app-1.0-SNAPSHOT.jar /app.jar
+
+CMD java -jar /app.jar
+
+--------------------------------------------------------------------
+#Creating and listing containers
+--------------------------------------------------------------------
 docker run -d nginx:alpine
 
 docker ps
