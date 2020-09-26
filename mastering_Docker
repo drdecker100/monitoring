@@ -571,5 +571,624 @@ RUN chmod +x /start.sh
 
 CMD /start.sh
 
+--------------------------------------------------------------------
+#Creating and listing containers
 
+docker run -d nginx:alpine
+
+docker ps
+
+docker container ls
+
+docker container create nginx:alpine
+
+#Remove and rename containers
+
+docker rm <name or id>
+
+#if the container is running
+
+docker rm -f <name or id>
+
+#downloading jenkins image 
+
+docker pull jenkins/jenkins
+
+docker images | grep jenkins
+
+#to build container
+
+docker run -d jenkins/jenkins
+
+# to rename container
+
+docker rename eloquent_edison jenkins-container
+
+#to map ports
+
+-You need to share containers port with your host port
+
+# to know the port of the container
+
+docker ps
+
+docker run -d --name jenkins -p 9090:8080 jenkins/jenkins
+
+#to stop a container
+
+docker stop <id or name>
+
+#to start a container
+
+docker start <id or name>
+
+docker ps -a
+
+#understanding containers filesystem
+
+# to show ids of all containers 
+
+docker ps -a -q
+
+#to remove all containers 
+
+docker rm $(docker ps -a -q)
+
+# to log into a container
+
+docker exec -ti <container name> bash
+
+#viewing the hostname
+
+echo $HOSTNAME
+
+#to view username
+
+whoami
+
+
+-------------------------
+
+ENV VARIABLES
+
+-------------------------
+
+ENV var1 1234
+
+#log into container
+
+docker exec -ti f45345666a67 bash
+
+echo $var1
+
+#to pass env variable outside Dockerfile
+
+docker run -d --name env -e "test=4321" env
+
+--------------------------------
+
+Creating a MySQL container
+
+----------------------------------
+
+docker run -d --name test mysql:5.7
+
+docker container ls --all
+
+docker logs <container name or id>
+
+docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=12345678 mysql:5.7
+
+docker logs <id or name>
+
+#containers also have their own internal network
+
+docker inspect <id or name>
+
+#install mysql on centos
+
+sudo yum -y install mysql
+
+#logging into the container
+
+mysql -u root -h 172.17.0.2 -p 12345678
+
+-----------
+
+Mapping Ports in MySQL
+
+-----------
+
+docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=12345678 -e MYSQL_DATABASE=docker_db -e MYSQL_USER=docker_user -e MYSQL_PASSWORD=1234 mysql:5.7
+
+#logging into our mysql container
+
+mysql -u root -h 172.31.87.182 -p 12345678
+
+mysql -u docker_user -h 172.31.87.182 -p 1234
+
+#show available databases
+
+show databases;
+
+use docker_db
+
+-------------------
+
+PostgreSQL
+
+-------------------
+
+#EXPOSE instruction
+
+To inform the port in which your application is suppose to run
+
+-Informs Docker that the container listens on the specified network ports at runtime.
+
+- You can specify whethertge port listens on TCP or UDP
+
+- default is TCP if protocol is not specified
+
+docker run -d --name postgres -e "POSTGRES_PASSWORD=12345678" -e 
+
+POSTGRES_USER=docker_user -e POSTGRES_DB=docker_db -p 5432:5432 postgres
+
+#logging into container
+
+docker exec -ti <id> bash
+
+psql -d docker_db -U docker_user
+
+#how to apply limits
+
+free -h # shows how much Ram you have availble
+
+#shows the number of processors
+
+grep "model name" /proc/cpuinfo | wc -l
+
+#to see the resources 
+
+docker stats
+
+#to limit a container memory resource
+
+docker run --help | grep memory
+
+docker run --d --name nginx2 --memory "200mb" nginx:alpine
+
+#to limit container cpu resouce(relies on how many CPUs you have)
+
+docker run -d --name nginx3 --memory "300mb" --cpuset-cpus 0,3 nginx:alpine
+
+#DevOps Style Jenkins as a container
+
+docker run -d --name jenkins -p 9090:8080 jenkins/jenkins
+
+docker ps
+
+docker exec -ti <id/name> bash
+
+#or with gitbash
+
+winpty docker exec -ti <id/name> bash
+
+cat /var/jenkins_home/secrets/initialAdminPassword
+
+#Tip to override CMD when running a container
+
+docker run -dti --name centos centos
+
+docker run -d --name centos2 centos python -m SimpleHTTPServer 8080
+
+docker run -d --name centos3 -p 9090:8080 centos python -m SimpleHTTPServer 8080
+
+docker ps --no-trunc
+
+--------------------------
+
+Changing the docker location
+
+------------------------------
+
+#to show root directory
+
+docker info | grep -i root
+
+#size of the dieectories
+
+sudo du -sh /var/lib/docker
+
+#before moving, all containers should be stopped
+
+sudo systemctl stop docker
+
+#edit the config file
+
+sudo vi /lib/systemd/system/docker.service
+
+#add 
+
+--data-root /mnt/docker
+
+#to relaod the server
+
+systemctl daemon-reload
+
+#to restart the docker
+
+systemctl restart docker
+
+---------------------------
+
+DOCKER VOLUMES
+
+---------------------------
+
+Volumes in Docker allows you to persist data after a container dies
+
+Normal/Bind/Anonymous
+
+--------------------------------
+
+Importance of volumes
+
+--------------------------------
+
+# creating mysql container with required environment variable
+
+
+
+docker run -d --name mysql -e "MYSQL_ROOT_PASSWORD=123456789" mysql:5.7
+
+docker ps
+
+docker exec -ti fffbf7085822 bash
+
+#login with user as root and password
+
+mysql -u root -p12345678
+
+#show databases
+
+show databases;
+
+#create a database
+
+create database test_db;
+
+#with volumes, we can persist data from destroyed container
+
+---------------------------------------
+
+Bind Volumes Map Folders to your container
+
+---------------------------------------
+
+#mysql by default stores information in /var/lib/mysql
+
+cd  /mnt/
+
+sudo mkdir mysql
+
+cd mysql/
+
+#create docker container with volume (hostpath:location in container)
+
+docker run -d -v /mnt/mysql:/var/lib/mysql --name mysql -e "MYSQL_ROOT_PASSWORD=12345668" mysql:5.7
+
+#see running container
+
+docker ps
+
+docker exec -ti mysql bash
+
+mysql -u root -p12345678
+
+---------------------------
+
+How to restore volume
+
+---------------------------
+
+#create new container with map volume
+
+docker run -d -v /mnt/mysql:/var/lib/mysql --name mysql -e "MYSQL_ROOT_PASSWORD=12345668" mysql:5.7
+
+#any changes effected in the mysql folder will affect the folder in the container
+
+------------------------------------
+
+Normal Volumes 
+
+------------------------------------
+
+#two types of volumes 
+
+Bind and Normal volumes
+
+#creating a normal volume
+
+docker volume create mysql_volume
+
+#to see where the volume created is stored
+
+docker info | grep -i root
+
+cd /mnt/docker
+
+cd volumes
+
+#to list normal volumes
+
+docker volume ls
+
+#creating a mysql container with normal volume
+
+
+
+docker run -d -v mysql_volume:/var/lib/mysql --name mysql -e "MYSQL_ROOT_PASSWORD=12345668" mysql:5.7
+
+#restore volume
+
+docker run -d -v mysql_volume:/var/lib/mysql --name mysql -e "MYSQL_ROOT_PASSWORD=12345668" mysql:5.7
+
+--------------------------------
+
+KNOWING THE DIFFERENCE(anonymous volume)
+
+-----------------------------------
+
+#When u create a docker volume with a name(id) makes it easy for identification. 
+
+# The other volume is  temporary
+
+docker volume ls
+
+# With the normal volume, you can track it with docker volume ls
+
+-----------------------------
+
+VOLUME IN DOCKERFILE
+
+-----------------------------
+
+#create anonymous volumes wven without -v because there is a docker file instruction called VOLUmE
+
+docker run -d --name mysql -e "MYSQL_ROOT_PASSWORD=123456789" mysql:5.7
+
+#make directory vol_test
+
+mkdir vol_test
+
+cd vol_test
+
+vi Dockerfile
+
+FROM centos
+
+VOLUME /opt
+
+#build image
+
+docker build -t test_volume
+
+------------------------------
+
+Dangling Volumes
+
+------------------------------
+
+#removes the container and volume
+
+docker rm -fv test
+
+#removes just the container
+
+docker rm -f test
+
+#find dangling volume
+
+docker volume ls -f=dangling=true
+
+#remove a dangling volume
+
+docker volume rm <id>
+
+------------------------------------------
+
+PERSIST DATA IN A NOSQL CONTAINER
+
+------------------
+
+cd /mnt/
+
+sudo mkdir mongo
+
+docker run -d --name mango -v /mnt/mango/:/data/db -p 27017:27017
+
+mongo
+
+docker exec -ti mongo bash
+
+cd data/db/
+
+#to use mongo shell
+
+mongo
+
+use mydb
+
+db.movie.insert({"name":"tutorials point"})
+
+WriteResult({ "nInserted" :1 })
+
+show dbs
+
+-------------------------
+
+Persist with jenkins
+
+-------------------------
+
+docker run -d --name jenkins -p 8080:8080 -v /mnt/jenkins:/var/jenkins_home jenkins/jenkins
+
+#to debug wrong volume permissions
+
+docker logs -f <id>
+
+docker run --rm -ti jenkins/jenkins bash
+
+#to show id 
+
+id
+
+#change permissions(owner)
+
+sudo chown 1000:1000 -R /mnt/jenkins
+
+------------
+
+Executing a command without logging into the container
+
+------------
+
+docker exec jenkins bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+
+--------------------------------------------
+
+Developing a website to share your data
+
+--------------------------------------------
+
+#map file to container
+
+sudo mkdir web
+
+sudo chown centos:centos web/
+
+cd web/
+
+touch index.html
+
+docker run -d --name nginx -p 8080:80 -v /mnt/web/:/usr/share/nginx/html nginx:alpine
+
+#all changes made affectd the container
+
+echo "Page2" > page2.html
+
+127.0.0.1:8080/page2.html
+
+---------------------------------------
+
+Share volumes between containers
+
+---------------------------------------
+
+cd  /mnt/
+
+sudo mkdir  common
+
+sudo chown 1000:1000 common/
+
+cd common/
+
+vi Dockerfile
+
+FROM centos 
+
+COPY start.sh /start.sh
+
+RUN chmod +x /start.sh
+
+CMD /start.sh
+
+vi start.sh
+
+#!/bin/bash
+
+while true; do
+
+    echo "<p>$(data)</p>" >> /opt/index.html
+
+     sleep 3
+
+done
+
+docker build -t generator .
+
+#another directory
+
+mkdir html_files
+
+#echo $PWD
+
+#echo $PWD/html_files
+
+#docker run -d --name gen -v $PWD/html_files:/opt generator
+
+
+#docker ps
+
+#cat html_files/index.html
+
+#map it to nginx container
+
+docker run -d --name nginx -v $PWD/html_files:/usr/share/nginx/html -p nginx:alpine
+
+#make sure only one container is writing to the file
+
+-------------------
+
+Default network(docker0 interface)
+
+---------------------
+
+ip a | grep docker
+
+docker network ls | grep bridge
+
+docker network inspect bridge
+
+----------------
+
+Ping containers in the default network
+
+------------------
+
+# you cannot delete the beidge, host, and none network
+
+#docker inspect <container id>
+
+docker exec container1 bash -c "ping 172.17.0.3"
+
+-------------------------------
+
+Creating your own network
+
+-------------------------------
+
+docker network create -d bridge --subnet 172.18.0.0/16 --gateway 172.18.0.1 new_network
+
+docker network inspect new_network
+
+#to remove network
+
+docker network rm new_network
+
+-------------------------------------------
+
+Attach containers to the new network
+
+------------------------------------------
+
+docker run -dti --network new_network --name container3 centos 
+
+#to remove all containers
+
+docker rm -fv $(docker ps -aq)
+
+#with the default network, you cannot ping the containers using their names
+
+#with created networks, you can ping the containers using their names
 
