@@ -4,4 +4,7 @@ systeminfo
 #to check if docker is installed on machine
 docker --version
 
-#
+#to connect to AWS EC2 instance
+open cmd on windows machine
+cd into folder with the .pem key
+RUN ssh -i "my_key_name_pair.pem" ubuntu@ec2-3-135-201-35.us-east-2.compute.amazonaws.com
