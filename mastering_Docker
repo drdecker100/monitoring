@@ -66,8 +66,118 @@ Instead you can create another image and start from the layer that you want
 Actually version images because we cant modify an image
 Basically, when you create a container you add a new layering on top of the image which is a read/write layer( that is you can modify the contents of the image in layer that was added)
 Spin up as many containers as you want from one image
+-------------------------------------------------------------------------------
 Docker INSTALLATION ON UBUNTU
+-------------------------------------------------------------------------------
 Create a ubuntu server EC2 instance on AWS or on VM locally
+
+#to check if docker is installed 
+docker ps
+
+#to install on ubuntu
+#update apt-get package index:
+sudo apt update
+#install packages to allow apt to use a repo over HTTPS:
+
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common -y      #accepting everything by default
+	
+#Add Docker’s official GPG key:
+
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	
+#Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88, by searching for the last 8 characters of the fingerprint.
+
+$ sudo apt-key fingerprint 0EBFCD88
+
+#Use the following command to set up the stable repository.
+
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+   
+#to install docker engine
+#Update the apt package index, and install the latest version of Docker Engine and containerd, or go to the next step to install a specific version:
+
+ $ sudo apt-get update
+ $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+#Verify that Docker Engine is installed correctly by running the hello-world image.
+
+$ sudo docker run hello-world
+
+#to check your username
+whoami
+
+#to check existing groups
+groups
+
+#to add a new groups
+sudo usermod -aG docker <username>
+or 
+sudo usermod --append --groups docker <username>
+
+#to enable the docker service when the host reboots
+sudo systemctl enable docker 
+
+
+------------------------------------------------------------------------------------
+
+sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+	
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+   
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+
+##test installation
+docker --version
+sudo docker run hello-world
+
+-----------------------------------------------------------------------
+##installing docker compose
+-------------------------------------------------------------------------
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+##Apply executable permissions to the binary:
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+##Test the installation
+docker-compose --version
+
+https://github.com/zabbix/zabbix-docker.git
+
+docker-compose -f docker-compose_v3_alpine_mysql_latest.yaml up -d
+
+
+
+
+
+
+
+
 --------------------------------------------------------------------------------
 Docker Official Image
 --------------------------------------------------------------------------------
