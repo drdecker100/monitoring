@@ -20,3 +20,11 @@ ctrl A, then TAB #to move to the other session
 ctrl A , then C  #initiate another session
 
 ctrl A , then shift |  #initiate a horizontal split
+
+
+#how to install numpy on Windows 10
+python -mpip install numpy
+
+python -m pip install --upgrade pip
+
+#
