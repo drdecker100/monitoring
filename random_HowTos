@@ -8,3 +8,15 @@ docker --version
 open cmd on windows machine
 cd into folder with the .pem key
 RUN ssh -i "my_key_name_pair.pem" ubuntu@ec2-3-135-201-35.us-east-2.compute.amazonaws.com
+
+#to split linux shell screens
+
+sudo apt-get install screen
+screen
+ctrl A , then shift S #to split terminal
+
+ctrl A, then TAB #to move to the other session
+
+ctrl A , then C  #initiate another session
+
+ctrl A , then shift |  #initiate a horizontal split
