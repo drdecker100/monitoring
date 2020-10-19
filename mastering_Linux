@@ -461,9 +461,9 @@ SEARCHING FILE CONTENT
 
 grep e hello.txt
 
-grep -c e hello.txt
+grep -c e hello.txt      #-c count
 
-grep -ic e gadsby_manuscript.txt
+grep -ic e gadsby_manuscript.txt    #-i ignore case-sensitive
 
 grep -cv e gadsby_manuscript.txt
 
