@@ -1,0 +1,508 @@
+-------------------------------------------------
+LINUX BASH SCRIPTING   UNIX SHELL
+-------------------------------------------------
+
+#3 MAIN USES FOR unix SHELL SCRIPTS
+#1.Automation of common tasks
+
+#2. unix system administration
+
+#3. CGI programming. interative and data-driven web sites employ various server-side scripts for processing data and constructing web pages
+
+------------------------------------
+SHELL
+------------------------------------
+Program that is used to start other programs
+
+Command-ine shells provide built-in features(cd and ls > file)
+
+Bourne Shell is widely supported shell. Its program filename is sh
+
+-----------------------------------------
+A BASIC SCRIPT
+-----------------------------------------
+#to make a file executable, use the chmod program
+
+#chmod +x myscript
+
+#to run file or scripts
+./myscript
+
+#if your path is setup correctly, then can just call the only the script name
+echo $PATH
+
+myscript
+
+-------------------------------------------
+ECHO
+-------------------------------------------
+echo is ashell built-in command
+
+writes its command-line parameters to standard output
+
+echo
+pwd
+echo
+ls -c
+echo
+date
+
+echo -n "Please enter your name: "
+
+echo "Please enter your name: \c "
+
+---------------------------------------
+READ
+--------------------------------------
+built-in command for reading from standard input(usually the keyboard) and astoring the info in the shell variables
+
+read name
+Amaeka
+
+echo $name
+Amaeka
+
+read firstname surname age
+donald decker 60
+
+echo $age
+60
+
+echo 
+echo The current date and time is :
+date 
+echo -n "Please enter your name: "
+read name
+echo hello $name, how are you?
+
+echo "Please enter your name: \c "
+
+#standard output of any program can be piped to the input of any other program using 
+who | wc -l
+
+#Standard output and standard errors can be directed to the same file as follows:
+backup > results 2>&1
+
+#unneeded output maybe redirected to the special file dev/null
+
+#the ampersand(&)  after a command allows you to get the command back immediately 
+sleep 1000 &
+
+--------------------------------------------
+#SPECIAL CHARACTERS
+-------------------------------------------
+& = Run job in background. A command followed by an & will run in the background.
+
+* = serves as a "wild card" for filename expansion in globbing. By itself, it matches every filename in a given directory.
+
+? = serves as a single-character "wild card" for filename expansion in globbing, as well as representing one character in an extended regular expression.
+
+[ ] = As part of a regular expression, brackets delineate a range of characters to match.
+
+< > = 
+
+\$ = backslash To ignore a special character
+
+cat /etc/passwd = to know the number of possible users on the system
+
+who = the number of users logged in
+total number of processes running
+
+---------------------------------------------
+RUNNING SCRIPTS ON COMMAND LINE
+---------------------------------------------
+There are 4 ways to run a shell script on the command-line.
+
+1. <typing the name of script>
+The script is made executable. The new shell is loaded into memory, which reads the commands from the file 
+
+2. sh myscript
+The file doesnt need to be executable.
+
+3. . myscript 
+the variables value is persisted. The commands in the script are executed by the current shell
+
+4. exec myscript
+the current shell terminates. spawning a new shell in its place to execute the script. As soon as the script has terminated, the user is logged off
+
+--------------------------------------------
+RUNNING A SCRIPT FROM WITHIN VI
+--------------------------------------------
+:! ls -l
+
+-------------------------------------------
+YOUR PATH and bin
+-------------------------------------------
+These scripts are usually collected together and housed in a single directory, usually called bin and usually 
+a subdirectory of the user's home directory
+
+can bin/l 
+exec /bin/ls lA color $*
+
+A PATH is a shell variable containing a list of directories that the shell should look into to locate executable files
+(separated by ":").
+
+How To add Bin directories to path
+
+--------------------------------------------
+SCRIPT INTERPRETERS
+--------------------------------------------
+To enable the shell to know what program should be run to interpret the script, 
+the script interpreter may be specified on the first line of the script in the ff manner:
+#!/bin/csh
+
+----------
+to locate where bash is located
+---------------
+type bash
+/usr/bin/bash
+
+--------------------------------
+CGI Program
+--------------------------------
+is a program that is used to provide interactivity,
+automation or database connectivity to a website.
+
+#A CGI Program can be any type of program, icluding Bourne shell scripts
+
+#For bourne shell scriptto act as a CGI script, it must have the ff attributes:
+-it must be executble
+-it must begin with the line #!/bin/sh
+
+--------------------------------------
+SHELL VARIABLE
+--------------------------------------
+Variables are small, named pieces of memory that can be assigned values.
+month=August
+
+These calues can change
+
+Variables name:
+-must be unique
+-can only conatin the characters:
+            a-z,A-Z,0-9 and "_"
+			
+-must not begin with a digit
+-Are case sensitive
+
+#All shell variables are strings
+#There must be no spaces on either side of the "="
+street="Sam Smith"
+
+#to retreive the value
+echo $street 
+
+----------------------------------------
+ENVIRONMENT VARIABLES
+----------------------------------------
+Many shell variables are "inherited" from the login shell environment.
+They are preser variables
+
+#examples of ENV variables
+-HOME
+-PATH
+-LOGNAME
+-TERM
+
+#a variable is added to the environment by using the export command:
+month=January
+export month
+
+------------------------------------------
+TROUBLE WITH QUOTES
+------------------------------------------
+#3 DIFFERENT TYPES OF QUOTES
+1. Single quotes(apostrophes) - the ' character
+
+2. Double quotes(quotation marks) - the " character
+
+3. Back quotes - the `  character
+
+echo ' The dollar is 
+now $150'
+
+1. the SINGLE QUOTES remove all of the shell's special character features.
+
+2. If we surround with double quotes, other characters are still treated as special 
+
+echo "$LOGNAME made \$1000 in `date +%
+
+3. Back quotes have nthing to do with special characters.
+Any text enclosed in back quotes is treated as a UNIX command, and is executed in its own shell.
+
+echo `date`
+
+list =`who | sort`
+
+echo $list
+
+------------------------------------
+GROUPING COMMANDS
+------------------------------------
+ $ ( echo the datae is 
+ date ] > output_file
+ 
+ $( echo ; pwd; ls; )
+ 
+ $( echo 
+ pwd
+ ls
+ ) &
+ 
+ ------------------------------------
+ LINE COMMANDS
+ ------------------------------------
+ echo Please enter your name: ; read name
+ 
+ echo This command is split \
+ over several lines
+ 
+ -----------------------------------
+ CONDITIONAL CODE
+ -----------------------------------
+ tRUE AND FALSE
+ 
+ #the vlaue is a number, and is known as the exit status of a command
+ 
+ #the value is usually ignored (by the shell and by the user)
+ 
+ #typically, an exit status of 0 means that the program completed with no error conditions arising.
+ other number means that some error has occured
+ 
+ # the exit status is stored in the in-built variable called "?", and can be examined at any time with the command
+ 
+ ls ddddd
+ echo $?
+ 
+ #exit status of 0 being equivalent to True
+ any other exit status to be equivalent to FALSE
+ 
+ command1 && command2
+ 
+#command2 only runs if command1 completes with an exit status of 0
+ls file1 && cp file1 /tmp
+cp abc xyz && echo The file was copied okay
+
+command1 || command2
+#command 2 only runs if command1 completes with an exit status of any other number but 0
+
+diff filea fileB || echo The files are different
+ 
+------------------------------------
+IF STATEMENT
+------------------------------------
+if command1     #executes if a given command returns a zero-exit status
+then
+	command2
+	command3
+	...
+fi
+
+-------------------------------------
+else clause
+-------------------------------------
+#we have a way to execute commands if a given command returns a non-zero exit status
+
+if command1
+then 
+	one set of commands
+else
+	another set of commands
+	
+if diff file1 file2 > /dev/null
+then 
+	echo The files are the same
+	rm file2
+else
+	echo The files are different!
+	echo Please review the differences:
+	diff file1 file2
+fi
+
+ 
+if ls file1 > /dev/null
+then
+	: 		# ":" is the "do nothing" command
+else
+	echo The file does not exist - exiting...
+	exit
+fi
+
+
+---------------------------------------
+ELIF CLAUSE
+---------------------------------------
+if command1
+then
+	command set 1
+elif command2
+	command set 2
+	
+else
+	command set 3
+fi
+
+if ls $file > /dev/null 2>&1
+then
+	echo Sorry
+elif who > $file
+then
+	echo $file now continues the user list
+else
+	echo Could not create $file
+fi
+
+
+------------------------------------
+USING TEST 1
+------------------------------------
+The Bourne shell does not natively support such comparisons(equality,inequality, one is greater than the other)
+
+Another UNIX program test exist that is used extensively
+
+$var1=10
+$test $var1 = 20
+$echo $?
+1(false)
+
+if test $var1 -gt $max
+then
+    echo That value is too large
+fi
+
+#if a variable has not been set, or is set to nothing, then checking returns syntax error. Remedied by enclosing the variable in double quotes:
+test "$var1" = 20
+
+test value1 = value2
+	returns true(0) if the values are equal
+	
+test value1 != value2 
+	returns true(0) if the values are diff
+
+test value1 -gt value2
+
+test value1 -le value2
+
+test value -lt value2
+
+test value
+	returns true(0) if the value is non-empty
+
+test -z value
+	returns true(0) if the value is empty(zero-length)
+	
+test -f filename
+	returns true(0) if the given file exists and is a regular file
+	
+test -d filename
+	returns true(0) if the given file exists and is a directory
+	
+test -s filename
+	returns true(0) if the given file exists and has a file-size greater than 0
+
+test -r|w|x 
+	returns true(0) if the given file exists and is a readable or writable or executable by the current process
+	
+	test ! expression
+	returns true(0) if the expression is false
+	
+	test expression1 -a expression2
+		returns true(0) if the both expressions are true (and)
+		
+	test expression1 -0 expression2
+		returns true(0) if the expression1 or expression2 is true (or)
+	
+	#another name for test is "[",
+	
+	if [ $var1 -gt $max ]
+	then
+		echo That value is too large
+	fi
+	
+#test return an exit status appropraite to the condition being tested
+
+-----------------------------------------
+THE CASE STATEMENT
+-----------------------------------------
+case $var1 in 
+	val1)
+		code for case 1
+		;;
+	val2)
+		code for case 2
+		;;
+	val3)
+		code for case 3
+		;;
+esac
+
+The case statement has similar construct to the else clause of the if statement - simply create a case called *
+
+case $var1 in 
+	val1)
+		code for case 1 ;;
+	...
+	*)
+		code for any case that is not covered above ;;
+esac
+
+
+case $var1 in 
+	val1|val2|val3)
+		code for cases 1-3 ;;
+	...
+
+#Also possible to use wildcard cahracters to match variables, as follows:
+case $var1 in 
+	d*)
+		code for anything that starts d ;;
+		
+case $rname in 
+	[dB]eat*)
+		no_albums=12
+		last_album="Let  it Be"
+		
+----------------------------------------------------
+WHILE LOOP
+----------------------------------------------------
+while command
+do
+	code block
+done
+
+read answer
+while [ "$answer" != chickens ]
+do
+	echo That answer is incorrect
+	echo Please try again
+	read answer
+done
+
+echo Congratulations : $answer is right!
+
+--------
+who | while read user time
+do
+echo $user has been on $term since $time
+done
+
+-------------------------------------------------
+break and continue
+-------------------------------------------------
+#use dto control the execution of any loop
+
+#break statement will cause the loop to immediately terminate. Execution will recommence with the next line after the done
+
+# continue statement will cause the loop to abandon the current iteration of the loop and begin with the next(
+the loop condition is retested)
+
+--------------------------------------------------
+NUMERICAL CALCULATIONS
+--------------------------------------------------
+$expr 3 \* 4    #to avoid syntax error(wildcard), we use the "\" 
+$expr 3 - 4
+
+$ a=15
+b=3
+c=`expr $a / $b`
+echo $c
