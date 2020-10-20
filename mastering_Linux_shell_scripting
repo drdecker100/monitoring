@@ -506,3 +506,1112 @@ $ a=15
 b=3
 c=`expr $a / $b`
 echo $c
+
+----
+read count
+i = 1
+while [ $i -le $count ]
+do
+	echo This is the loop $i of $count
+	i=`expr $i + 1`
+done
+
+read count
+i=1
+while [[ $i<${count} ]]
+do
+	echo This is the loop $i of $count
+	i=`expr $i + 1`
+done
+
+
+----------------------------------------------
+FOR LOOP
+----------------------------------------------
+for var1 in Bread Meat Diary
+do
+	echo One of the main food groups is $var1
+done
+
+for fname in *.txt
+do 
+	[ -s $fname ] && cp $fname backups
+done
+
+
+-----------------------------------------------
+TEXT PROCESSING
+-----------------------------------------------
+#a filter is a UNIX command-line program that has the ff properties:
+1.takes either standard input or the contnents of one or more files
+
+2. It performs some processing on the above data
+
+3. it produces output based upon that input
+
+wc is a filter
+
+ls is not filter. you cannot pipe input into ls .it does not take standard input
+
+examples of filter
+filter ---processing done to std input
+cat   --- None
+more  --- Pagination
+grep  --- removal of lines that do not contain certain text
+sort ---- sorting
+wc    --- counting of lines, words and/or characters
+tee   --- Duplication - write to files and screen
+sed   --- basic editing
+awk   --- anything
+
+---------------------------------------------------------
+GREP(somehow a filter)- global reqular expression parser
+---------------------------------------------------------
+Is a program that displays lines of trext from its input that contain a certain pattern
+
+#grep pattern [files]
+
+grep sincerely *.txt
+
+who | grep root
+
+------------------------------------------------
+REGULAR EXPRESSIONS
+------------------------------------------------
+#^abc matches any lie of text that begins with abc
+
+#abc$ matches any line of text that ends with abc
+
+#^$ matches a blank line
+
+#a* matches any sequence of zero or more a's
+
+#a+ matches any sequence of one or more a's
+
+#-E (extented regular expressions ) grep -E ca+t sample
+
+#c[aou]t matches cat,cot or cut  
+
+#c.t matches a foolowed by any one character, followed by tRUE
+
+#X[a-zA-Z0-9] *X matches any sequence 
+
+Many programs use regular expressions, including 
+#grep
+#sed
+#awk
+#vi and ed/ex
+
+grep abc sample
+
+grep ^abc sample   #carrot symbol at the begiining restrict the search to abc that are at the beginning of the line 
+
+grep -i ^D names.dat
+
+grep c[aou]t  matches cat, cot , cut
+
+grep c[aou]*t matches ct, caaat, cut
+
+
+file=greptest
+
+echo Lines that start with a T:
+grep '^T' $file
+echo ===============================
+
+echo Blank lines:
+grep '^$' $file
+echo ===============================
+
+echo Lines that have two or more a\'s anywhere in them:
+grep 'aa' $file
+echo ===============================
+
+echo lines that have a two-or-more-digit number in them:
+grep '[0-9][0-9]' $file
+# or grep -E '[0-9]{2,}' $file
+echo ===============================
+
+echo lines that have the pattern [x,y] in them, where x and y are any numbers:
+grep -E '\[[0-9]+,[0-9]+\]' $file
+echo ===============================
+
+------------------------------------------------
+SORT
+------------------------------------------------
+#SORT  is a simple filter whose processing consists of sorting lines of text from its input
+
+sort datafile
+
+who | sort
+
+sort file1 > file1 #mistake it erturns empty file
+
+sort file1 > file2
+mv file2 file1
+
+echo `sort sample.txt` > file2.txt
+
+-------------------------------------------------
+SED (STREAM EDITOR)
+-------------------------------------------------
+#A program for performing basic editing tasks on the output of another program
+or on a file (similar to sort, the file itself is not changed)
+
+#sed action [files]
+
+sed -e action1 -e action2 [files]
+
+sed -f scriptfile [files]
+
+#actions specified on the cmd line are enclosed in single quotes to prevent interpretation of special chars 
+
+sed 's/bin/bourne shell/' sample.txt   #s-substitute  #d- delete
+
+sed 's/been/feed/' sample.txt
+
+#to chane first occurence of foo on each line to bar
+s/foo/bar
+
+#to change all occurence of foo to bar
+s/foo/bar/g 
+
+#a range of line numbers can be specified to restrict these actions:
+1,10s/foo/bar/   or 40,$s/foo/bar/g
+
+#Note that $ refers to the last line in the file
+
+#deleting lines :
+11, 20d - delete the second 10 lines of the input
+
+/hopscotch/d - delete all lines with hopscotch in it
+
+#delete all lines except for lines that match certain criteria
+3,$!d
+sed '3,$!d' sample.txt
+
+sed /ducks/!d
+
+s/mvirtue/THE AUTHOR OF THIS COURSE/
+
+/gumby/d
+
+who | sedscript
+
+----------------------------------------------------
+AWK (Aho, Weinberger and kernighan)
+----------------------------------------------------
+Program capable of virtually any conceivable text processing
+
+#awk action [files]
+
+#action is a sequence of statements enclosed in { },each separated by a ;
+who | awk '{print $1, "is on terminal", $2}'
+
+#$1,$2,$3 etc are the tokens from each line. tokens are separated by spaces and tabs
+
+#With the -F option, it is possible to specify the character(s) used to separate tokens:
+awk -F : '{print $1, "home:", $6}' /etc/passwd 
+
+#Possible to perform diff actions on lines that match certain patterns:
+awk '/Australia/ {print $1}' database
+
+#Perform arithmetic on varaiables within awk, for examples
+awk '{print $1, ($3+$4)/$5)' database
+
+#create a standalone awk scripts
+#!/bin/awk -f
+{print $1, "home:", $6}
+
+BEGIN {
+	FS 	= ":"
+}
+
+{
+printf("%s home dir is %s\n",$1, $6)
+
+------
+awk 'printf("%-12s%-20s\n", $1, $6)' database
+
+who | sort | awk '{printf("%-15s%s %2s %s\n", $1, $3, $4, $5)}'
+
+sort -t : +1 $fname | awk -F : '{printf("%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n", $1, $2, $3, $4, $5, $6)}'
+
+#sorting by second field(+1)
+
+----------------------------------------------------------
+PROGRAM STRUCTURE
+----------------------------------------------------------
+Most shell scripts adhere to the ff code structure:
+1.interpreter
+2.opening comment
+3.important variables
+4.functions
+5.main body of code
+
+#!/bin/bash
+###############################
+# Program to back up directory
+###############################
+
+dir=/home/user1/docs
+backupdir=/backups/user1
+
+backup_one_file()
+{
+	cp $1 $backupdir
+	echo $1 has been backed up
+}
+
+for file in $dir/*
+do
+	[ -s $file ] && backup_one_file $file
+done
+
+
+----------------------------------------
+defining and caliing functions
+----------------------------------------
+#A function is a named code block that may be run from a point in the program, simply by invoking its name
+
+#Functions must be defined before they can be used
+
+function_name()
+{
+	code block
+	...
+}
+
+#call function
+function_name
+
+pause()
+{
+echo -n "Hit <ENTER> to continue: "
+read junk
+} 
+
+-------------------------------------------
+FUNCTION PARAMETERS(passing info in a function)
+-------------------------------------------
+#each item of data passed to a function is called a function parameter
+
+backup_one_file()
+{
+	cp $1 /backup
+	echo $1 has been backed up
+}
+
+This function might be called as follows:
+backup_one_file report.txt
+backup_one_file logo.gif
+
+#Each parameter is numbered: $1 up to $9
+
+ # $* represents all the parameters
+ 
+ # $# represents the number of parameters (e.g 4)
+ 
+ backup_these_files()
+ {
+ for fname  #short for "for fname in $*"
+ do
+ cp $fname /backup
+ echo $fname has been backed up
+ done
+ }
+ 
+ backup_these_files *.txt *.doc 
+ 
+----------------------------------------------------
+FUNCTION RETURN VALUES
+----------------------------------------------------
+#Functions can return info to the calling code in 2 ways:
+
+1. output(e.g. standard output)
+
+2. an exit status
+
+#Function output:
+This is the combined output of all programs run within the code block of the function(e.g. who,ls,echo, etc)
+
+#Usually this output is simply left to go to the screen,  but it may be sent to the ff places:
+#Another program:   sample_func | wc -l
+#A file 			sample func > file1
+#Stored in a variable  output=`sample_func` 
+
+Function exit status
+#All UNIX coomands have an exit status, even functions
+
+#If you do not specify an exit status in your function, the exit status of the last command that your function executes will be used
+
+# An exit status may be specified using the retrun statement:
+return 1    ; return 0
+
+valid_file()
+{
+[ ! -r $1 ] && return 1        #check if file is readbale
+grep LOGFILE $1 > dev/null || return 0      #if file contains pattern 'LOGFILE'
+return 0 
+
+#the return statement terminates the execution of the current function
+
+#the exit statement terminates the execution of the current shell, the shell script terminates 
+and the user is left back at their login shell
+
+#Any functions that you write that are suitbale for reuse may be placed in a separate file and "included" in future scripts that you write using the . command as follows 
+. /home/script_library1
+. /home/script_library2
+
+--------------------------------------------------
+CASE STUDY -YES NO Function
+--------------------------------------------------
+#
+#   yesno()
+#
+#   A function to display a string (passed in as $*), followed by a "(Y/N)?",
+#   and then ask the user for either a Yes or No answer.  Nothing else is
+#   acceptable.
+#   If Yes is answered, yesno() returns with an exit code of 0 (True).
+#   If No is answered, yesno() returns with an exit code of 1 (False).
+#
+yesno()
+{
+    #
+    #   Loop until a valid response is entered
+    #
+    while :  #SAME AS while true
+    do
+        #
+        #   Display the strings/paramters passed in, followed by "(Y/N)?"
+        #   The \c causes suppression of echo's newline
+        #
+        echo -n "$* (Y/N)? "
+
+        #
+        #   Read the answer - only the first word of the answer will
+        #   be stored in "yn".  The rest will be discarded
+        #   (courtesy of "junk")
+        #
+        read yn junk
+
+        case $yn in
+            y|Y|yes|Yes|YES)
+                return 0;;        # return TRUE
+            n|N|no|No|NO)
+                return 1;;        # return FALSE
+            *)
+                echo Please answer Yes or No.;;
+                #
+                # and continue around the loop ....
+                #
+        esac
+    done
+}
+
+--------------------------
+. func_library
+
+#
+#   Test the yesno function
+#
+while true
+do
+    if yesno Do you really wish to quit now
+    then
+        exit
+    fi
+done
+
+-----------------------------------
+function to calcalate avaerage
+-----------------------------------
+average()
+{
+    if [ $# = 0 ]
+    then
+        echo 0
+        return
+    fi
+
+    total=0
+
+    for i #short for i in $*
+    do
+        total=`expr $total + $i`
+    done
+
+    expr $total / $#
+}
+
+echo the average of 4, 8 and 21 is `average 4 8 21`
+echo the average of 4 and 14 is `average 4 14`
+echo the average of nothing is `average`
+
+
+-----------------------------------------------------
+COMMAND-LINE PARAMETERS
+-----------------------------------------------------
+Any UNIX command can receive parameters via the command-line
+
+These command-line params are made available to the shell-script programmer through the $1...$9 variables
+
+-----------------------------------------------------
+USING SHIFT
+-----------------------------------------------------
+It is possible to refernce individual command-line params beyond $9 by using the shift command
+
+When shift is used:
+the original value in $1 is lost
+
+$1 assumes the value of the second parameter
+
+$2 assumes the value of the third parameter and so on
+
+shift
+
+-----------------------------------------------------
+USING SET
+-----------------------------------------------------
+#While itis not possible to set an individual command-line param within the script($1...$9 are read-only), it is possible to set them all collectively, using the set -- construct:
+set -- file1.txt fred
+
+#this sets $1 to file1.txt and $2 to fred
+
+set -- `who | grep fred`
+
+set --who | grep mvirtue/THE
+
+echo $1 is logged in on $2
+shift 2
+echo since $*      #all paramaters after shift 2> 3 ...
+
+-----------------------------------------------------
+USING IFS(internal field separator)
+-----------------------------------------------------
+#WHEN SETTIGNCOMMAND-LINE PARAMS using set --, 
+the params set are separated by spaces(and/or tabs).
+
+#we can use the IFS variable to designate the character(s) that will be used to separate 
+one command-line param from the next. 
+
+IFS=|
+
+set -- Parameter1|Parameter2|Parameter3
+
+------------------------------------------------------
+USAGE MESSGAES
+------------------------------------------------------
+#couple of lines of text that are displayed if user incorrectly specifies command-line params
+
+usage: grep [OPTION]... PATTERN [FILE]...
+
+#tHE [ ] bracktets specify parameters that are optional
+
+#script for public use, you create a usage message for it
+if [ $# -lt 2 ]
+then
+echo Usage: myscript username file
+exit 2
+
+#Note: The usage message should go to standard Error.
+This can be achieved by adding a 1>&2 to the end of the echo statement.
+
+#$0 contains the name of the script
+echo Usage: $0 username filename ... 1>$2
+
+#Notes:
+ # $0 cannot be shift-ed
+ # Usage: /usr/local/bin/myscript username filename ...
+ 
+echo Usage: `basename $0` username filename .. 1>$2
+
+
+----------
+usage()
+{
+    script=$1
+    shift
+
+    echo "Usage: `basename $script` $*" 1>&2
+    exit 2
+}
+
+#
+#   A simple test for the above function
+#
+usage $0 filename username ...
+
+----------------------------------------------
+DEBUGGING
+----------------------------------------------
+sh -x % test.dat   #%-this script
+
+
+------------------------------------------
+DEFAULT VARIABLES
+------------------------------------------
+wE FREQUENTLY WRITE CODE LIKE THE FF:
+
+if [ -z "$var1" ]
+then
+var1="Some Default Value"
+fi
+
+The above code may be abbreviated thus:
+${var1:="Some Default value"}
+
+: ${var1:="Some Default value"}
+
+------------------------------------------
+TEMPORARY FILES
+------------------------------------------
+who > /tmp/who_results #return error
+
+#Many people maybe running the script at the same time
+
+#come up with a filename that is guaranteed to be unigue to this instance
+
+#the secret is to use the $$ variable: $$ contains the process ID of the current shell
+
+#$$ could be used as the name of the file
+
+tmpfile=/tmp/myscript.$$
+who > $tmpfile
+...
+rm $tmpfile
+
+------------------------------------------
+PREVENTING ABNORMAL TERMINATION
+------------------------------------------
+using kill 12345
+
+#when a process is "killed", the process is sent a signal, and the process is not designed to handle that signal,
+the process simply terminates(aborts)
+
+#3 possible reasons for handling signals:
+-Preventing the program from terminating(simply ignoring the signal)
+-Terminate the program, but in a graceful manner
+-causing the program to perform some custom action upon recipt of a particular signal
+
+#There are over 20 possible signals that could be received by a program.
+-1(sighup, short for "hang-up") .Occurs when the users terminal is disconnected or 
+login shell is terminated(modem hangs up, telnet session is interrupted, etc )
+
+-2(SIGINT) occurs when the user presses the interrupt key on their keyboard(usally ctrl -c)
+
+-3(SIGQUIT) occurs when the user presses the "quit" key on their keyboard(usually ctrl -|)
+
+-15(SIGTERM) occurs when UNIX is in the process of shutting down or if the process is manually killed
+
+-SUGUSR1 and SIGUSR2 (10 and 12) are available to developers for custom processing i their programs
+
+-Any signal may be sent to a process using the kill program
+kill -10 12345
+
+-is it not possible for any process to handle signal 9 (SIGKILL)
+
+-IN ORDER TO HANDLE A SIGNAL, THE SCRIPT SHOULD CONATIN(GENERALLY NEAR THE BEGIINIGN OF THE SCRIPT) 
+a trap command in the ff format
+
+trap ls 1 2
+
+trap "graceful_exit 2" 1 2 15
+
+process_sig()
+{
+    echo         # blank line to make the output neater
+    date
+    cal
+}
+
+trap process_sig 10
+
+while :
+do
+    sleep 1
+done
+
+---------------------------------------
+CONTACT PROJECT
+---------------------------------------
+#!/bin/sh
+#   The above line causes this script to be run using the Bourne Shell (sh)
+#######################################################################
+#
+#   Script to maintain a contacts database.
+#
+#######################################################################
+
+#
+#   Define the name of the file
+#
+fname=names.dat
+
+#
+#   Set a name for all temp files used during this script.
+#   The `basename $0` bit causes the temp filename to include the filename
+#   of this script.  The $$ bit causes the name to include a number unique
+#   to this shell, in case more than one copy of this script is running at
+#   any given time.
+#
+#   E.g.  /tmp/menu.12345
+#
+tmpfile=/tmp/`basename $0`.$$
+
+#
+#   pause()
+#
+#   Ask the user to press ENTER and wait for them to do so
+#
+pause()
+{
+    echo "Hit <ENTER> to continue: \c"
+    read junk
+}
+
+#
+#   yesno()
+#
+#   A function to display a string (passed in as $*), followed by a "(Y/N)?",
+#   and then ask the user for either a Yes or No answer.  Nothing else is
+#   acceptable.
+#   If Yes is answered, yesno() returns with an exit code of 0 (True).
+#   If No is answered, yesno() returns with an exit code of 1 (False).
+#
+yesno()
+{
+    #
+    #   Loop until a valid response is entered
+    #
+    while :
+    do
+        #
+        #   Display the string passed in in $1, followed by "(Y/N)?"
+        #   The \c causes suppression of echo's newline
+        #
+        echo "$* (Y/N)? \c"
+
+        #
+        #   Read the answer - only the first word of the answer will
+        #   be stored in "yn".  The rest will be discarded
+        #   (courtesy of "junk")
+        #
+        read yn junk
+
+        case $yn in
+            y|Y|yes|Yes|YES)
+                return 0;;        # return TRUE
+            n|N|no|No|NO)
+                return 1;;        # return FALSE
+            *)
+                echo Please answer Yes or No.;;
+                #
+                # and continue around the loop ....
+                #
+        esac
+    done
+}
+
+#
+#   usage
+#
+#   Generic function to display a usage message and exit the program
+#   The ^G is the bell (beep) character
+#   "basename" is used to transform "/home/mark/contacts"
+#   into "contacts" (for example)
+#
+usage()
+{
+    script=$1
+    shift
+
+    echo "Usage: `basename $script` $*" 1>&2
+    exit 2
+}
+
+#
+#   quit()
+#
+#   Prompt the user to exit the program.
+#   If they choose to, an exit code is provided in $1 (the first argument)
+#
+quit()
+{
+    #
+    #   Store the exit code away, coz calling another function
+    #   overwrites $1.
+    #
+    code=$1
+
+    if yesno "Do you really wish to exit"
+    then
+        exit $code           #  exit using the supplied code.
+    fi
+}
+
+#
+#   heading()
+#
+#   Display the standard heading used when displaying records
+#
+heading()
+{
+    clear
+
+    echo "First Name    Surname         Address             City           State Zip"
+    echo "============================================================================"
+}
+
+#
+#   print_records()
+#
+#   Read records from standard input, and nicely format each on one line.
+#   This function would typically be the target of a pipe.
+#   E.g.
+#       grep pattern file | print_records
+#
+#   Used to ensure that all displays of the records are consistent.
+#   If this format changes, don't forget to change the "heading" function above
+#
+print_records()
+{
+    #
+    #   Read from standard input (usually some other program) and
+    #   loop once for each line in the input.
+    #
+    sort -t : +1 | while read aline
+    do
+        #
+        #   Display the line correctly formatted.
+        #   Use awk for the formatting.
+        #   The "-F :" bit causes awk to perceive fields as being
+        #   separated by colons.
+        #   "%-14.14s" means display a string in a field width of 14,
+        #   left-justified.
+        #
+        echo $aline | awk -F : '{printf("%-14.14s%-16.16s%-20.20s%-15.15s%-6.6s%-5.5s\n", $1, $2, $3, $4, $5, $6)}'
+    done
+}
+
+#
+#   do_create()
+#
+#   Create records for our database
+#
+do_create()
+{
+    #
+    #   Loop until the user is sick of entering records
+    #
+    while :
+    do
+        #
+        #   Inner loop:  loop until the user is satisfied with
+        #   this ONE record
+        #
+        while :
+        do
+            #
+            #   Read in the contact details from the keyboard
+            #
+            clear
+
+            echo "Please enter the following contact details:"
+            echo
+            echo "Given name: \c"
+            read name
+            echo "   Surname: \c"
+            read surname
+            echo "   Address: \c"
+            read address
+            echo "      City: \c"
+            read city
+            echo "     State: \c"
+            read state
+            echo "       Zip: \c"
+            read zip
+
+            #
+            #   Now confirm ...
+            #
+            clear
+
+            echo "You entered the following contact details:"
+            echo
+            echo "Given name: $name"
+            echo "   Surname: $surname"
+            echo "   Address: $address"
+            echo "      City: $city"
+            echo "     State: $state"
+            echo "       Zip: $zip"
+            echo
+
+            if yesno Are these details correct
+            then
+                #
+                #   Enter the details onto the end of file,
+                #   with the fields separated by colons, and
+                #   break out of the inner loop
+                #
+                echo $name:$surname:$address:$city:$state:$zip >> $fname
+                break
+            fi
+        done
+
+        #
+        #   Ask the user if they wish to create another record.
+        #   The "break" bit will only be executed if the user
+        #   answers "No"
+        #
+        yesno Create another record || break
+    done
+}
+
+#
+#   do_view()
+#
+#   Display all records in the file, complete with headings, sorted,
+#   one page at a time
+#
+do_view()
+{
+    clear
+
+    #
+    #   Show what's currently in the file
+    #
+    (
+        heading
+
+        #
+        #   Display the lines correctly formatted, using out print_records
+        #   function
+        #
+        cat $fname | print_records
+    ) | more
+
+    #
+    #  And display how many there are
+    #
+    echo
+    echo There are `cat $fname | wc -l` contacts in the database
+}
+
+#
+#   do_search()
+#
+#   Prompt the user for a pattern to search for in the file, and display all
+#   results nicely formatted, with headings.
+#   It is possible to display ALL records by entering an empty search string.
+#   If any records are found, do_search() returns with an exit code of 0 (True)
+#   If no records are found, do_search() returns with an exit code of 1 (False)
+#   These exit codes are used by do_delete()
+#
+do_search()
+{
+    echo "Please enter pattern to search for (ENTER for all): \c"
+    read string
+
+    echo
+
+    #
+    #   Check to see if there records are in the file matching the pattern.
+    #   If there are, "grep" will return 0 (True), which we can use in
+    #   the "if".
+    #   Send the results to "/dev/null" (trash them), coz we don't actually
+    #   want to see them yet.
+    #
+    if grep "$string" $fname > /dev/null
+    then
+        #
+        #   Use the round brackets to group both the headings and the
+        #   actual records together for the pager program
+        #
+        (
+            heading
+
+            #
+            #   Search the file again, and this time send the
+            #   output to "print_record" for formatting,
+            #   via "sort" for sorting
+            #
+            grep "$string" $fname | print_records
+        ) | more
+        return 0             # we found some records
+    else
+        echo "Sorry, no records in file \"$fname\" contain \"$string\""
+        return 1             # we didn't find any records
+    fi
+}
+
+#
+#   do_delete()
+#
+#   Use the search function to find all records matching a certain pattern,
+#   prompt the user for a confirmation, then delete those records.
+#   It is possible to delete ALL records by entering an empty search string.
+#
+do_delete()
+{
+    #
+    #   Search for records in the standard manner.
+    #   If any records are found, "do_search" will return 0 (true)
+    #   allowing us to progress to the "yesno" bit, which will ask us
+    #   if we actually want to delete the records.  If we answer "No",
+    #   we will be forced to move on to the "return" bit, exiting this
+    #   function.  Otherwise, we stay here to delete the records.
+    #
+    #   A side-effect of calling the "do_search" function is that the
+    #   "$string" variable gets set.  We will use that here in this
+    #   function when we do the delete.
+    #
+    do_search && yesno "\nDelete ALL these records" || return
+
+    #
+    #   Now delete the records.
+    #   Check if they are deleting ALL the records ($string is empty)
+    #
+    if [ "$string" = "" ]
+    then
+        #
+        #   Simply clear the file
+        #
+        > $fname
+
+        echo "All records deleted from file \"$fname\""
+    else
+        #
+        #   Actually delete the records, using "sed".
+        #   "sed" doesn't actually change the file itself, so we have
+        #   to use a temporary intermediate file.
+        #
+        sed "/$string/d" $fname >> $tmpfile
+        mv $tmpfile $fname
+
+        echo "All records containing text \"$string\" deleted from file \"$fname\""
+    fi
+}
+
+#
+#   START MAIN CODE HERE
+#
+
+#
+#   For the duration of the program, ensure that signals 2 and 3
+#   (CNTRL-C and CNTRL-\) cause the program to quit via the "quit" function
+#   (as opposed to just dying).
+#   We shall pass "quit" an argument of 3, so that if the user presses
+#   CNTRL-C, we return an exit code to the parent shell of 3.
+#   Why?  Just in case.
+#    15 (SIGTERM) is the result of a "kill" or the system shutting down
+#     1 (SIGHUP) is the result of a broken connection/terminated login shell
+#    No confirmation required, so just use "exit"
+#
+trap "quit 3" 2 3
+trap "exit 0" 1 15
+
+#
+#   Check that there is exactly one argument.
+#   "$#" contains the number of command line arguments.
+#   "$0" is the name of the shell script (complete path as
+#   typed in on the command line (e.g. "/home/mark/menu")
+#
+[ $# == 1 ] || usage $0 filename         # exits the program
+
+#
+#   If we got here, they must have supplied a filename.  Store it away
+#
+fname=$1
+
+#
+#   Check if the filename represents a valid file.
+#
+if [ ! -f $fname ]
+then
+    echo $1 does not exist
+
+    #
+    #   Ask if it should be created
+    #
+    if yesno "Create it"
+    then
+        #
+        #   Attempt to create it
+        #
+        > $fname
+
+        #
+        #   Check if that succeeeded
+        #
+        if [ ! -w $fname ]
+        then
+            echo $1 could not be created
+            exit 2
+        fi
+        #
+        #   Otherwise we're OK
+        #
+
+    else
+        #
+        #   They didn't want to create it
+        #
+        exit 0
+    fi
+elif [ ! -w $fname ]    # it exists - check if it can be written to
+then
+    echo Could not open $1 for writing
+    exit 2
+fi
+
+#
+#   Loop forever - until they want to exit the program
+#
+while true
+do
+    #
+    #   Display the menu
+    #
+    clear
+    echo "\n\t\tSHELL PROGRAMMING DATABASE"
+    echo "\t\t\tMAIN MENU"
+    echo "\nWhat do you wish to do?\n"
+    echo "\t1.  Create records"
+    echo "\t2.  View records"
+    echo "\t3.  Search for records"
+    echo "\t4.  Delete records that match a pattern"
+    echo
+
+    #
+    #   Prompt for an answer
+    #
+    echo "Answer (or 'q' to quit)? \c"
+    read ans junk
+
+    #
+    #   Empty answers (pressing ENTER) cause the menu to redisplay,
+    #   so .... back around the loop
+    #   We only make it to the "continue" bit if the "test"
+    #   program ("[") returned 0 (True)
+    #
+    [ "$ans" = "" ] && continue
+
+    #
+    #   Decide what to do
+    #
+    case $ans in
+        1)     do_create;;
+        2)     do_view;;
+        3)     do_search;;
+        4)     do_delete;;
+        q*|Q*) quit 0;;
+        *)     echo "please enter a number between 1 and 4";;
+    esac
+
+    #
+    #   Pause to give the user a chance to see what's on the screen
+    #
+    pause
+done
+
