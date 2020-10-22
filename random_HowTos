@@ -27,4 +27,53 @@ python -mpip install numpy
 
 python -m pip install --upgrade pip
 
-#
+----------------------------------------------------------------------
+#VM installation on oracle virtualbox (Using vdi to install VM)
+----------------------------------------------------------------------
+https://www.osboxes.org/virtualbox-images/
+
+Username: osboxes
+Password: osboxes.org
+Root Account Password: osboxes.org
+
+ssh osboxes@192.168.43.80 #ssh username@ip_address
+
+----------------------------------------------------------------------
+#Clone VM
+----------------------------------------------------------------------
+Open virtualbox
+Right click on template and click clone
+Set MAc adrress for cloned VM and choose linked clone
+
+Connect to VMs via ssh using either putty or MobaXterm
+
+#To change hostname 
+sudo nano /etc/hostname
+
+#to change the hosts file
+sudo nano /ect/hosts
+127.0.0.1   localhost ansiblecontroller
+::1         localhost ansiblecontroller
+
+shutdown now -r 
+
+#to install ansible on RHEL(centOS 8)
+sudo yum install ansible
+
+or
+
+pip install ansible
+
+#to confirm installation
+ansible --version
+---------------------------------------
+#How to ssh using VSCODE
+---------------------------------------
+install remote-SSH from extension on vscode
+
+click on remote explorer, select SSH targets and ADD NEW 
+
+ssh osboxes@192.168.43.8   #ssh username@ip-address with password
+
+
+
