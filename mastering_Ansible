@@ -1,0 +1,377 @@
+#Automation with Ansible
+an IT auotmation platform that makes your applications and systems easier to deploy
+
+#It supports configuration mgmt with examples as below:
+-Configuration of servers
+-Apllication deployment
+-Continuous testing of already intalled apps
+-Provisioning(post-implementation tasks)
+-Orchestration
+-Automation of tasks
+
+#Is an open source configuration mgmt and orchestration utility 
+(planning or coordination of the elements of a situation to produce a desired effect)
+
+#It can automate and standardize the config of remote hosts and VMs.
+Its orchestration functionality allows ansible to coordinate the lauch and graceful shutdown of multtiered 
+Ansible can perform rolling updates of multiple systems in a way that results in zero downtime.
+
+#Instead of writing custom, individualized scripts, system administrators create high-level plays in Ansible. 
+A play performs a series of tasks on the host, or group of hosts, specified in the play. 
+A file that contains one or more plays is called a playbook
+
+#Ansible's architecture is agentless. 
+Work is pushed to remote hosts when Ansible executes. 
+Modules are the programs that perform the actual work of the tasks of a play. 
+Ansible is immediately useful because it comes with hundreds of core modules that perform useful system administrative work.
+
+#Ansible is supported by DevOps tools, such as Vagrant and Jenkins.
+
+------------------------------------------------
+LIMITATIONS WITH Ansible
+------------------------------------------------
+#Ansible can add packages to an installation, but it does not perform the initial minimal installation of the system. 
+Every system can start with a minimal installation, either via Kickstart or a base cloud starter image, then use Ansible for further configuration.
+
+#Although Ansible can remediate configuration drift, it does not monitor for it.
+
+#Ansible does not track what changes are made to files on the system, nor does it track what user or process made those changes.
+
+
+***tHINGS WE CAN PERFOM WITH Ansible
+Ansible  ---> SSH  ---> Client
+RPM Repo     Single touch installation      Copy RPM
+
+-----------------------------------------------
+ANSIBLE COMMAND SYNTAX
+-----------------------------------------------
+How to run remote command using Ansible?
+
+Ansible -m command -a “ls"  dev   #aNSIBLE=keyword ; -m=module ; command=module name ; ls=os command ; dev=target server group
+
+Features of Ansible - easy to learn -wriiten in python, agentless,yaml-based playbooks,ansible galaxy
+
+-----------------------------------
+WHY ANSIBLE 
+-----------------------------------
+Why Ansible
+
+It is a free open source application 
+Agent-less – No need for agent installation and management 
+Phython/yaml based
+Highly flexible and configuration management of systems.
+Large number of ready to use modules for system management 
+Custom modules can be added if needed
+Configuration roll-back in case of error 
+Simple and human readable
+Self documenting 
+Implement Sudo passwd, so that normal needs password to elevate his privileage
+
+-------------------------------
+ANSIBLE ARCHITECTURE
+-------------------------------
+Ansible concepts and architecture
+
+There are two types of machines in the Ansible architecture: the control node(THE SERVER on which you will install ansible) and managed hosts.
+
+Ansible software is installed on the control node and all of its components are maintained on it. 
+The managed hosts are listed in a host inventory, a text file on the control node that includes a list of managed host names or IP addresses.
+
+System administrators log into the control node and launch Ansible, providing it with a playbook and a target host to manage. 
+Instead of a single system to control, a group of hosts or a wildcard can be specified.
+
+#Ansible uses SSH as a network transport to communicate with the managed hosts. 
+The modules referenced in the playbook are copied to the managed hosts. 
+Then they are executed, in order, with the arguments specified in the playbook. 
+Ansible users can write their own custom modules, if needed, but the core modules th at come with Ansible can perform most system administration tasks.
+
+-----------------------------------------
+ANSIBLE INVENTORY
+-----------------------------------------
+
+#Ansible inventories
+
+A host inventory defines which hosts Ansible manages. 
+Hosts may belong to groups which are typically used to identify the hosts' role in the datacenter. 
+A host can be a member of more than one group.
+
+#An Ansible static host inventory is defined in an INI-like text file, in which each section defines one group of hosts (a host group).
+[webservers]
+localhost ansible_connection=local
+web1.example.com
+web2.example.com:1234 ansible_connection=ssh ansible_user=ftaylor
+[db-servers]
+web1.example.com
+db1.example.com
+
+The default location for the host inventory file is /etc/ansible/hosts.
+
+Simplifying host inventories with ranges
+
+192.168.[4:7].[0:255] - all IP addresses in the 192.168.4.0/22 network (192.168.4.0 through 192.168.7.255).
+server[01:20].example.com - all hosts named server01.example.com through server20.example.com.
+
+----------------------------------------------
+DEPLOYING Ansible
+----------------------------------------------
+#Unlike other configuration management utilities, such as Puppet and Chef, Ansible uses an agentless architecture. 
+Ansible itself only needs to be installed on the host or hosts from which it will be run. 
+Hosts which will be managed by Ansible do not need to have Ansible installed.
+
+#Ansible installation on the control node requires only that Python 2, version 2.6 or later be installed.
+
+#Managed hosts do not need to have any special Ansible agent installed. 
+They do need to have Python 2, version 2.4 or later installed. If the version of Python installed on the managed host is earlier than Python 2.5, 
+then it must also have the python-simplejson package installed.
+
+----------------------------------------------
+CUSTOMIZE ANSIBLE BEHAVIOUR
+----------------------------------------------
+Configuring Ansible
+
+The behavior of an Ansible installation can be customized by modifying settings housed in
+    ansible's configuration file (/etc/ansible/ansible.cfg).
+
+privilege_escalation section in the ansible.cfg configuration file by adding the following entry.
+   [privilege_escalation]
+
+Enable privilege escalation by adding the become setting and configuring it as True.
+   become=True
+
+Set the privilege escalation to use sudo by adding the become_method setting and configuring it as sudo.
+
+     become_method=sudo
+
+Set the privilege escalation user by adding the become_user setting and configuring it as root.
+      become_user=root
+
+Enable password prompting during privilege escalation by adding the become_ask_pass setting and configuring it as True.
+      become_ask_pass=True
+
+-------------------------------------------
+AD HOC COMMANDS
+-------------------------------------------
+Ad hoc commands are performed by running ansible on the control node, specifying as part of the command which operation should be performed on the managed hosts. 
+Each ad hoc command is capable of performing a single operation.
+
+To execute an ad hoc command, administrators need to execute the ansible command using the following syntax.
+
+ansible host-pattern -m module [-a 'module arguments'] [-i inventory]
+
+-------------------------------------------
+INSTALLING ANSIBLE on UBUNTU 20.04
+-------------------------------------------
+sudo apt update
+
+sudo apt install ansible -y
+
+cd etc/ansible/
+
+chmod 777 hosts    #means making the file readable, writable and executable by everyone.
+
+---------------
+CREATE NORMAL USER
+----------------
+
+
+---------------------------------------------------
+Ansible is completely agentless  which means Ansible works by connecting your nodes through ssh
+---------------------------------------------------
+ANSIBLE INVENTORY
+----------------------------------------------------
+The Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate.
+
+example
+target1 ansible_host=192.168.43.13 ansible_ssh_pass=osboxes.org
+
+#to install sshpass on centos8
+sudo yum install -y http://mirror.centos.org/centos/7/extras/x86_64/Packages/sshpass-1.06-2.el7.x86_64.rpm
+
+-----------------------------------------------
+YAML
+-----------------------------------------------
+It is used to represent data
+
+key Value Pair
+Fruit : Apple
+Liquid : Water
+
+--------------------------
+ANSIBLE PLAYBOOKS
+--------------------------
+#Playbooks are one of the core features of Ansible and tell Ansible what to execute. 
+They are like a to-do list for Ansible that contains a list of tasks. Playbooks contain the steps which the user wants to execute on a particular machine. 
+Playbooks are run sequentially.
+
+#pLAYBOOK IS A single yaml FILE
+
+#Play - defines a set of activities(tasks) to be run on hosts
+
+#task - an action to be performed on the host
+-execute a command
+-run a script
+-install a package
+-shutdown/restart
+
+--------------------------
+ANSIBLE PLAYBOOKS COMMANDS
+--------------------------
+ansible-playbook <playbook name>
+
+ansible-playbook playbook-webserver.yaml
+
+ansible-playbook playbook-pingtest.yaml -i inventory.txt
+
+cat playbook-pingtest.yaml
+ansible all -m ping -i inventory.txt      #to ping all server in inventory
+
+---------------
+PING Module
+---------------
+
+-                            #item 1
+  name: Test connectivity    #name of play
+  hosts: all 
+  tasks:                     #an array of actions  
+	- name: Ping test
+	  ping:
+	  
+cat inventory.txt
+target1 ansible_host=168.43.13 ansible_ssh_pass=osboxes.org
+target2 ansible_host=168.43.128 ansible_ssh_pass=osboxes.org
+
+#yamllint.com to check your yaml file
+
+-------------------------
+COPY Module 
+-------------------------
+
+-
+  name: Copy file to target servers
+  hosts: all
+  tasks:
+    - name: Copy file
+      copy:
+        src: /tmp/test-file.txt
+        dest: /tmp/test-file.txt
+		
+		
+
+--------------------------
+ANSIBLE  COMMANDS
+--------------------------
+
+controller- 192.168.43.8
+
+target1-192.168.43.13
+
+target2-192.168.43.128
+
+
+-----------------------------------
+ANSIBLE Modules
+-----------------------------------
+#are discrete units of code that can be used from the command line or in a playbook task. 
+Ansible executes each module, usually on the remote managed node, and collects return values.
+
+#Can be grouped into system ; Commands ; Files ; Database ; Cloud ; Windows ; More..
+System - USer,Group,Hostname,Iptables,Lvg,Lvol,Make,Mount, Ping, Timezone,Systemd,Service
+
+Command - command, expect,raw, script, shell
+
+Files - acl, archive, copy . file, find, lineinfile, replace, stat, template, unarchive
+
+Database - Mongodb, mssql, mysql, postgresql, vertica, proxysql
+
+cloud - amazon, atomic, azure, centrylink, cloudscale, cloudstack,digital ocean, docker, google, linode, openstack, rackspce, smartos, softlayer, vmware
+
+windows- win_copy, win_command
+
+----------------------------------------
+ANSIBLE VARIBALES
+----------------------------------------
+#Uses variables to manage differences b/n systems. With Ansible , you can execute tasks and playbooks on multiple on 
+diffrent systems with a single command. To represent the variations among those different systems,
+you can create variables with standard YAML syntax , including lists and dictionaries.
+
+---------------------------------------
+ANSIBLE CONDITIONALS
+----------------------------------------
+#sAMPLE iNVENTORY file
+web1 ansible_host=web1.company.com ansible_connection=ssh ansible_ssh=P@ssW
+db ansible_host=db.company.com ansible_connection=winrm ansible_ssh=P@s
+web2 ansible_host=web2.company.com ansible_connection=ssh ansible_ssh=P@ssW
+
+[all_servers]  #Group
+web1
+db
+web2
+
+#Simple Ansible_Playbook.yml
+- 
+  name: Start services
+  hosts: all_servers
+  tasks:
+    -    service: name=mysql state=started
+	     when: ansible_host == "db.company.com"
+	
+	-    service: name= httpd state=started
+		 when: ansible_connection == "web1.company.com" or 
+		       ansible_connection == "web2.company.com"
+	
+OR
+- 
+  name: Start db services
+  hosts: db_servers
+  tasks:
+	- 	  service: name=mysql state=started
+
+- 
+  name: Start web services
+  hosts: web_servers
+  tasks:
+	- 	  service: name=httpd state=started
+	
+-----------------------------------
+LOOPS
+------------------------------------
+
+
+#SAMPLE ansible playbook.yml
+-
+	name: Install Packages
+	hosts: localhost
+	tasks:
+	  -   yum: name='{{ item }}' 	state=present
+		  with_items:
+			-	httpd
+			-	binutils
+			-	glibc
+			-	ksh
+			-	libXext
+			-	gcc
+			-	make
+			-	sysstat
+			-	uinxODBC
+
+		
+-----------------------------------
+ANSIBLE ROLES
+------------------------------------
+Roles provide a framework for fully independent, or interdependent collections of variables, tasks, files, templates, and modules. 
+In Ansible, the role is the primary mechanism for breaking a playbook into multiple files. 
+This simplifies writing complex playbooks, and it makes them easier to reuse.
+
+Create ansible role from scratch | Ansible roles example
+Step 1: Create Ansible Role - vhost.
+Step 2: Create ansible tasks.
+Step 3: Create ansible handlers.
+Step 4: Create ansible template.
+Step 5: Remove unwanted directories (Optional)
+Step 6: Create ansible role playbook.
+Step 7: Deploy ansible playbook roles.
+Step 8: Verification.
+
+#An Ansible role has a defined directory structure with seven main standard directories. You must include at least one of these directories in each role. 
+You can omit any directories the role does not use. For example:
+
