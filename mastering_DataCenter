@@ -1,0 +1,197 @@
+#Data Center
+
+Terminologies
+#Greenfield = new built-to-suit needs
+
+#Brownfield = existing, repurposed
+
+#Redundancy = duplication of equipment or systems
+
+#Reliability = likelihood of meeting functions over time 
+
+#Availability = amount of time system is functioning
+
+#Uptime = time that equipment & systems are available to perform functions
+
+#Downtime = time that equipment & systems are not
+
+#PUE = Power Usage Effectiveness
+
+#TGG = The Green Grid
+
+#UTI = Uptime Institute
+
+#PDU = Power Distribution Unit
+
+#CRAC = Computer Room Air-Conditioning unit
+
+#CRAH = Computer Room Air Handling unit
+
+#IRC = In-Row Cooling Unit 
+
+#CHWS /R = Chilled Water Supply / Return
+
+#UPS = Uninterruptable Power Supply
+
+#RAID =  Redundant Array of Independent Disks
+
+#White space = The areas of the data center that houses the IT equipment
+
+#Raised access floor  =Provides an elevated structural floor above a concrete slab to create a hidden void for the passage of mechanical and electricalservices
+
+#Ceiling plenum = Space above a ceiling that allows power, air or other items to traverse 
+
+#Floor plenum = Space below a raised floor that allows power air or other items to traverse
+
+#FP = Fire protection
+
+#PDU = Power Distribution Unit 
+
+#RPP = Remote Power Panel
+
+#UPS = Uninterruptable Power Supply 
+
+#CRAC = Computer Room Air Conditioner
+
+#NOC = Network Operations CENTER
+
+#VESDA = VERY early smoke detection apparatus
+
+#ICS = Industrial controls security
+
+#PLC = Programmable logic controller
+
+#FP = fire protection
+
+#FA = fire alarm
+
+#DC is a room/facility that houses computer systems 
+
+#Networks, storage, processing
+
+-----------------------------------------
+#Data Center Planning
+-----------------------------------------
+There are many phases and implementing a data center
+
+1. Obtain requirements
+2. Plan 
+3. Design
+4. Procure
+5. Construct
+6. Commission
+7. Monitor & Manage
+8. Operate & maintain
+
+Against strategy phase = planning, analysing, designing, implementing, Maintaining
+
+-----------------------------------------
+CLASS & SIZE OVERVIEW
+-----------------------------------------
+DC SIZES
+#Server closet
+#Server room
+#Small, local data center
+#Mid-size, dedicated data denter
+#Large, enterprise, world class DC
+
+DC Types
+#Containerized
+#Modular
+#Co-location
+#Enterprise
++Company, organinzation
+
+-----------------------------------------
+POWER USAGE EFFECTIVENESS
+-----------------------------------------
+PUE = total facility energy / IT Energy
+
+Total Facility Energy = IT Energy + Cooling Energy + Electrical losses
+
+Cooling Energy = Chiller + Chiller Water Pump + Cooling Tower + Condenser Water Pump + CRAC Units + AHUs + Humidifiers
+
+#Target PUE for your primary site
+1-1.2 = 12% ; 1.2-1.5 = 47% ; 1.5-2.0 = 38% ; 2.0-2.5 = 2%
+
+-----------------------------------------
+MODERN DC: 3 Key Definitions
+-----------------------------------------
+#Reliability
+Ability of a system to perform its required functions under stated conditions for a specified period of time
+
+Five 9s (99.999%)
+
+#Reliabilty is need from bottoem to the top to meet the goals of the end users
+Facility --> communication physical infra --> Network --> Data processing & storage platforms --> Apps
+
+#Availability is the proportion of time a system is in functioning conditions
+
+A loss of availability doesnt end when the power comes back on. Servers also need time to recover
+
+#Redundancy is duplication of critical components or functions of a system with the intention of increasing reliabitlity
+
+-----------------------------------------
+REDUNDANCY LEVELS
+-----------------------------------------
+Tier I - Basic = +Single Path , +No redundancy
+Tier II - Redundant capacity = Single path , redundant components
+Tier III - Concurrently maintainable = multiple paths; only one active ;redundancy, concurrently maintanable
+Tier IV - multiple active paths, redundancy, concurrently maintanable 
+
+TIA 942 DATA CENTER STANDARDS
+
+
+-----------------------------------------
+IT EQUIPMENT
+-----------------------------------------
+#IT equipment is broken down into network, storage, compute
+
+#Is supported by mechanical, electrical and other IT equipment
+
+#A network consists of multiple devices that communicate with one another.
+
+#Storage = enable data and application storage within a data center facility.
+Tape, disk, solid state
+
+SERVERS 
+#Traditional = independent, lower cost
+#Blades = higher density, more efficient, modular components
+
+-----------------------------------------
+POWER EQUIPMENT
+-----------------------------------------
+EXTERIOR
+#Utility transformer = Transforms voltage down for data center use
+
+#Automatic transfer switch = switches between the main electrical supply utility and a generator power source
+
+#Generators = provides power during an extended utiity outage
+
+INTERIOR 
+--Electrical room: UPS
+#UPS = ensures continuous power to the IT equipment
+#Utility power/grid power is the normal electrical source
+#Batteries(or other UPS sytem) used for short-term power interruptions
+#Generators used for longer-term interruptions of >90 secs
+
+
+--ELectrical rooms: SWITCHGEAR 
+#switchgear, substations, transformers, moto control centers  are for safety and to optimize the power path
+
+#Larger PDUs can be located in electrical rooms before distribution to other PDUs or racks
+ 
+#BATTERY ROOMS
+Provides power during an extended utility outage
+
+#power in white space
+#Rack mounted PDUs #Floor mounted PDU # Overhead busway PDU
+
+--------------------------
+SECURITY
+---------------------------
+#pHYSICAL AND vIRTUAL
+
+#bADGES AND bIOMETRICS
+--biometrics --> physiological ; behovioral
+
