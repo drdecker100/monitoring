@@ -174,11 +174,49 @@ print("{0} - {1}".format(A,B))
 print("{1} - {0}".format(A,B))
 
 --------------------------------------------
-DIR method
+DIR method & other useful functions
 -------------------------------------------
 print(dir())
 print(dir(string))
 print(dir(list))
+
+round() # rounds floating point number to the nearest integer or specified number of places
+round(5.6231)
+> 6
+
+round(4.55842, 3)
+> 4.558
+
+divmod(x, y) #outputs quotient and remainder in a tuple
+divmod(27,5)
+> (5,2)
+
+isinstance() return True, if the first arg is an instance of that class
+isinstance(1,int)
+> True
+
+isinstance(1.0,int)
+> False
+
+ininstance(1.0, (int, float))
+> True 
+
+pow(x,y)                # returns an output x to the power y 
+pow(2,3)
+> 8
+
+pow(2,3,3)              # returns the remainder of (2 to the power 3) divided by 3 )
+> 2 
+
+input() a = input("Enter name: ") # no matter the input, it returns string type
+
+help(input) #returns details of function
+
+min()                   # returns the lowest element in a list
+
+max()                   # returns the highest element in a list
+
+sorted(L)               # returns a sorted array , from lowest to highest 
 
 ---------------------------------------------
 STRING METHODS
@@ -341,7 +379,7 @@ True
 True 
 
 ---------------------------------------
-IF STATEMENTS
+IF STATEMENTS (CONTROL FLOW)
 ---------------------------------------
 -aloows us to execute code if the condition is True.
 
@@ -392,19 +430,20 @@ comparison operators   > < = == compare expressions and elements
 logical operators combine and modify conditions
 
 not True
-False
+> False
 
 not 2 < 3
-False
+> False
 
 not 4 == 3
-True
+> True
 
 if not y < x:
 	print("It worked")
---------	
+
+----------------------------------------------------------	
 NOT gate had one input (output is inverse of input)
----------
+----------------------------------------------------------
 "AND" Truth tabel has two inputs, returns True if both inputs are True
 
 1 and 1 
@@ -430,7 +469,7 @@ if C > 10 and D > 1:
 if not (C > 10 and D > 1):
 	print("It worked")	
 
-----------
+---------------------------------------------------------------------------------------------------------
 OR Truth Table has two inputs, returns True when one of the inputs is True or when both inputs are True
 
 True or True
@@ -470,9 +509,9 @@ paakow[4]
 paakow[-2]
 True
 
----------
+------------------------------------------------
 SLICING
----------
+------------------------------------------------
 paakow[0:3]
 [A,B,C]
 
@@ -521,6 +560,7 @@ while True:
 
 ------------------------------------------- 
 List Methods
+-------------------------------------------
 
 known_users.pop(index)      #worked with the index of the element
 known_users.pop(3)
@@ -733,31 +773,35 @@ print(students["Emma"]["id"] , students["Emma"]["grade"])
 
 
 ------------------------------------------
-WHILE LOOPS!
+WHILE LOOPS! (CONTROL FLOW)
 ------------------------------------------
 repeats code over and over again while the condition is true.
 
-while True:
+while True:               #infinite iteration
 	print("Hello")
+
 	
-while 2>1:
+while 2>1:                #infinite iteration becuase conditions remains true always
 	print("Hello")
+
+
 	
 num = 1
 
 while num <= 5:
     print(num)
-    num = num + 1
+    num = num + 1         # num += 1
 
-print("")    
+print(" loop done")    
 print(num)
 
+>
 1
 2
 3
 4
 5
- 
+ loop done 
 6
 
 L =[]
@@ -794,18 +838,24 @@ while True:
 --------------------------------------------------------------------
 FOR LOOPS
 --------------------------------------------------------------------
-A for loop is used for iterating over a sequence (that is either a list, a tuple, a dictionary, a set, or a string)
+#A for loop is used for iterating over a sequence (that is either a list, a tuple, a dictionary, a set, or a string)
 
 type(range(6))
 <class 'range'>
 
-In Python, range outputs a range iterable
+#In Python, range outputs a range iterable
+
+#"for loops" are called iterators. Just like while loop, "For Loop" is also used to repeat the program. 
+# But unlike while loop which depends on condition true or false.. For Loop iterates with number declared in the range.
 
 range(6)
 range(0, 6)
 
 list(range(0, 6))
-[0,1,2,3,4,5]
+> [0,1,2,3,4,5]
+
+list(range(0,10,2)):
+> [0,2,4,6,8]
 
 for number in range(1,4)
 	print(number)
@@ -854,6 +904,51 @@ for key in students:
 			
 ##same results
 
+for key in students:
+    print(key, students[key])
+
+> male ['1', '2', '3']
+  female ['Kate', 'Ann', 'Naa']
+
+# finding the smallest number in a list
+L = [2,1,3,-5,2,-6]
+
+m = L[0]
+
+for i in L:              #iterate through list L
+    
+    if i<m:
+        m = i            #replace with new value
+        
+print(m)
+
+# finding the largest number in a list
+L = [2,1,3,-5,2,-6]
+
+m = L[0]
+
+for i in L:              #iterate through list L
+    
+    if i>m:
+        m = i            #replace with new value
+        
+print(m)
+
+#Sorting numbers of a list
+L = [1,2,4,-5,7,9,3,2]
+for j in range(len(L)):
+    m = L[j]
+    idx = j
+    c = j
+    for i in range(j,len(L)):
+        if L[i]<m:
+            m = L[i]
+            idx = c
+        c+=1    
+    tmp = L[j]
+    L[j] = m
+    L[idx] = tmp
+print(L)
 
 -------------------------------------------------------------------------
 List comprehension
@@ -882,9 +977,9 @@ BREAK, CONTINUE, PASS  (loop control statements)
                 break
 
 
-the break keyword breaks the loop and takes you back to the else statement
+the BREAK keyword breaks the loop and takes you back to the else statement
 
-Whereas, the continue keyword takes you to the loop above, in this case, the if statement
+Whereas, the cCONTINUE keyword takes you to the loop above, in this case, the if statement
 
 # Using loops in Python automates and repeats the tasks in an efficient manner
 
@@ -892,18 +987,14 @@ Whereas, the continue keyword takes you to the loop above, in this case, the if 
 After that, the control will pass to the statements that are present after the break statement,
 if available.
 
-# Python program to  
-# demonstrate break statement  
+# Python program to demonstrate break statement  
     
 s = 'geeksforgeeks'
-# Using for loop  
+  
 for letter in s:  
-    
-    print(letter)  
-    # break the loop as soon it sees 'e'  
-    # or 's'  
+      
     if letter == 'e' or letter == 's':  
-        break
+        break                             # break the loop as soon it sees 'e' or 's'
     
 print("Out of for loop")  
 print() 
@@ -913,24 +1004,31 @@ instead of terminating the loop, it forces to execute the next iteration of the 
 .When the continue statement is executed in the loop, the code inside the loop following the continue statement will be skipped 
 and the next iteration of the loop will begin.
 
-# Python program to  
-# demonstrate continue  
-# statement  
+# Python program to demonstrate continue statement  
     
 # loop from 1 to 10  
 for i in range(1, 11):  
-    
-    # If i is equals to 6,    
-    # continue to next iteration    
-    # without printing   
+      
     if i == 6:  
+        continue                   # if i is equals to 6,continue to next iteration without printing 
+    else:           
+        print(i, end = " ")        # otherwise print the value of i 
+
+n = 10
+i = 1
+while True:
+    if i%9 != 0:
+        print("Inside loop")
+        i += 1
         continue
-    else:  
-        # otherwise print the value  
-        # of i  
-        print(i, end = " ") 
+
+    print("something")
+    print("somethingelse")
+    break
+
+print("done")
 		
-#pass statement simply does nothing. The pass statement in Python is used when a statement is required syntactically but you do not want any command or code to execute. 
+#PASS STATEMENT simple DOES NOTHING. The pass statement in Python is used when a statement is required syntactically but you do not want any command or code to execute. 
 #It is like null operation, as nothing will happen is it is executed. 
 #Pass statement can also be used for writing empty loops.
 
@@ -942,15 +1040,15 @@ s = "geeks"
   
 # Empty loop 
 for i in s: 
-    # No error will be raised 
-    pass
+    pass                          # No error will be raised
+     
   
 # Empty function 
 def fun(): 
-    pass
+    pass                          # No error will be raised
   
-# No error will be raised 
-fun() 
+
+fun()   
   
 # Pass statement 
 for i in s: 
