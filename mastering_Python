@@ -1,13 +1,12 @@
-1. Variables    2. Numbers    3. Mail     4. Logic        
-5. Data Structures     6. Loops       7. Functions
-8.Object oriented programs
+1. Variables    2. Numbers    3. Strings     4. Logic        
+5. Data Structures(Collections)     6. Loops       7. Functions
+8.Object oriented programs   9. Numpy     10. Pandas         11.Matplotlib
 
 
 --------------------------------------------
 TO CHECK WHETHER PYTHON HAS BEEN INSTALLED
 --------------------------------------------
 In CMD, type python --version
-
 
 IDE= Integrated Developer Editor
 
@@ -116,23 +115,20 @@ name = " Donald"
 message = "John" says hi" #broken strings
 
 TO FIX
-message = ''' "John" says hi" '''
+msg = ''' "John" says hi" '''
 
-message = """ "John" says hi" """
+msg = """ "John" says hi" """
 
+msg = " \"John\" says hi "
+
+msg = ' "John" says hi '
 
 print('Hello World')
 
-Input function (Python built-in functions)
-input([prompt]) --> the square brackets means the prompt is optional
+print("c:\drive\name")
 
-input()
-empty input
-
-#output empty input
-
-# the input always turns it into strings
-type(age) --> class 'str'
+print(r"c:\drive\name")            #treats it as raw string
+> c:\drive\name
 
 #ask user for name
 name = input('enter your name: ')
@@ -198,7 +194,7 @@ isinstance(1,int)
 isinstance(1.0,int)
 > False
 
-ininstance(1.0, (int, float))
+isinstance(1.0, (int, float))
 > True 
 
 pow(x,y)                # returns an output x to the power y 
@@ -234,53 +230,60 @@ text.count("day")
 x = "Happy Birthday"
 
 x.lower()
+> happy birthday
 
 x.upper()
-
-x, 
-
-#returns intial value because string are immutable(cannot be changeg) , but can be overwritten
-
-x = x.upper()
+> HAPPY BIRTHDAY
+ 
+#returns intial value because string are immutable(cannot be changed) , but can be overwritten
 
 x.title()
+> Happy Birthday
 
-x.capitalize()
-#returns the capital of the first letter
+x.capitalize()           #returns the capital of the first letter
+> Happy birthday
 
-x.isalpha(), x.isupper() , x.istitle(), .isdigit(), .isalnum
+x.isalpha(), x.isupper() , x.istitle(), x.isdigit(), x.isalnum
 
 #because of space, .isalpha() will return false
 
 x = "happy birthday"
 x.index("birthday")            #returns the number of the first occurence of the letter or word  #case-sensitive
-x.index("jashdfasdsfs")
-#returns an error
+> 6
+
+x.index("jashdfasdsfs")        #returns an error
 
 x.find("birthday")
-6
+> 6
 
 x.find("adsfsfdsfgdgfsfsdfs")   #returns -1 if it cant be found, so preferred to index. it doesnt return error when the str is not found
 -1
 
-y = "000000haopybirthday000000"
+y = "000000happy0birthday000000"
 y.strip("0")
 'happybirthday'    #strip off both sides
 
 y.lstrip("0")
-'happybirthday0000000"
+'happy0birthday0000000"
 
 y.rstrip("0")
-'00000000happybirthday'
+'00000000happy0birthday'
 
 y.strip()   #strips the string off spaces
-len(y)
 
-name = input("WHatis your name?: ").strip()
+y.replace("0","")     # replacing the first substring with the second substring
+> happybirthday
+name = input("Whatis your name?: ").strip()
 What is your name?: Zee  #with spaces
 
-print(name)
-len(name)   
+print(name)      #returns output without space
+len(name)
+
+"at" in "bathlehom"
+> True 
+
+"abc" < " daa"
+> True
 
 ---------------------------------------
 SLICES
@@ -492,10 +495,14 @@ if C > 1 or D > 1:
  
  if (C > 5 and D > 5) or (C > 1 and D > 1):
 	print("it worked")
-	
--------------------------------------------------------------------
-LISTS DATA STRUCTURE (list are mutable, can change their content
--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------
+DATA STRUCTURES(collections) - List, Tuple, Set, Dictionary
+
+---------------------------------------------------------------------------------------------
+LISTS DATA STRUCTURE (list are ordered(positioning/indexing), mutable(changeable), duplicates
+----------------------------------------------------------------------------------------------
 our_list = [27,46,-5,17,99]
 print(our-list)
 
@@ -508,6 +515,8 @@ paakow[4]
 
 paakow[-2]
 True
+
+S = [12,"banana"", 5.3,12]              #duplicates
 
 ------------------------------------------------
 SLICING
@@ -606,7 +615,7 @@ A
 
 #the append method returns an empty value
 A = [5,12,4,5]
-A = A.append(10)
+A = A.append(10)            #should not be re-assign instead A.append(10)
 A 
      #empty value
 type(A)
@@ -631,7 +640,7 @@ A = [5,2,3]
 
 
 ---------------------------------------------------------------------------
-TUPLES
+TUPLES (ordered ; unchangeable(immutable); duplicates)
 ---------------------------------------------------------------------------
 #oNCE A tuple is created, you cannot change its contents 
 #it is immutable
@@ -647,6 +656,8 @@ type(our_tuple)
 
 our_tuple[0:3]
 (1,2,3)
+
+S = (12,"banana"", 5.3,12)
 
 #tuple object does not support item assignment
 our_tuple[2] = 100   #returns error
@@ -685,8 +696,28 @@ H
 I 
 9
 
+del A   #can delete all items, but can not delete one element(immutable)
+
+T2 = T  #to copy elements
+
+
 ---------------------------------------------------------
-DICTIONARIES (DATA TYPE)
+SETS (Unordered ; addable/removable ; no duplicates)
+---------------------------------------------------------
+S = {12,"banana"", 5.3}
+
+X in S  # returns True or False
+
+S.add("new item")
+S.update({"more","items"})      #more than one element
+S.remove("banana")
+del S 
+
+S2 = S.copy()
+
+
+---------------------------------------------------------
+DICTIONARIES (Unordered ; changeable ; no duplicates)
 ---------------------------------------------------------
 students = {}
 students
@@ -702,6 +733,7 @@ Traceback (most recent call last):
   File "<pyshell#6>", line 1, in <module>
     error_std = {Alice:20, Bob:30}
 NameError: name 'Alice' is not defined
+
 students["Dan"]
 20
 
@@ -728,11 +760,12 @@ Traceback (most recent call last):
 AttributeError: 'dict' object has no attribute 'key'
 >>> 
 #wont work, unless we turn it into a list
+
 students_keys = list(students.keys())
 students_keys
 ['Dan', 'Bob']
 students_keys[1]
-'Bob'
+>'Bob'
  
 students.values()
 dict_values([20, 30])
@@ -746,6 +779,59 @@ b[1]
 students
 {'Dan': 20, 'Bob': 30}
 
+#to concatenate two dictionaries 
+D = {"name": ["Ama","Afia"], "age" : ["20","30"]}
+D2 = {"blood" :["O","AB"]}
+
+D.update(D2)
+print(D)
+{'name': ['Ama', 'Afia'], 'age': ['20', '30'], 'blood': ['O', 'AB']}
+
+
+#Problems
+
+def getDataFromUser():
+    D = {}
+    while True:
+            
+        studentId = input("Enter student ID: ")
+        marksList = input("Enter the marks by comma separated values: ")
+        moreStudent = input('Enter "no" to quit insertions or enter to continue: ')
+
+        if studentId in D:
+            print(studentId, "is already inserted")
+
+        else:
+            D[studentId] = marksList.split(",")
+        
+        if moreStudent.lower() == "no":
+            return D 
+        
+        quitters = input("Enter q,x,exit to quit program: ")
+        if quitters.lower() in ["q","x","exit"]:
+            print("See you again")
+            return
+
+studentData = getDataFromUser()
+
+print(studentData)
+
+#from statistics import mean
+
+def getAvgMarks(D):
+    avgMarks = {}
+    for key, value in D.items():
+        s= 0
+        for num in value:
+            s+=int(num)
+        avgMarks[key] = s/len(value)
+    
+    return avgMarks 
+
+avgM = getAvgMarks(studentData)
+
+for x in avgM:
+    print("Student with ID: {} has an avarage of {}".format(x, avgM[x]))
 
 -----------------------------------------
 pass keyword just python to MOVE ON
@@ -1099,9 +1185,9 @@ print(output)
 -------------------------------------------------------
 Functions
 -------------------------------------------------------
-#Functions is ablock of organized and reusuable code that performs an action
+#Functions is a block of organized and reusuable code that performs an action
 
-#defining a function
+#defining a function    def printMessage(inputArguments):
 
 def functionName(params):
 
@@ -1119,7 +1205,9 @@ answer = add(100,20)
 answer = 120
 
 #returning a value != printing a value
-retruing stores in variable name in memory, print just displays the output on screen
+returning stores in variable name in memory, print just displays the output on screen
+
+return makes a local variable accessible outside the function
 
 a= print("hello")
 type(a)
@@ -1132,6 +1220,39 @@ rev('pen')
 
 rev([1,2,3,4])
 
+#USING docstring with function 
+def printSuccess():
+    """This function is returns Hello world when called"""
+    rerturn "Hello World"
+
+printSuccess()        #to call function
+
+help(printSuccess)    # returns the docstring in the function
+
+
+A python function always returns NOne if there is no return/print in the function
+
+#using return without an argument works like a break function
+def h():
+    print("A")
+    a = 3
+    b = 5
+    print("something")
+    return              #acts as break
+    print("B")
+
+def f():
+    a = 5
+    b = 7
+    d = "something"
+    return a,b,d        #can return multipel values
+
+
+#function(default values)
+def f(sum=0):
+    print(sum)
+
+f() #returns the default,0 
 
 ----------------------------------------------------
 Variable Scope( Global scope and local scope)
@@ -1353,7 +1474,13 @@ add(1,2,3,4,5,6,7,8,9)
 45
 
 #same as 
-numbers = (1,2,3,4,5,6,7,8,9)
+numbers = add(1,2,3,4,5,6,7,8,9)
+
+def add(*args):
+    sum = 0
+    for i in range(len(args)):
+        sum+=args[i]
+    return sum
 
 --------------------------------------------------------------
 def about(name, age, likes):
@@ -1378,6 +1505,12 @@ foo(huda = "Female",ziyad = "male")
 ziyad:male
 huda:Female
 
+
+def printAllVAriables(**kwargs):
+    for x in kwargs:
+        print("Variable Name is :",x," And Value is :", kwargs[x])
+
+printAllVAriables(a=3,b = "b",d =7.0)
 ---------------------------------------------------------------
 board = [" "] * 9
 
@@ -1447,6 +1580,86 @@ while True:
      elif is_draw():
         print("Its a draw!")
         break
+
+
+----------------------------------------------------------------
+MODULES 
+----------------------------------------------------------------
+a PYTHON file that contians functions,variables, classes that can be resuable in a different code
+
+
+---module ----
+
+def checkIfNotNumeric(*args):
+    
+    for x in args:
+        if not(isinstance(x,(int,float))):
+            return False
+    return True
+
+def addAllNumerics(*args):
+    s = 0
+    for x in args:
+        s+=x
+    return s
+
+
+myName = "Python COurse"
+
+---code----
+import sys
+sys.path.append('D:/mymodules/')
+import myfuncs as f 
+
+f.printMe('hellow')
+
+c = myfs.addAllNumerics(2,3,4,6)
+
+print(c)
+
+------------------
+
+def findMin(L,startIndx):
+    """ Function to return minimum number and index """
+    m = L[startIndx]
+    idx = startIndx    
+    for i in range(startIndx,len(L)):
+        x = L[i]
+        if x<m:
+            m = x
+            idx = i
+        else:
+            pass                
+    return m,idx
+
+def swapValues(L,idx1,idx2):
+    """ Function to swap elements in list """
+    L[idx2],L[idx1] = L[idx1], L[idx2]
+    return L
+
+#print(swapValues([1,2,3,4,5],1,3))
+
+def checkIfNotNumeric2(L): 
+
+    for x in L:
+        if not(isinstance(x,(int,float))):
+            return False
+    return True
+
+def sortList(L):
+    if not(checkIfNotNumeric2(L)):
+        print("Error: List does not contain numeric values")
+        return
+    else:
+        c = 0
+        for x in L:
+            m,idx = findMin(L,c)
+            L = swapValues(L,c,idx)
+            c+=1
+    return L
+
+
+print(sortList([2,1,3,4,-5,-6]))
 
 ---------------------------------------------------------------------
 OBJECT ORIENTED PROGRAMMING(O.O.P)
@@ -1614,3 +1827,283 @@ class Student(Person):
 ---------------------------------
 #polymorphism
 #when a method has multiple forms inside a class, thats polymorphism
+
+
+-------------------------------------------------------------------------------------------
+NUMPY --> a Python library used for working with arrays OF same datatype(making it faster)
+-------------------------------------------------------------------------------------------
+
+import numpy as np 
+
+a = np.array([1,2,3,4,5])  #array defined as list
+
+b = np.array((1,2,3,4,5))  #array defined as tuple 
+
+a = np.array([1,2,3,4,5], dtype = 'f')   # you can optionally defined data type (athough can dynaically find the data type)
+
+a = np.array([[1,2,3],[4,5,6]])
+print(a.ndim)                           #numpy dimension   # the length of array must be same
+> 2                                     #2 because you need two index to point to an element in the two arrays
+
+a[1,1]
+> 4
+
+arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+print(arr.shape)
+>(2,4)                                   # the array has 2 dimensions, and each dimension has 4 elements. # no.of rows by no.of columns
+
+arr = np.array([[[1,2,3,4],[4,5,6,4],[0,0,-1,4]],[[-1,-2,-3,4],[-4,-5,-6,4],[0,0,1,5]]])
+
+print(C.shape)
+> (2,3,4)                                # the array has 2 dimensions, 3 one darrays and each dimension has 3 elements.
+ 
+print(arr.size)
+>24                                      #2*3*4 = 24 ; total number of elements
+
+np.arange                                #cretae a 1-d array
+A = np.arange(20,30)
+> [20 21 22 23 24 25 26 27 28 29]
+
+A = np.random.permutation(np.arange(10))
+> [8 9 1 3 2 5 0 6 7 4]
+
+A = np.random.randint(20,40)
+> 31                       #returns a random integer
+
+type(A)
+> int 
+
+np.random.rand(1000)
+
+D = np.arange(100).reshape(4,25)
+
+D.shape
+>(4,25)
+
+np.zeros(10)
+np.ones(10)
+
+--------------------
+NUmpy slicing
+--------------------
+creates a view rather than a copy 
+
+result = np.where(arr == 45)            #to find the index of an element
+
+print(result)                           #returns a tuple
+
+print(result[0][0])                     #returns index
+
+arr[result[0][0]] = 3                   # to change value
+
+arr[1,2]         #access the elements in 2 row and 3 column 
+
+arr[1,:]         #access the second row
+
+arr[:,1]         #to access the second column
+
+arr.T            #transpose matrix
+
+arr[arr<40]      #returns elements less than 40
+
+arr[(arr<40) & (arr>30)]    
+
+arr2 = np.hstack(arr1,arr2)
+
+np.vstack(arr1,arr2)
+
+arr1.sort()
+
+#To confirm SPEED BETWEEN universal , in-built and built FUNCTIONS
+
+B = np.random.rand(1000000)
+%timeit sum(B)
+%timeit np.sum(B)  # B.sum()
+
+307 ms ± 22.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+2.77 ms ± 260 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+
+
+def mySum(G):
+    s = 0
+    for x in G:
+        s+=x
+    return s
+
+%timeit np.sum(B)
+367 ms ± 22.2 ms
+
+---------------------------------------------------------------------------
+PANDAS
+---------------------------------------------------------------------------
+
+The Pandas module mainly works with the tabular data, whereas the NumPy module works with the numerical data. 
+The Pandas provides some sets of powerful tools like DataFrame(more than 1 -dimen) and Series(1-dimensional arrays) that mainly used for analyzing the data, 
+whereas in NumPy module offers a powerful object called Array.
+
+import pandas as pd 
+
+A = pd.Series([2,3,4,5],index=['a','b','c','d'])
+
+type(A.values)
+
+type(A)
+
+A.index
+
+A['a']
+
+:
+A['a':'c']
+
+#PANDAS SERIES
+
+grads_dict = {'A':4,'B':3.5,'C':3,'D':2.5}
+grads = pd.Series(grads_dict)
+
+print(grads.index)
+
+print(grads.values)
+
+marks_dict = {'A':85,'B':75,'C':65,'D':55}
+marks = pd.Series(marks_dict)
+
+print(marks)
+
+print(marks['A'])
+
+print(marks[0:2])
+
+D = pd.DataFrame({'Marks':marks,'Grades':grads})
+
+print(D.T)
+
+D.columns 
+
+D.values[2,0]
+
+D['ScaledMarks']  = 100 * (D['Marks']/90)
+
+print(D)
+
+del D['ScaledMarks']
+
+G = D[D['Marks']>70]
+
+A = pd.DataFrame([{'a':1,'b':4},{'b':-3,'c':9}])     #missing values represented with zeros
+
+print(A)
+
+A.fillna(0)                    #to fill NaN with zeros
+
+A = pd.Series(['a','b','c'],index=[1,3,5])
+
+A.loc[1:3]
+
+A.iloc[1:3]
+
+D.iloc[2,:]
+
+D.iloc[::-1,:]
+
+# data[1] #explicit index, use loc instead 
+
+# data[1:3] #implicit index, use iloc instead 
+
+from sklearn.impute import SimpleImputer
+
+df = pd.read_csv('E:/covid/covid_19_data.csv')
+
+df.head(10)
+
+df.drop(['SNo','Last Update'],axis=1,inplace=True)       #axis=1 means deal with columns , inplace means do the change in df itself
+
+df.rename(columns={'ObservationDate':'Date','Province/State':'Province','Country/Region':'Country'},inplace=True)
+
+df.head()
+
+df['Date'] = pd.to_datetime(df['Date'])             #converting to internal pandas date format
+
+imputer = SimpleImputer(strategy='constant')
+df2 = pd.DataFrame(imputer.fit_transform(df),columns =df.columns)          #a simpler way to handle null in data
+
+df.head()
+
+df.describe()                                       #returns summary or statistic(min,max,std)
+
+df.info()                                           #shows missing values
+
+df = df.fillna('NA')                                #replaces empty value with 'NA'
+
+df.info()
+
+
+df2 = df.groupby('Country')[['Country','Confirmed','Deaths','Recovered']].sum().reset_index()    #grouping by Country
+
+df2 = df.groupby(['Country','Date'])[['Country','Date','Confirmed','Deaths','Recovered']].sum().reset_index()
+
+df3 = df2[df2['Confirmed']>100]
+
+---------------------------------------------------------------------
+Matplotlib
+---------------------------------------------------------------------
+import matplotlib.pyplot as plt
+
+x = np.linspace(0,10,1000)
+plt.plot(x,np.sin(x))
+
+plt.scatter(x[::10],y[::10],color='red')
+
+plt.plot(x,y,color='b')
+plt.plot(x,np.cos(x),color='g')
+
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+
+df = pd.read_csv('E:/covid/covid_19_data.csv')
+
+df.head(50)
+
+df.drop(['SNo','Last Update'],axis=1,inplace=True)
+df.rename(columns={'ObservationDate':'Date','Province/State':'State','Country/Region':'Country'},inplace=True)
+
+df['Date'] = pd.to_datetime(df['Date'])
+
+imputer = SimpleImputer(strategy='constant')
+df2 = pd.DataFrame(imputer.fit_transform(df),columns=df.columns)
+
+df3 = df2.groupby(['Country','Date'])[['Country','Date','Confirmed','Deaths','Recovered']].sum().reset_index()
+
+df3.head(10)
+
+countries = df3['Country'].unique()
+len(countries)
+
+for idx in range(0,len(countries)):    
+    C = df3[df3['Country']==countries[idx]].reset_index()        
+    plt.scatter(np.arange(0,len(C)),C['Confirmed'],color='blue',label='Confirmed')
+    plt.scatter(np.arange(0,len(C)),C['Recovered'],color='green',label='Recovered')
+    plt.scatter(np.arange(0,len(C)),C['Deaths'],color='red',label='Deaths')
+    plt.title(countries[idx])
+    plt.xlabel('Days since the first suspect')
+    plt.ylabel('Number of cases')
+    plt.legend()
+    plt.show()
+
+
+
+df4 = df3.groupby(['Date'])[['Date','Confirmed','Deaths','Recovered']].sum().reset_index()
+
+C = df4
+plt.scatter(np.arange(0,len(C)),C['Confirmed'],color='blue',label='Confirmed')
+plt.scatter(np.arange(0,len(C)),C['Recovered'],color='green',label='Recovered')
+plt.scatter(np.arange(0,len(C)),C['Deaths'],color='red',label='Deaths')
+plt.title('World')
+plt.xlabel('Days since the first suspect')
+plt.ylabel('Number of cases')
+plt.legend()
+plt.show()
+
