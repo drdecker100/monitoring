@@ -1,1 +1,115 @@
 # API application programming interface
+
+# Interface = how to get things to work, but not necessarily how it does that
+setting an alarm on a wall clock via the interface, but not knowing the process it takes to set it up
+
+# button on devices == interface
+
+# code runs on the button
+
+# finds way to interact with the source and destination
+
+#API
+Set of tools designed for software developers
+
+Saves you from creating eveything yourself
+
+Software intermediary that allows two applications to talk to each other. Each time you use an app like Facebook, send an instant message, or check the weather on your phone, you're using an API.
+
+An API is a set of definitions and protocols for building and integrating application software.
+
+An application implementing a RESTful API will define one or more URL endpoints with a domain, port, path, and/or querystring — for example, https://mydomain/user/123?format=json
+
+#RESt API
+Conforms to the constraints of REST architectural style and allows for interaction with RESTful web services
+
+#HOW THE WEB WORKS
+
+ The web is a system for publishing pages of information on the internet, and for linking pages together using links.
+ Anyone can publish a page by uploading it to a web server. Anyone can read that page by typing its address into a web browser.
+ 
+ The web would be useful but annoying if you had to type the precise address- the URL (uniform resource locator) - for every page you wanted. 
+ Fortunately, you don’t have to. Web pages can include embedded links or ’hyperlinks’, so simply clicking the link will take you to that page. 
+ Following a trail of links is called ‘web surfing’.
+ 
+ The web is also traversed by ’spiders’ (or software robots) that follow links and collect information that can be used by search engines such as Google. 
+ Not all web users are human!
+ 
+ Web pages are written in text with Hypertext Markup Language (HTML), then uploaded to a host computer running web server software, such as Apache or Microsoft’s IIS (Internet Information Server).
+ 
+ The web server sends out pages when they are requested by a web browser (web client)
+ 
+ The host and client communicate using an agreed ’language’ called HTTP (HyperText Transfer Protocol) or HTTPs(HTTP over SSL) 
+ This is why web page addresses begin with http:// and so on
+ 
+ URI(uniform resource Identifier)  = URL(Uniform Resource Locator) + http verb (GET/POST/PUT/DELETE)
+
+# HTTP VERBS vs CRUD
+POST = Create
+GET = Read / Retrieve
+PUT = Update/Replace
+PATCH = Update/Modify
+DELETE = Delete
+
+# HTTP HEADERS
+HTTP headers let the client and the server pass additional information with an HTTP request or response
+
+# RESTFUL API CONSTRAIT 
+Client-Server Architecture
+Statelessness
+LAyered System
+Cacheability
+Uniform Design
+Cosde on Demand
+
+# myProgram ---> HTTP GET ---> Server/Host
+stateless so you will have to send info(like auth info and user credentials) via headers every time/ request
+
+# Everything on the web page is a resource (collection of items/lists of items)
+
+# JSON(Javascript Object Notation)
+JSON is an open standard file format, and data interchange format, 
+that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and array data types.
+
+# drdecker100+apicourse@gmail.com
+
+# Exploring APIS online (spotify.com) and twilio
+https://developer.spotify.com/console/get-search-item/?q=lizzo&type=artist&market=&limit=&offset=&include_external=
+
+#Using CURL on either MAC/linux or Windows tO CREATE (POST)
+WIth Windows, you can use git bash to use curl
+
+curl 'https://api.twilio.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json' -X POST \
+--data-urlencode 'To=+17405907351' \
+--data-urlencode 'From=+14158959591' \
+--data-urlencode 'Body=Ahoy World Needs You' \
+-u ACce93e656933d09cb4c2924a1f36b9c0e:1baf3ae113c2094f39df1ff5df9da53a | python -m json.tools
+
+#To Get(read to the endpoint/interface)
+$ curl "https://api.twilio.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json" -X GET \
+--data-urlencode "To=+17405907351" \
+-u ACce93e656933d09cb4c2924a1f36b9c0e:1baf3ae113c2094f39df1ff5df9da53a | python -m json.tool
+
+#Using POSTMAN to test APIs
+Create a new collection to store all requests
+
+Set Authorization locally so every request can use those variables in the request headers
+
+URL for the GET meassage
+"https://api.twilio.com/2010-04-01/Accounts/{{ACCOUNT_SID}}/Messages.json"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
