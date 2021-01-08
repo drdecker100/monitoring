@@ -2280,6 +2280,200 @@ with open('wifi.txt', 'rb') as fh:
     if r.status_code == 200:
         print('Success')
 
+#Better Coding Ways
+#1
+num1 = 10_000_000_000
+num2 = 10_000_000
+
+total = num1+num2
+print(f"{total :,}")
+
+#2
+#instead of manually closing the file, can use a CONTEXT MANAGERS
+
+with open("test.txt", "r") as f:
+	file_contents = f.read()
+	
+words = file_contents.split(" ")
+word_count = len(words)
+	
+#3 iterating over a list
+names = ["Yaw", "Kwame","Ama","Adwoa"]
+
+for index, name in enumerate(names):
+	print(index, name)
+	
+for index, name in enumerate(names, start=1):      #if you want index to start at 1
+	print(index, name)
+	
+#4 working with multiple lists
+names = ["Yaw", "Kwame","Ama","Adwoa","F"]
+heroes = ["A","B","C","D", "E"]
+universe = ["Marvel","DC","Marvel","DC"]
+
+for index, name in enumerate(names):
+    hero = heroes[index]
+    print(f"{name} is actually {hero}")
+print()
+
+for name, hero in zip(names,heroes):
+    print(f"{name} is actually {hero}")
+    
+#5 Unpacking values
+#Normal
+value = (1,2)
+print(value)
+
+#Unpacking
+a, b = (1,2)
+print(a)
+>1
+
+a, _ = (1,2)     #if you wont use the other value only , you can hide the other object with underscore
+print(a)
+> 1
+
+
+a, b, *c = (1,2,3,4,5)     #* unpacks the remaining elements
+print(c)
+> [3,4,5]
+
+
+#6 Class
+class Person():
+	pass
+	
+person = Person()
+
+# person.first = "Corey"
+# person.last = "Schafer"
+
+#print(person.first)
+#print(person.last)
+
+person_info = {"first":"Corey","last":"Schafer"}
+
+for key, value in person_info.items():
+	setattr(person, key, value)
+
+for key, _ in person_info.items():
+	print(getattr(person, key))
+	
+#print(person.first)
+#print(person.last)
+
+# 7 Taking Password input
+# normal
+username = input("Username: ")
+password = input("Password: ")
+
+print("logging in...")
+
+# secure way
+from getpass import getpass
+
+username = input("Username: ")
+password = getpass("Password: ")
+
+print("logging in...")
+
+
+#8 Using modules
+python -m json.tool                     # python -m instead of python bookstore.py because we do not have the script(running a module), will check the sys path and run it
+
+python -m password similar to python password.py
+
+import smtpd 
+
+help(smtpd)                        #used to display the documentation of modules, functions, classes, keywords etc.
+
+dir(smtpd)                         #returns list of the attributes and methods of any object (say functions , modules, strings, lists, dictionaries etc.)
+
+# Top Mistakes
+1.Spaces and tabs. Need to Upgrade IDE and set tabs as spaces
+
+2. Saving python file as main.py and importing math module raises an error when script is run
+> Name of file should be changed
+
+3. Import errors (definitely issue with path or file having same name as module we trying to call in file)
+
+4. How to do mutable default arguments
+#Wrong way
+def add_employee(emp, emp_list=[]):
+	emp_list.append(emp)
+	print(emp_list)
+
+emps = ["John","Jane"]
+
+add_employee("Corey")
+add_employee("John")
+> ["Corey","John"]                       #returns both COrey and John instead of just John
+
+#Right way
+def add_employee(emp, emp_list=None):
+	if emp_list is None:
+		emp_list = []
+	emp_list.append(emp)
+	print(emp_list)
+
+emps = ["John","Jane"]
+
+add_employee("Corey")
+add_employee("John")                    #returns only John
+
+#
+import time
+from datetime import datetime
+
+def display_time(time=datetime.now()):
+	print(time.strftime("%B %d, %Y %H:%M:%S"))
+	
+display_time()
+time.sleep(1)
+display_time()
+
+def display_time(time=None):
+	time= datetime.now()
+	print(time.strftime("%B %d, %Y %H:%M:%S"))
+	
+display_time()
+time.sleep(1)
+display_time()                # returns the correct output becuase of the way functions work
+
+#6. Issues with Iterators like zip
+names = ["Yaw", "Kwame","Ama","Adwoa","F"]
+heroes = ["A","B","C","D", "E"]
+
+identities = list(zip(names,heroes))           #list are not exhausted like other interables
+
+print(identities)        # with Python 3, you would need function list
+
+for identity in identities:
+    print("{} is actually {}".format(identity[0], identity[1]))
+    
+#7. os module issues
+import os
+os.rename(filename)
+
+from os import rename, remove                  #allow us to use multiple methods of the module
+remove(filename)
+remove()
+
+from html import escape as h_escape
+from glob import escape as g_escape
+
+print(help(h_escape)
+
+
+####ITERATORS AND ITERABLES
+a LIST is a iterable, but not an iterator.
+
+
+
+
+
+
+
 
 
 
