@@ -2466,7 +2466,186 @@ print(help(h_escape)
 
 
 ####ITERATORS AND ITERABLES
-a LIST is a iterable, but not an iterator.
+#A List is a iterable, but not an iterator. It doesnt have a state and a __next__() method
+#Iterable is an object, which one can iterate over.
+#Iterator is an object, which is used to iterate over an iterable object using __next__() method. Iterators have __next__() method, which returns the next item of the object. 
+#Note that every iterator is also an iterable, but not every iterable is an iterator.
+
+nums = [1,2,3]
+
+for num in nums:
+	print(num)
+
+print(dir(nums))
+> __iter__
+
+i_nums = iter(nums)     #nums.__iter__().. calls the dunder function in the background
+
+print(i_nums)
+print(dir(i_nums))
+>__next__
+
+print(next(i_nums))
+print(next(i_nums))
+print(next(i_nums))
+
+> 1
+  2
+  3
+  
+ class MyRange:
+ 	def __init__(self, start, end):
+		self.value = start
+		self.end = end
+	
+	def __iter__(self):
+		return self
+	
+	def __next__(self):
+		if self.value >= self.end:
+			raise StopIteration
+		current = self.value
+		self.value += 1
+		return current
+		
+#creating a generator function
+def my_range(start,end):
+	current = start
+	while current < end:
+		yield current
+		current += 1
+	
+nums = MyRange(1,10)
+
+print(next(nums))
+print(next(nums))
+
+###MODULES ITERTOOLS
+import itertools
+
+counter = itertools.count()
+
+data = [100,200,300,400]
+
+print(next(counter))
+print(next(counter))
+
+daily_data = list(zip(itertools.count(), data))
+
+print(daily_data)
+> [(0,100),(1,200),(2,300),(3,400)
+
+counter = itertools.cycle(("On","Off"))
+print(next(counter))
+print(next(counter))
+print(next(counter))
+print(next(counter))
+
+squares = map(pow, range(10), itertools.repeat(2))
+
+print(list(squares))     #cast it to a list
+
+#Context Manager
+from contextlib import contextmanager
+
+@contextmanager
+def open_file(file, mode):
+	f = open(file, mode)
+	yield f
+	f.close()
+	
+with open_file("sample.txt","w") as f:
+	f.write("I tried, but i lost")
+	
+print(f.closed)
+
+import os
+from contextlib import contextmanager
+
+cwd = os.getcwd()
+os.chdir('Sample-Dir-One')
+print(os.listdir())
+os.chdir(cwd)
+
+cwd = os.getcwd()
+os.chdir('Sample-Dir-Two')
+print(os.listdir())
+os.chdir(cwd)
+
+@contextmanager
+def change-dir(destination):
+	try:
+		cwd = os.getcwd()
+		os.chdir(destination)
+		yield
+	finally:
+		os.chdir(cwd)
+
+with change_dir('Sample-Dir-One'):
+	print(os.listdir())
+
+with change_dir('Sample-Dir-Two'):
+	print(os.listdir())
+
+###DECORATORS
+# A decorator is a design pattern in Python that allows a user to add new functionality to an existing object without modifying its structure.
+# Decorators are usually called before the definition of a function you want to decorate.
+
+def outer_functions():
+	message = "Hi"
+	
+	def inner_function():
+		print(message)
+	return inner_function()
+
+outer_function()
+
+def decorator_function(original_function):
+	def wrapper_function():
+		print("wrapper executed this before {}".format(original_function.__name__))
+		return original_function()
+	return wrapper_function
+
+@decorator function
+	def display():
+		print("display function ran")
+
+#display = decorator_function(display)
+
+display()
+
+
+##FIRST CLASS FUNCTIONS
+#First-class functions means that the language treats functions as values – that you can assign a function into a variable, pass it around
+
+def square(x):
+	return x*x
+	
+def my_map(func, arg_list):
+	result = []
+	for i in arg_list:
+		result.append(func(i))
+	return result
+
+squares = my_map(square, [1,2,3,4,5])
+
+print(squares)
+
+def cube(x)
+	return x * x * x
+f = square(5)
+
+print(square)
+print(f)
+
+f = sqaure      #assign function as variable
+print(f(5))
+
+
+
+
+
+
 
 
 
