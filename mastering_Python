@@ -214,6 +214,9 @@ max()                   # returns the highest element in a list
 
 sorted(L)               # returns a sorted array , from lowest to highest 
 
+eval("3+4")             #evaluates string and returns an object 
+> 7
+
 ---------------------------------------------
 STRING METHODS
 ---------------------------------------------
@@ -2692,7 +2695,12 @@ for i in range(0,10):
 	a, b =b, a+b
 
 
+[Pyhton Questions](https://bidsarmanish.blogspot.com/2017/10/python-interview-questions-2.html)
 
+#10. KNOW THE BASICS OF OTHER TECHNOLOGIES 
+#T-shaped profesional model is a metaphor used in job recruitment to describe the abilities of persons in the workforce. 
+#The vertical bar on the letter T represents the DEPTH of related skills and expertise in a single field, 
+#whereas the horizontal bar(BREADTH) is the ability to collaborate across disciplines with experts in other areas and to apply knowledge in areas of expertise other than one's own.
 
 
 
