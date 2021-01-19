@@ -619,9 +619,9 @@ sudo apt-get clean [ cleans all compressed package arcvhices in the archived cac
 
 sudo apt-get autoclean [deletes package archives no longer accessible]
 
-------------------------------------------
+-------------------------------------------------------------
 CREATING BASH SCRIPTS
-------------------------------------------
+-------------------------------------------------------------
 
 nano our_script.sh
 
@@ -659,6 +659,42 @@ m h dom mon dow   command
 * *  *  *    *    bash ~/Desktop/bin/backup
 
 script and crontab
+
+------------------------------------------------------------
+CUSTOMIZING YOUR TERMINAL: bash_profile and .bashrc files
+------------------------------------------------------------
+$PSI="custom-> ";                       #this customise prompt, but it is temporary
+
+#add to specific files to make permanent 
+ls -al
+.bashrc
+
+#difference between bashrc and .bash_profile files
+.bash_profile is read and executed when Bash is invoked as an interactive login shell, while .bashrc is executed for an interactive non-login shell.
+Use .bash_profile to run commands that should run only once, such as customizing the $PATH environment variable .
+Put the commands that should run every time you launch a new shell in the .bashrc file. 
+This include your aliases and functions , custom prompts, history customizations , and so on.
+
+mv .bashrc Dotfiles/               # moving .bashrc file to new folder
+
+mv .bash_profile Dotfiles/         # moving .bash_profile to new folder
+
+touch .bashrc && touch .bash_profile      # creating new files
+
+nano .bashrc 
+echo "FROM BASHRC"
+
+nano .bash_profile
+echo "FROM BASH_PROFILE"
+
+if [ -f ~/.bashrc ]; then                     #if there is a .bashrc file, run from source .bashrc
+   source ~/.bashrc
+fi
+
+#quit and re-run  terminal
+
+
+
 
 
 
