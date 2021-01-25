@@ -1,0 +1,58 @@
+#to install tmux
+$sudo apt install tmux
+
+#to open a window
+tmux
+
+#*(asterisk) specifies which window is selected
+
+#flow
+--> session --> window --> panes
+
+#to create another pane 
+ctrl+b %
+
+$to switch between panes
+ctrl+b (back navigational key)
+
+#to create a pane under a pane
+ctrl+b "
+
+# to create a new window
+ctrl+b c
+
+#to switch back to the first window
+ctrl+b 0
+
+# to rename window 
+ctrl+b ,
+
+#to close a window
+exit
+
+#to detach a session  #PRESERVES the session
+ctrl+b d
+
+#to view created sessions
+tmux ls
+
+#to attach to a session  #the seesion is preserved
+tmux attach -t 0
+
+#to rename a session
+tmux rename-session -t 0 git
+
+#to createa session with a name 
+tmux new -s docker
+
+#deleting session
+tmux kill-session -t docker
+
+
+
+
+
+
+
+
+
