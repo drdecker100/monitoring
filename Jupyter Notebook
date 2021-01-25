@@ -1,0 +1,31 @@
+#Great for exploring and visualizing data
+
+[kernels, what programming language you will like to use]
+we can have different kernels for python
+
+Keyboard shortcuts
+esc             # cmd mode
+
+enter           # edit  mode
+
+shift+enter     # to run the cell
+
+!               # interprest as a bash command
+!pip lis 
+!dir
+
+%lsmagic        # all available line and cell magic
+
+magics
+%               # command args will come from the same line
+
+%%              # entire cell will be used as command args
+
+%%timeit        # time your script ;t will return the time taken (in seconds) to execute the code snippet, the specified number of times.
+square_evens = [n*n for n in range(1000)]
+
+#exporting file
+download as html/python file/
+
+#to view conda environment
+conda env list
