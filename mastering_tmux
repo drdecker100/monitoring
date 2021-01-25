@@ -48,6 +48,18 @@ tmux new -s docker
 #deleting session
 tmux kill-session -t docker
 
+############################
+Issue with tmux prompt color not appearing
+
+#edit / Create a tmux.conf file in home directory
+$ nano ~/.tmux.conf 
+
+set -g default-terminal "screen-256colors"
+
+#close and re-open tmux
+
+
+
 
 
 
