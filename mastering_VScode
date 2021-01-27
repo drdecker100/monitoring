@@ -7,10 +7,18 @@ Select folder
 You can download Cobalt2 from EXTENSION in the left tab
 
 #To customize layout with shortcuts(CMD on MAC and Ctrl on Windows)
-Ctrl+D 
+Ctrl+ b    #to toggle explorer tab
+
+Ctrl +Shift +E = Switch to explorer 
+
+Ctrl + Shift + F = Switch to Search/Find Tab
+
+Ctrl + Shift + 
 
 #The SEarch button on the left tab
 Can be used to search for words and also replace word with another word
+
+#
 
 
 
