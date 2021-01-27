@@ -71,8 +71,57 @@ Reliability Tools
 3. TTM    #time to market is the length of time it takes from a product being conceived until its being available for sale. The reason that time to market is so important is because being late erodes the addressable market that you have to sell your product into.
 4. Uptime #Uptime is a measure of system reliability, expressed as the percentage of time a machine
 
-#Growth In the New nErwork Enginner
-Network Automation Engineer (-Enterprise/R&S -DC -Security)  > Network DevOps > Cloud Engineer > SDN/VNF Engineer > NRE
+# Growth In the New nETwork Engineer
+Network Automation Engineer (-Enterprise/R&S -DC -Security)  > Network DevOps > Cloud Engineer > SDN/VNF(Virtual Network Functions) Engineer > NRE(network reliability engineer)
+
+# Network Automation Engineer      [77k-120k ; 100k - 220k(senior network engineer)] 
+Required --> Network Protocols/Vendor Technologies  > Python/Go > Modeling Language/Encoding Standards > Ansible/Git    
+
+Desired --> Linux/Shell > Device APIs > Automation Frameworks > DevOps Tools      
+
+# NetDevOps                        [90k-170k ; 160k - 180k(senior devOps engineer)]  # 6-figure salary
+Required --> Network Protocols/Vendor Technologies  > Python/Go > Linux/Shell > Modeling Language/Encoding Standards > Ansible/Git
+
+Desired --> Device APIs > Automation Frameworks
+
+# Cloud Network/Services Engineer  [100k-220k ; 110k - 160k(senior Systems engineer)]
+Required --> Network Protocols/Vendor Technologies > Cloud Infra > Python/Go > Linux/Shell > Modelling Language/Encoding Standards > Cloud APIs
+
+Desired --> Automation Frameworks > DevOps Tools
+
+# SDN/ VNF Engineer   #Telco Focused Role
+Required --> Networking Protocols & Controllers/ Vendor VNFs > OpenStack > Linux/Shell > Modeling LAng/Encoding Structure > Controller APIs
+
+Desired  --> Python/Go > Automation Frameworks > DevOps Tools
+
+# NRE/ Nework SRE #specialised form of Net DevOps     [97k-150k Reliability Engineer ] 
+Required -->  Networking Protocols & Vendor Tecghnologies > Linux/Shell > Python/Go > Modeling LAng/Encoding Structure > Device APIs > Monitoring Tools > DevOps Tools
+
+Desired --> Automation Frameworks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
