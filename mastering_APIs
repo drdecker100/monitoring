@@ -73,13 +73,13 @@ that uses human-readable text to store and transmit data objects consisting of a
 
 # drdecker100+apicourse@gmail.com
 
-# Exploring APIS online (spotify.com) and twilio
+# Exploring APIS online (spotify.com) and hadtochange
 https://developer.spotify.com/console/get-search-item/?q=lizzo&type=artist&market=&limit=&offset=&include_external=
 
 #Using CURL on either MAC/linux or Windows tO CREATE (POST)
 WIth Windows, you can use git bash to use curl
 
-curl 'https://api.twilio.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json' -X POST \
+curl 'https://api.hadtochange.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json' -X POST \
 --data-urlencode 'To=+17405907351' \
 --data-urlencode 'From=+14158959591' \
 --data-urlencode 'Body=Ahoy World Needs You' \
@@ -89,7 +89,7 @@ import json
 print (json.dumps(response.json(), indent=4, sort_keys=True))
 
 # To Get(read to the endpoint/interface)
-$ curl "https://api.twilio.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json" -X GET \
+$ curl "https://api.hadtochange.com/2010-04-01/Accounts/ACce93e656933d09cb4c2924a1f36b9c0e/Messages.json" -X GET \
 --data-urlencode "To=+17405907351" \
 -u ACce93e656933d09cb4c2924a1f36b9c0e:1baf3ae113c2094f39df1ff5df9da53a | python -m json.tool
 
@@ -99,7 +99,7 @@ Create a new collection to store all requests
 Set Authorization locally so every request can use those variables in the request headers
 
 URL for the GET meassage
-"https://api.twilio.com/2010-04-01/Accounts/{{ACCOUNT_SID}}/Messages.json"
+"https://api.hadtochange.com/2010-04-01/Accounts/{{ACCOUNT_SID}}/Messages.json"
 
 # Postman also helps generate codes
 
