@@ -7,13 +7,54 @@ Select folder
 You can download Cobalt2 from EXTENSION in the left tab
 
 #To customize layout with shortcuts(CMD on MAC and Ctrl on Windows)
-Ctrl+ b    #to toggle explorer tab
+Ctrl+ B             # to toggle explorer tab
 
-Ctrl +Shift +E = Switch to explorer 
+Ctrl + Shift + E    # Switch to explorer 
 
-Ctrl + Shift + F = Switch to Search/Find Tab
+Ctrl + Shift + F    # Switch to Search/Find Tab
 
-Ctrl + Shift + 
+Ctrl + Shift + G    # fOR source control/SCM
+
+Ctrl + Shift + D    # debugging/Run
+
+Ctrl + Shift + X    # extensions
+
+Ctrl + Shift + P    # For Palette
+[freom palette, you hava access to all commands, like 
+# zen mode
+# minimap
+
+Ctrl + F            # to find
+
+Ctrl + H            # to replace
+Enter               # to replace one
+Ctrl + Alt + Enter  # to replace all
+
+Ctrl + W            # to close a file
+
+Ctrl + tab          # to toggle through files
+
+Ctrl + Shift + tab  # to toggle backwards
+
+Ctrl + P            # to open files
+
+Ctrl + Shift + left/right key      #to select text
+
+Ctrl + left/right key              # to move between words
+
+Ctrl+ home                         # beginning of a line
+
+Ctrl + end                         # end of a line
+
+home                               # at the beginning of the line
+
+end                                # at the end of the line
+
+
+
+
+
+
 
 #The SEarch button on the left tab
 Can be used to search for words and also replace word with another word
