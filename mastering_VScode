@@ -7,36 +7,39 @@ Select folder
 You can download Cobalt2 from EXTENSION in the left tab
 
 #To customize layout with shortcuts(CMD on MAC and Ctrl on Windows)
-Ctrl+ B             # to toggle explorer tab
+Ctrl+ B                       # to toggle explorer tab
 
-Ctrl + Shift + E    # Switch to explorer 
+Ctrl + Shift + E              # Switch to explorer 
 
-Ctrl + Shift + F    # Switch to Search/Find Tab
+Ctrl + Shift + F              # Switch to Search/Find Tab
 
-Ctrl + Shift + G    # fOR source control/SCM
+Ctrl + Shift + G              # fOR source control/SCM
 
-Ctrl + Shift + D    # debugging/Run
+Ctrl + Shift + D              # debugging/Run
 
-Ctrl + Shift + X    # extensions
+Ctrl + Shift + X              # extensions
 
-Ctrl + Shift + P    # For Palette
+Ctrl + Shift + P              # For Palette
 [freom palette, you hava access to all commands, like 
 # zen mode
 # minimap
+# transform to uppercase
+# transform to lowercase
 
-Ctrl + F            # to find
 
-Ctrl + H            # to replace
-Enter               # to replace one
-Ctrl + Alt + Enter  # to replace all
+Ctrl + F                      # to find
 
-Ctrl + W            # to close a file
+Ctrl + H                      # to replace
+Enter                         # to replace one
+Ctrl + Alt + Enter            # to replace all
 
-Ctrl + tab          # to toggle through files
+Ctrl + W                      # to close a file
 
-Ctrl + Shift + tab  # to toggle backwards
+Ctrl + tab                    # to toggle through files
 
-Ctrl + P            # to open files
+Ctrl + Shift + tab            # to toggle backwards
+
+Ctrl + P                      # to open files
 
 Ctrl + Shift + left/right key      #to select text
 
@@ -50,6 +53,30 @@ home                               # at the beginning of the line
 
 end                                # at the end of the line
 
+click on line + Ctrl+C             # to copy line 
+
+Ctrl + V                          # to paste 
+
+Ctrl + D                          # to select a word
+
+Ctrl + `                          # to open terminal
+
+## built-in intellisense
+document.                         # the '.' gives you the available functions that goes with the object 
+
+#the purple ones(cube shapes) are functions
+
+document.addEventListener()       #takes in parameter,intellisense shows you the argument available
+
+
+#some cool extension
+prettier                          # It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
+
+night owl theme
+
+live server 
+
+# Go to settings to change terminal cursor style and whether to blink or what
 
 
 
