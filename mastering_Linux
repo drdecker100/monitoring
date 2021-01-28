@@ -163,10 +163,13 @@ xargs convert std in into command line args
 ----------------------------------------
 ALIAS
 ----------------------------------------
-create hidden file or edit .bash_profile file in home directory
-nano .bash_aliases
 
-nano .bash_profile
+#type alias in terminal will show all aliases
+
+#create hidden file or edit .bash_profile file in home directory
+$nano .bash_aliases
+
+$nano .bash_profile
 
 alias getdates='date | tee /home/drdecker100/fulldate.txt | cut -d " " -f 1 | tee /home/drdecker100/shortdate.txt | xargs echo hello'
 
