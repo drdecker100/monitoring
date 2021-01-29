@@ -2382,9 +2382,11 @@ print("logging in...")
 
 
 #8 Using modules
-python -m json.tool                     # python -m instead of python bookstore.py because we do not have the script(running a module), will check the sys path and run it
+python -m venv vitrualenv           # to create virtual environment[At its core, the main purpose of Python virtual environments is to create an isolated environment for Python projects. This means that each project can have its own dependencies, regardless of what dependencies every other project has.]
 
-python -m password similar to python password.py
+python -m json.tool                 # python -m instead of python bookstore.py because we do not have the script(running a module), will check the sys path and run it
+
+python -m password                  #similar to python password.py
 
 import smtpd 
 
