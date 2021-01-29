@@ -76,7 +76,16 @@ night owl theme
 
 live server 
 
+git lens
+
 # Go to settings to change terminal cursor style and whether to blink or what
+
+# Source control Integration
+# the work flow
+changes ---> stage changes ---> commit
+
+#connect to Github
+Use the palette and search for Publish to Github(that is if you do not have it already in Github)
 
 
 
