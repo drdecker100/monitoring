@@ -1,41 +1,73 @@
--------------------------------------------
-Initializing GIT
--------------------------------------------
-mkdir project
-cd project
-git init demo
+-- Central version control system(VCS) SVN- subversion
+based on the idea that there is a single “central” copy of your project somewhere (probably on a server), 
+and programmers will “commit” their changes to this central copy. 
+“Committing” a change simply means recording the change in the central system.
 
-------------------------------------------
-Git States
-------------------------------------------
-Working Area --- Staging Area -- Repository(.git folder)/history --Remote Repo
+-- Distributed VCS (Git)
+is a form of version control in which the complete codebase, 
+including its full history, is mirrored on every developer's computer.
 
-WOrking Area contains all the files and folders for your application
+git --version                                                              # to check if git is intsalled and which version is installed
+
+git help <command>                                                         # to get help with a command from manual:  git help merge
+
+git config --help     / git init --help                                    # to get help with a command from manual:  git help merge
+
+-----------------------------------------------------------
+SET CONFIG VALUES
+-----------------------------------------------------------
+git config --global user.name "Donald Decker"                              # to add username to show as author name when you make a change 
+
+git config --global user.email "drdecker100@yahoo.com"                     # to add user email to show as author email when you make a change
+
+git config --list                                                          # output entries
+
+
+------------------------------------------------------------
+Initializing GIT  [ to track that repo]
+------------------------------------------------------------
+mkdir project                                                              # to make a new directory
+
+cd project                                                                 #change from current dir to new dir
+
+git init                                                                   # Create an empty Git repository or reinitialize an existing one or to set Tracking on the dir
+                                                          
+git init demo                                                              # git init [directory]  Create a directory "dema" and tracks the files in that directory  
+
+------------------------------------------------------------
+GIT STATES
+------------------------------------------------------------
+Working Area ---> Staging Area ---> Local Repo (.git directory)/history ---> Remote Repo
+
+Working Area contains all the files and folders for your application
 
 Repo contains all the commited /saved changes to the Git repo
 
-Staging area used to prepare for the next commited
+Staging area used to prepare for the next commit [ we can choose what we want files we want to commit ]
 
 Remote Repo
 
 --------------------------------------
 FIRST COMMIT
 --------------------------------------
-nano README.md    (In working directory)
+nano README.md                                                # to create a new file if README.md does not exist in working directory
 
-git add README.md (moved to staging area)
+git status                                                    # Show the working tree status (changes)
+
+git add README.md                                             # Add file contents to the index(staging area) [The "index" holds a snapshot of the content of the working tree]
+
+git add -A / git add .                                        # Add all files to the staging area
 
 git commit -m "First file in demo repo"    (local repo)
 
 ----------------------------------------
 REPO AND GIT FOLDER
 ---------------------------------------
+ls -al                                                        # shows list of all files both hidden and unhidden files
 
-ls -al
+.git                                                           # hidden folder created after git init command 
 
-.git [git folder]
-
-rm -rf .git [unmakes the directory as a git branch]
+rm -rf .git                                                    # unmakes the directory as a git branch
 
 
 -------------------------------------------
@@ -45,22 +77,17 @@ cd demo
 
 git init
 
-#adding both files to staging area
-git add *
+git add *                                                      # adding both files to staging area
 
-git commit   [open an editor]
+git commit                                                     # open an editor
 
 ------------------------------------------
 COMMIT HISTORY WITH LOG AND SHOW
 ------------------------------------------
 
-git log
+git log                                                        # commit id - SHA-1 identifier  # author and #date
 
-#commit id - SHA-1 identifier
-#author and #date
-
-git show
-# will show the last commit and a diff containing all the changes
+git show                                                       # will show the last commit and a diff containing all the changes
 
 ------------------------------------------
 EXPRESS COMMITS
@@ -69,25 +96,35 @@ EXPRESS COMMITS
 git ls-files
 [to show all files being tracked]
 
-git -am "Updating README"
+git -am "Updating README with express commit"
 
 ------------------------------------------
-BACKING OUT CHANGES
+BACKING OUT CHANGES (REMOVE FILES FROM STAGING AREA)
 ------------------------------------------
-git restore --staged READMe.md (to unstage area)
+git restore --staged README.md                                  # to unstage area
 
-git restore READMe.md     (to working directory, restore changes)
+git restore README.md                                           # to working directory, restore changes
+
+git reset README.md                                             # to unstage a file from staging area to working area
+
+git rm --cached README.md                                       # to unstage a file from staging area to working area
+
+git reset                                                       # to unstage all files from the staging area to working area
 
 ------------------------------------------
 HISTORY AND MAKING NEW COMMANDS WITH ALIAS
 ------------------------------------------
 git log --oneline --graph --decorate --all
 
-git config --global alias.hist "log --oneline --graph --decorate --all"
+git config --global alias.hist "log --oneline --graph --decorate --all"                   # to create an entry in global config
 
 git config --global --list
 
-git history
+git config --list                                                                         # to show entry of global config file
+
+git hist                                                                                  # to use git alias created
+
+git config --global --unset alias.history "log --oneline --graph --decorate --all"        # to remove an entry in global config file --unset
 
 --------------------------------------------
 RENAME AND DELETE FILES
@@ -101,17 +138,18 @@ git commit -m "renaming example"
 MANAGING FILES OUTSIDE OF GIT
 ---------------------------------------------
 touch myfile.txt
+
 mv LICENCE.md LICENCE.txt
 
-git status #shows untracked
+git status                                                                                # shows untracked
 
-git add -u   #picks up only the tracked changes(renaming)
+git add -u                                                                                # picks up only the tracked changes (renaming)
 
-git add -A   #picks up all files(all type of modifications) 
+git add -A                                                                                # picks up all files(all type of modifications) 
 
 rm myfile.txt
 
-git add -u  #means update
+git add -u                                                                                # means update
 
 git commit -m "remove myfile.txt"
 
@@ -119,12 +157,13 @@ git commit -m "remove myfile.txt"
 ----------------------------------------------------------
 EXCLUDING UNWANTED FILES
 ----------------------------------------------------------
-nano application.log
+touch application.log                                                         # create a log file
 
-nano .gitignore
-   *.log   #one expression per line
+nano .gitignore                                                               # add files we want git to ignore
+   *.log                                                                      # one expression per line
+   *.pyc
    
-git add -gitignore
+git add .gitignore
 
 git commit -m "Adding ignore file"
 
@@ -134,17 +173,17 @@ git status
 GIT DIFF
 ---------------------------------------------------------
 
-git diff
+git diff                                                             # Show changes between commits, commit and working tree; show changes between the working tree and the index 
 
-git difftool
+git difftool                                                         # Show changes using common diff tools
 
 ---------------------------------------------------------
 BRANCHING AND MERGE TYPES
 ---------------------------------------------------------
-branches are the names or lables we give timelines in Git
+Branches are the names or lables we give timelines in Git
 
 Types Of Merges
->Fast Forward - Simplest case, like never branched , can be disbaled
+> Fast Forward - Simplest case, like never branched , can be disbaled
 
 > Automatic - Noncoflicting merge detected, preserves both timelines,merge commit on destination
 
@@ -156,7 +195,6 @@ SPECIAL MARKERS
 Like pointers
 
 HEAD > points to Last Commit of current branch > can be moved
-
 
 ------------------------------------------------------------
 BRANCHING 
@@ -231,7 +269,7 @@ git stash
 
 git stash list
 
-git commit -am "updating readme file"
+git commit -am "updating README file"
 
 git stash pop
 
@@ -264,9 +302,9 @@ git reset 6ad47df --mixed
 git reset 6ad47df --hard #most destructive, any changes are wiped out
 
 ------------
-git log shows commit ids
+git log                                                  # shows commit logs [commit id, author, date, and comment]
 
-git reflog shows all different actions taken in repo
+git reflog                                               # shows all different actions taken in repo
 
 --------------------------------------------------------------------
 LINKING TO OUR GITHUB REPO
@@ -328,18 +366,22 @@ git clone git@github.com:drdecker100/demo.git
 STARTING REMOTE WITH A STARTER REPO
 ----------------------------------------------------------------
 
-creaste a repo and initialize with files- licence and readme files
+create a repo and initialize with files - licence and README files
 
-------------------------------------------
-Createa local copy with clone
-------------------------------------------
-git clone git@github.com:drdecker100/demo.git 
+----------------------------------------------------------------
+CREATE LOCAL COPY WITH CLONE  (CLONING A REMOTE REPO)
+----------------------------------------------------------------
+git clone <url>  <where to clone>
 
-#will clone the repo into a project folder named the repo name by default; 
+git clone ../remote_repo.git .                                             # . means this directory
+
+git clone git@github.com:drdecker100/demo.git .                            #  clone the repo into this current directory 
 
 ls -al
 
-git remote -v
+git remote -v                                                              # to view information about the remote repo
+
+git branch -a                                                              # list all branches both local and remote
 
 git clone git@github.com:drdecker100/demo.git my_new_name
 
@@ -431,14 +473,14 @@ git pull
 
 git branch -a
 
-git checkout update-readme
+git checkout update-README
 
 --------------------------------------------------
 CLEANING UP BY DELETING BRANCHES AND REFERENCES
 --------------------------------------------------   
 git pull --all # get updates from all remote repos
 
-git push origin :uodate-readme
+git push origin :uodate-README
 
 -------------------------------------------------
 PULL WITH REBASE
@@ -496,7 +538,7 @@ locally, paste url
 
 git clone git@github.com:drdecker100/starter-web.git
 
-git checkout -b feature-readme
+git checkout -b feature-README
 
 nano README.md
 
@@ -506,7 +548,7 @@ git status
 
 git commit -m "Adding README file"
 
-git push -u origin feature-readme
+git push -u origin feature-README
 
 
 --------------------------------------------------
