@@ -148,9 +148,7 @@ git add -u                                                                      
 git add -A                                                                                # picks up all files(all type of modifications) 
 
 rm myfile.txt
-
-git add -u                                                                                # means update
-
+                                                                             
 git commit -m "remove myfile.txt"
 
 
@@ -199,7 +197,7 @@ HEAD > points to Last Commit of current branch > can be moved
 ------------------------------------------------------------
 BRANCHING 
 ------------------------------------------------------------
-git branch
+git branch                                               # shows the local branches
 
 git checkout -b updates
 
@@ -324,7 +322,7 @@ PUSHING CHANGES TO GITHUB
 --------------------------------------------------------------------
 git status
 
-git push -u origin master --tags  #-u tracking branch between the master branch on the local repo and the master branch on the remote repo
+git push -u origin master --tags  #-u tracking branch between the master branch on the local repo(master) and the master branch on the remote repo(origin)
 
 #origin = name of the remote repo  
 #master = name of branch we will push up
@@ -418,7 +416,9 @@ git push
 ---------------------------------------------------
 FETCH and PULL
 ---------------------------------------------------
-pull --> fetch and merge
+pull                                            --> fetch and merge
+
+fetch                                           --> to fetch update, but does not merge
 
 
 --------------------------------------------------
@@ -438,11 +438,13 @@ git remote show origin
 ------------------------------------------------------
 COMMIT DETAILS GOING DEEPER
 ------------------------------------------------------
-GIT STATUS
+git status
 
-GIT PULL
+git pull                                       # developers could be working on a code at the same time, so its prudent to pull before working on a code to get the latest changes
 
-git show <sha-1>
+git pull origin master                         # means the remote master branch is origin and the local branch is master. Fetching changes/update from the remote brach to the local branch 
+
+git show <sha-1>                               # Shows one or more objects (blobs, trees, tags and commits).
 
 -----------------------------------------------------
 LOCAL BRANCHES
@@ -456,13 +458,13 @@ merging locally
 --------------------------------------------
 git checkout master
 
-git pull
+git pull                                              # Fetch from and integrate with another repository or a local branch
 
 git merge remove-ipsum
 
 git branch -d remove-ipsum
 
-git fetch -p #to removes any dead branches
+git fetch -p                                          #to removes any dead branches
 
 --------------------------------------------------
 LOCALLY SWITCH TO A BRANCH ON GITHUB
@@ -492,9 +494,9 @@ pwd
 #then playing back the commits that happened on the branch that you're wanting to bring in;
 #and after that, playing on top of that any commints that have happened on the branch that you are currently working on
 
-git fetch # to fetch update, but does not merge
+git fetch                                                               # to fetch update, but does not merge
 
-git pull --rebase #applying changes from Github before add changes locally
+git pull --rebase                                                       #applying changes from Github before add changes locally
 
 git push
 
@@ -569,13 +571,68 @@ SYNCHRONIZE CHANGES BACK TO YOUR FORK
 ------------------------------------------------
 Click star to send us notifactions later
 
-git remode add upstream git@github.com:scm-ninja/starterweb.git
+git remote add upstream git@github.com:scm-ninja/starterweb.git
 
  
 ------------------------------------------------
 transfer GITHUB ORGANIZATIONS
 ------------------------------------------------
 under personal account, click on repo,settings, and then transfer button
+
+-----------------------------------------------------------------
+COMMON WORKFLOW
+-----------------------------------------------------------------
+-----------------------------------------------------------------------creatinng a local repo
+* mkdir gitlearnhub 
+* cd gitlearnhub
+* touch demo.txt
+* git init 
+* git status
+* git add demo.txt / git add .
+* git commit -m "[workflow] Creating a new file"
+
+
+-----------------------------------------------------------------------cloning a repo
+* git clone git@github.com:scm-ninja/starterweb.git .
+* git remote -v
+* git branch -a 
+
+* git checkout master 
+* git pull
+
+* touch demo.txt 
+
+* git branch workflow                                    # to create a branch with name calc-divide
+* git checkout workflow                                  # switches from the current branch to the new branch
+
+* git status                                             # to check for changes 
+* git add .                                              # add changes to staging area
+* git commit -m "[workflow] cloned a repo                # the changes does not affect the local master branch and the remote repo
+
+* git push -u origin calc-divide                         #-u means to associate our local branch to the remote repo branch, so we can do git pull /push in the future
+
+
+# for unittest purposes, some people push up frokm the branch to the remote repo.
+# If everything works well, we can merge our branch to the master branch
+
+* git checkout master                                      # to switch back to master branch
+
+* git pull origin master                                   # to get update from the remote in case of some changes befre we commit anything to master
+
+* git branch --merged                                      # to
+
+* git merge calc-divide                                    # merge changes to the master branch
+
+* git push origin master                                   # the changes will be push to the master 
+
+
+# we need to delete the branch
+* git branch --merged                                      # to double -check if our merge worked. so we will see both branches
+
+* git branch -d workflow                                   # to delete our local branch
+
+* git push origin --delete workflow                        # to delete a remote branch
+
 
 
 
