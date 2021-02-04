@@ -4,6 +4,10 @@ Ctrl+ Alt + D = close terminal
 
 Ctrl + L = clear screen
 
+Ctrl + R = reverse search
+
+
+
 hostnamectl set-hostname VM
 
 -------------------------------
@@ -64,6 +68,8 @@ MANUAL PAGES
 man -k which
 
 man 1 which
+
+man test
 
 [  ] optional
 
