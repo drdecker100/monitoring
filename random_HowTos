@@ -83,6 +83,18 @@ set "dev= shh drdecker100@192.168.1.1"
 
 call --> %dev%
 
+#permanent fix
+--  create a bat directory in the c:/ folder
+--  create and edit a file named "macros.doskey"  [notepad macros.doskey]
+--  np=notepad $T
+    dev=cd Desktop/py/learn
+    
+--  under registry editor, go to KHEY_LOCAL_MACHINE/SOFTWARE/MICROSOFT
+-- right click on microsoft,click New,  String Value. Rename to Autorun
+
+--right click on it, click Modify and add value DOSKEY /MACROFILE="C:\bat\macros.doskey"
+
+
 
 
 
