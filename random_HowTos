@@ -75,5 +75,17 @@ click on remote explorer, select SSH targets and ADD NEW
 
 ssh osboxes@192.168.43.8   #ssh username@ip-address with password
 
+--------------------------------------------------------------
+#How to set aliases on Windows cmd prompt
+--------------------------------------------------------------
+#temporal fix
+set "dev= shh drdecker100@192.168.1.1"
+
+call --> %dev%
+
+
+
+
+
 
 
