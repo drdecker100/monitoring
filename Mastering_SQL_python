@@ -3,4 +3,70 @@ as the SQL local server
 
 #RDBMSes are a subset of DBMSes. A relational database refers to a database that stores data in a structured format, using rows(records) and columns(field).
 
-#
+# An important feature of A single database is it has several tables.
+
+# SQL(Structural querying language) used to communicate with the database. SQL allows the user to use series of commands and queries to retrieve or update data(CRUD)
+
+# "Select" , "Insert", "Drop", "Delete" are queries that can do an action
+
+# PSequel similar to PGAdmin is a free PostgresSQL GUI tool for MAcOX
+
+#to cretae a database 
+CREATE DATABASE learn_db;
+
+# to create a table with a column(field)
+CREATE TABLE test_table (
+  a INTEGER
+)
+
+# to check for data tyepes of postgres [https://www.postgresql.org/docs/9.5/datatype.html]
+
+# to create a table with two fields
+CREATE TABLE people (
+  id INTEGER,
+  name VARCHAR (255)
+)
+
+# To delete from a table
+DROP TABLE people;
+
+# Adding to table
+INSERT INTO people VALUES (1, "Corey")
+
+INSERT INTO people (name, id) VALUES ('Kwame', 4)
+
+INSERT INTO people (name, id) VALUES ('Kwame', '4')
+
+# to create a table with mutiple fields
+create table employees (
+	 id int,
+     first_name char (255),
+	 last_name  char (255),
+	 age        int,
+	 occupation	char (255)
+)
+
+# to show data of table employees, schema = public
+select * from public.employees;
+
+##########################
+create table employees (
+	 id int,
+     first_name char (255),
+	 last_name  char (255),
+	 age        int,
+	 occupation	char (255)
+)
+
+insert into employees values (1, 'John', 'Smith', 33, 'Teacher');
+
+insert into employees values (2, 'Donald', 'Decker', 40, 'Engineer');
+
+select * FRom public.employees;
+
+SELECT first_name,last_name FROM people;
+########################
+
+
+
+
