@@ -1,1 +1,6 @@
+# using Mac, so wwe will download Postgres.app[free and open-source relational database management system (RDBMS) emphasizing extensibility and SQL compliance.]
+as the SQL local server
 
+#RDBMSes are a subset of DBMSes. A relational database refers to a database that stores data in a structured format, using rows(records) and columns(field).
+
+#
