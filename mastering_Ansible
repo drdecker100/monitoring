@@ -3,7 +3,7 @@ an IT auotmation platform that makes your applications and systems easier to dep
 
 #It supports configuration mgmt with examples as below:
 -Configuration of servers
--Apllication deployment
+-Application deployment
 -Continuous testing of already intalled apps
 -Provisioning(post-implementation tasks)
 -Orchestration
