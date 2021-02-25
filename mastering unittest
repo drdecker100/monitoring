@@ -1,0 +1,21 @@
+# System testing is actually a series of different tests whose sole purpose is to exercise the full computer based system. What you verify in system testing ?
+
+# 1. End to End Scenraio testing is testing the fully integrated applications including external peripherals(any external device that provides input and output for the system)
+in order to check how components interact with one another and with the system as a whole.
+
+# 2. Verify thorough testing of every input in the application to check for desired outputs.
+
+# 3. testing of the user's experience with the application.
+
+# Types of system Testing - usabiltiy testing ; - stress testing ; - regressiom testing ; - functional testing ; unit testing ; integration testing
+
+# Unit Testing test each part of the program and shows that the individual parts are correct, 
+whereas Integration Testing combines different modules in the application and test as a group to see they are working fine
+
+# Intgration testing
+in this phase of testing, individual modukes are combined and tested as a group. Data transfer between the modules is tested thoroughly.
+
+# Incremental Testing
+modules are tested as and when they are available. 
+
+A stub (A stub may simulate the behavior of existing code or be a temporary substitute for yet-to-be-developed code) is created in palce of the awaiting module.
