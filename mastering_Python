@@ -52,41 +52,66 @@ Stores values. variable has a name and a value
 
 number = 1
 
-number
-#output value stored in variable name
+pint(number)
+# output value stored in variable name
 
 # variables are case-sensitive  number != Numbers
 
-#Dynamically typed language if the type of a variable is checked during run-time. 
+# Dynamically typed language if the type of a variable is checked during run-time. 
 Common examples includes JavaScript, Objective-C, PHP, Python, Ruby, Lisp, and Tcl
 
-#Also means the type of variable can change unlike c, java that you have to state the type of variable
+# Also means the type of variable can change unlike c, java that you have to state the type of variable
 
-#using type function to find the type of variable
+# using type function to find the type of variable
 type(number)
+>>int
 
-int
-#use lowercase variable names, with underscores(_)for spaces
+# USE LOWERCASE VARIABLE NAMES, WITH UNDERSCORES(_)FOR SPACES
 
 -----------------------------------------
-NUMBERS
+NUMBERS (INTEGERS AND FLOAT)
 -----------------------------------------
 Basic Algebra 
 
-Integer is a whole number, float is a decimal number
 
-Mathematical Operators(+-*/%**//)
-/ = division , returns float(python 3)
-% = modulos , returns reminder
-** = exponentiation
-// = floor division 
+#Integer is a whole number, float is a decimal number
+# Float datatype for storing decimal numbers
+# Order of computations using BODMAS(brackets order division multiplication addition subtraction)
 
-Float datatype for storing decimal numbers
+num_1 = '100'                       # data type = string 
+num_2 = '200'
+num_3 = '200.5'                       # data type = float
+num_4 = 200.5
 
-Order of computations using BODMAS(brackets order division multiplication addition subtraction)
+num_1 = int(num_1)                  # cast num_1 into an integer
+num_2 = int(num_2)                  # cast num_2 into an integer
+num_3 = int(num_3)                  # returns error ValueError: invalid literal for int() with base 10: '200.5'
+num_4 =int(num_4)                   # returns 200 ; cast the float to integer
+print(num_1 + num_2)
 
-Python modules Import random , import math (Python documnetation under IDLE docs)
+# Arithmetic Operators:
+# Addition:       3 + 2           ; 5 
+# Subtraction:    3 - 2           ; 1
+# Multiplication: 3 * 2           ; 6
+# Division:       5 / 2           ; 2.5 ;divide two numbers and return their quotient as a float.
+# Floor Division: 5 // 2          ; 2   ;gets the integer quotient, while discarding the remainder. This means that the result of a//b is always an integer.
+# Exponent:       3 ** 2          ; 9
+# Modulus:        5 % 2           ; 1   
 
+num = 2
+num *= 10                          # num = num * 10
+print(num) > 20
+
+# Comparisons:                      # returns bool (True or False)
+# Equal:            3 == 2          ; False
+# Not Equal:        3 != 2
+# Greater Than:     3 > 2
+# Less Than:        3 < 2
+# Greater or Equal: 3 >= 2
+# Less or Equal:    3 <= 2          ;False
+
+
+Python modules Import random , import math (Python documnetation under IDLE docs  https://docs.python.org/3/)
 #Creating a health portion
 
 import random
@@ -106,28 +131,31 @@ health = health + potion_health
 #print function to output new health value onto screen
 print(health)
 
+
+
 ----------------------------------------------------------
 STRINGS
 ----------------------------------------------------------
 ++ 3 ways to create strings
-name = " Donald"
+name = " Donald"                          # 1. using double quotes
 
-message = "John" says hi" #broken strings
+message = "John" says hi"                 # broken strings
 
-TO FIX
+TO FIX/HANDLE broken strings
 msg = ''' "John" says hi" '''
 
-msg = """ "John" says hi" """
+msg = """ "John" says hi" and             # 2. using 3 quotes for multi-line
+he will pay the family a visit """             
 
-msg = " \"John\" says hi "
+msg = " \"John\" says hi "                # using escape character '\'
 
 msg = ' "John" says hi '
 
-print('Hello World')
+print('Hello World')                      # 3. using single quotes
 
 print("c:\drive\name")
 
-print(r"c:\drive\name")            #treats it as raw string
+print(r"c:\drive\name")                   # treats it as raw string
 > c:\drive\name
 
 #ask user for name
@@ -137,44 +165,235 @@ print(name)
 --------------------------------------------------------
 CONCATENATE stings
 -------------------------------------------------------
-#should be of the same data type
+# SHOULD BE OF THE SAME DATA TYPE
 
 A = "part one"
 B = "part two"
 
 A + B
-'part onepart two
+> part onepart two                            # no space, adds the values of the variable together
+
+A + ', ' + b                                  # adds the 3 strings together
+> part one, part two
 
 A * 3
+> part onepart onepart one
 
 "=" *20
+> ====================
 
 B=1
+A+B , returns error                           # because of different types, it returns an error
 
-A+B , returns error
-
-A + str(B) 
+A + str(B)                                    # The in-built str() function is used to convert the specified value into a string. 
 'part one1'
 
----------------------------------------------
-STRING FORMATTING
----------------------------------------------
-A = 'part'
 
+---------------------------------------------
+STRING FORMATTING and F -STRINGS
+---------------------------------------------
+A = 'part'                                      # data type is string
+
+B = 1                                           # data type is an integer
+
+print("{} - {}".format(A,B))                    # using {} as placeholder for the individual variables        
+> part - 1
+
+print("{0} - {1}".format(A.upper(),B))
+> PART - 1
+
+print("{1} - {0}".format(A,B))          
+> 1 - part
+
+
+#this concatenating  is not readable; need to be mindful of spaces 
+person = {'name': 'Jenn', 'age': 23}
+> My name is Jenn and I am 23 years old.
+
+sentence = 'My name is ' + person['name'] + ' and I am ' + str(person['age']) + ' years old.'
+print(sentence)
+> My name is Jenn and I am 23 years old.
+
+sentence = 'My name is {} and I am {} years old.'.format(person['name'], person['age'])      # using string formatting with a dictionary 
+print(sentence)
+> My name is Jenn and I am 23 years old.
+
+sentence = 'My name is {0} and I am {1} years old.'.format(person['name'], person['age'])
+print(sentence)
+> My name is Jenn and I am 23 years old.
+
+sentence = 'My name is {0[name]} and I am {0[age]} years old.'.format(person)                 #         
+print(sentence)
+> My name is Jenn and I am 23 years old.
+
+l = ['Jenn', 23]
+sentence = 'My name is {0[0]} and I am {0[1]} years old.'.format(l)                          # using string formatting with list         
+print(sentence)
+
+#using string formatting with a class obj
+class Person():
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person('Jack', '33')
+
+sentence = 'My name is {0.name} and I am {0.age} years old.'.format(p1)
+print(sentence)
+> My name is Jack and I am 33 years old.
+
+tag = 'h1'
+text = 'This is a headline'
+
+sentence = '<{0}>{1}</{0}>'.format(tag, text)
+print(sentence)
+> <h1>This is a headline</h1>
+
+# using string formatting with keyword  arguments
+sentence = 'My name is {name} and I am {age} years old.'.format(name='Jenn', age='30')
+print(sentence)
+
+sentence = 'My name is {name} and I am {age} years old.'.format(**person)
+print(sentence)
+
+# to zero pad and tab values
+for i in range(1, 11):
+    sentence = 'The value is {:02}'.format(i)               # {:05} to have 5-digit value(5 for width), and have one tab            
+    print(sentence) 
+
+import math
+print("Floating point {0:10.3f}".format(math.pi))
+> Floating point 3.142
+we specify 3 digits of precision, 10 for width and f for floating point number.
+
+pi = 3.14159265
+
+sentence = 'Pi is equal to {:.2f}'.format(pi)               # 2 digit of precision
+print(sentence)
+> Pi is equal to 3.14
+
+sentence = '1 MB is equal to {:,} bytes'.format(1000**2)     #{:} shows we want to do some formatting 
+print(sentence)
+> 1 MB is equal to 1,000,000 bytes
+
+import datetime
+
+my_date = datetime.datetime(2016, 9, 24, 12, 30, 45)
+print(my_date)
+> 2016-09-24 12:30:45
+
+sentence = '{:%B %d, %Y}'.format(my_date)                     # %B month as locale's full name; %d day of the month; %Y year without century as a zero-padded decimal number
+print(sentence)
+> September 24, 2016
+
+sentence = '{:%B %d, %Y} fell on a {:%A} and was the {:%j} day of the year'.format(my_date)
+print(sentence)
+> September 24, 2016 fell on a Saturday and was the 268 day of the year
+
+from datetime import datetime
+time_now = datetime.now()
+sentence = '{0:%B %d, %Y} fell on a {0:%A} and was the {0:%j} day of the year'.format(time_now)
+print(sentence)
+> February 28, 2021 fell on a Sunday and was the 059 day of the year
+
+
+----------------------
+F-STRING
+---------------------
+A = 'part'                                                                  # data type is string
 B = 1
 
-print("{} - {}".format(A,B))
+print(f"{A.upper()} - {B}")                                                 # using f -string to print output
+> > PART - 1
 
-print("{0} - {1}".format(A,B))
+first_name = 'Corey'
+last_name = 'Schafer'
 
-print("{1} - {0}".format(A,B))
+sentence = f'My name is {} {}'.format(first_name,last_name)
+print(sentence)
+> My name is Corey Schafer
+
+sentence = f'My name is {first_name} {last_name}'
+print(sentence)
+> My name is Corey Schafer
+
+person = {'name':'Jenn', 'age':23}
+
+sentence = f"Myname is {person['name']} and I am {person['age']} years old"   # if you use single quote, it will raise error becuase it terminate with the key in the placeholder
+print(sentence)
+
+# we can run methods and function in our placeholder
+for n in range(1, 11):
+    sentence = f'The value is {n:02}'
+    print(sentence)
+
+from math import pi
+sentence = f'Pi is equal to {pi:.4f}'
+print(sentence)
+
+>Pi is equal to 3.1416
+
+from datetime imprt datetime
+
+birthday = datetime(1990, 1, 1)
+
+sentence = f'Jenn has a birthday on {birthday: %B %d %Y}'                         #https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+> Jenn has a birthday on February 01 1990
+
+
 
 --------------------------------------------
-DIR method & other useful functions
+DIR method & other useful functions(help, round,divmod, isinstance, pow, input, min, max, sorted, eval)
 -------------------------------------------
-print(dir())
+dir([object])                                 # the object is an optional argument; When nothing is passed, the method returns back the list of all the local attributes(local scope)
+
+print(dir())                                     # returns all methods and attributes/properties of the specified object in an alphabetically sorted manner.
+> ['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__']
+
 print(dir(string))
+> ['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+
 print(dir(list))
+['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+
+class shape:                                    #class with custom object with undefined __dir__()
+    name = "rectangle"
+    sides = 4
+ 
+obj = shape()
+print(dir(obj))                                 # dir for our custom object
+> ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'name', 'sides']
+
+# Python dunder (https://www.tutorialsteacher.com/python/magic-methods-in-python) or magic methods = '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', ...
+# Magic/Dunder  methods are the special methods that start and end with the double underscores. 
+# Magic methods are not meant to be invoked directly by you, but the invocation happens internally from the class on a certain action. 
+# For example, when you add two numbers using the + operator, internally, the __add__() method will be called.
+>>> num=10
+>>> num + 5
+15
+>>> num.__add__(5)
+15
+
+2. With defined __dir__(), the dir() method calls the corresponding __dir__() method which must again return a list of attributes.
+
+class shape:                                    # class with custom object with defined __dir__()
+    name = "rectangle"
+    sides = 4
+    def __dir__(self):
+        return ['Square','Circle']
+ 
+obj = shape()
+print(dir(obj))                                 #dir for our custom object
+> ['Circle','Square']
+
+# Help() functions                              used to display the documentation of modules, functions, classes, keywords etc
+print(help(str))
+print(help(str.lower()))
+> Help on method_descriptor:
+
+lower(self, /)
+    Return a copy of the string converted to lowercase.
 
 round() # rounds floating point number to the nearest integer or specified number of places
 round(5.6231)
@@ -206,7 +425,7 @@ pow(2,3,3)              # returns the remainder of (2 to the power 3) divided by
 
 input() a = input("Enter name: ") # no matter the input, it returns string type
 
-help(input) #returns details of function
+help(input)             #returns details of function
 
 min()                   # returns the lowest element in a list
 
@@ -220,67 +439,74 @@ eval("3+4")             #evaluates string and returns an object
 ---------------------------------------------
 STRING METHODS
 ---------------------------------------------
-string.method()
+syntax = string.method([argument])
 
 "hello".count("e")
 
 text = "happy birthday"
-
-text.count("a")
+text.count("a")                         # takes a string as an argument and returns the number of occurence                
+> 2
 
 text.count("day")
+> 1  
 
 x = "Happy Birthday"
-
 x.lower()
 > happy birthday
 
 x.upper()
 > HAPPY BIRTHDAY
  
-#returns intial value because string are immutable(cannot be changed) , but can be overwritten
+print(x)                        # returns intial value because string are immutable(cannot be changed) , but can be overwritten
 
 x.title()
 > Happy Birthday
 
-x.capitalize()           #returns the capital of the first letter
+x.capitalize()                  # returns the capital of the first letter
 > Happy birthday
 
-x.isalpha(), x.isupper() , x.istitle(), x.isdigit(), x.isalnum
+x.isalpha(), x.isupper() , x.istitle(), x.isdigit(), x.isalnum        # because of space, .isalpha() will return false
 
-#because of space, .isalpha() will return false
+x = "happy birthday"            # assigned string to a variable
 
-x = "happy birthday"
-x.index("birthday")            #returns the number of the first occurence of the letter or word  #case-sensitive
+x.index("birthday")             # returns the number of the first occurence(index) of the letter or word  #case-sensitive
 > 6
 
-x.index("jashdfasdsfs")        #returns an error
+x.index("jashdfasdsfs")         # returns an error
 
 x.find("birthday")
 > 6
 
-x.find("adsfsfdsfgdgfsfsdfs")   #returns -1 if it cant be found, so preferred to index. it doesnt return error when the str is not found
+x.find("adsfsfdsfgdgfsfsdfs")   # returns -1 if it cant be found, so preferred to index. it doesnt return error when the str is not found
 -1
 
 y = "000000happy0birthday000000"
 y.strip("0")
-'happybirthday'    #strip off both sides
+'happybirthday'                                 # strip off the arg "0" from both sides
 
-y.lstrip("0")
+y.lstrip("0")                                   # strip off the arg "0" from left side
 'happy0birthday0000000"
 
-y.rstrip("0")
+y.rstrip("0")                                   # strip off the arg "0" from right side
 '00000000happy0birthday'
 
-y.strip()   #strips the string off spaces
+y.strip()                                       # strips the string off spaces
 
-y.replace("0","")     # replacing the first substring with the second substring
-> happybirthday
+new_y = y.replace("0","")                       # replaces the first argument(substring) with the second substring(argument)
+print(new_y)
+> happybirthday                     
+print(y)                                        # if a new variable is not set, it will return the same value  
+> 000000happy0birthday000000
+
+y = y.replace("0","")                           # setting it to the same varibale to modify its value
+print(y)
+
 name = input("Whatis your name?: ").strip()
 What is your name?: Zee  #with spaces
 
 print(name)      #returns output without space
-len(name)
+
+len(name)        #returns the count of elements in the variable
 
 "at" in "bathlehom"
 > True 
@@ -289,11 +515,11 @@ len(name)
 > True
 
 ---------------------------------------
-SLICES
+SLICING (string)
 ---------------------------------------
 string = "ABCDEFG123456"
 
-#it is ITERABLE meaning you can go through it step by step, each step is called element of the string
+#it is ITERABLE meaning you can go through it step by step,  STEP IS CALLED ELEMENT OF THE STRING
 #each element has an index and starts from zero
 
 word = "supercalifragilisticexpialidocious"
@@ -306,10 +532,10 @@ word
 
 variable[start:end:step]   # up to end, but included
 
-word[0:5:1]
+word[0:5:1]                # get a range of elements , from the first index up to the 5th elemrnt but not including in steps of 1
 'super'
 
-word[0:5:2]
+word[0:5:2]                 # get a range of elements , from the first index up to the 5th elemrnt but not including in steps of 2
 'spr'
 
 word[5:9] = 'cali'
@@ -317,13 +543,28 @@ word[5:9] = 'cali'
 word[5:]
 'califragilisticexpialidocious'
 
-word[5::2]
+word[5::2]                      #slice from the 5th index up to the end, and in 2 steps
 
 
-word[:7]
+word[:7]                        # slice from the beginning up the 7th element but not included
 'superca'  
 
-word[::-1]
+word[::-1]                      # reverse the entire string
+
+sample_url = 'http://coreyms.com'
+print(sample_url)
+
+# Reverse the url
+print(sample_url[::-1])
+
+# Get the top level domain (TLD)
+print(sample_url[-4:])
+
+# Print the url without the http://
+print(sample_url[7:])
+
+# Print the url without the http:// or the top level domain
+print(sample_url[7:-4])
 
 -------------------------------------------
 AUTOMATE SLICES
@@ -522,24 +763,45 @@ True
 S = [12,"banana"", 5.3,12]              #duplicates
 
 ------------------------------------------------
-SLICING
+SLICING        
 ------------------------------------------------
-paakow[0:3]
-[A,B,C]
+# list[start:end:step]                   # end is not inclusive
 
-Nested list
+my_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+#          0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+#        -10,-9,-8,-7,-6,-5,-4,-3,-2,-1
+
+print(my_list[::-1])                    # prints out first element to the last element in reverse steps (entire list is reversed)
+> [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+print(my_list[0:3])                     # prints out the first element up to the third but not included
+> [0,1,2]
+
+print(my_list[-7:-2])                   # prints out the negative 7th index up to the negative 2nd index 
+> [3, 4, 5, 6, 7]
+
+print(my_list[-2:-7:-1])                # prints out the negative 2nd index up to the negative 7th index in a reverse step
+> [8, 7, 6, 5, 4]
+
+print(my_list[-2:3:-1]) 
+> [8, 7, 6, 5, 4]
+
+# Nested list
 our_list = [1,2,[3,4,5],6,7,8]
 
 our_list[2]
-[3,4,5]
+> [3,4,5]
 
 our_list[2][1]
-4
+> 4
 
 our =_list[2][0::2]
-[3,5]
+> [3,5]
 
 >>> jack = [5,6,7,8,"Ama"]
+jack[-1]
+> Ama
+
 >>> type(jack[-1])
 <class 'str'>
 
@@ -1677,7 +1939,10 @@ OBJECT ORIENTED PROGRAMMING(O.O.P)
 
 #To create states, we use class variables 
 #To create behaviors, we use methods 
-#Methods are the same as functions, we call them methods when using classes
+
+# Methods are the same as functions, we call them methods when using classes
+
+# Method is a function that belongs to an object
 
 Class for a 10p Coin
 
