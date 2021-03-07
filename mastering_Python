@@ -622,24 +622,109 @@ True
 2 != 3     #not equal to
 True
 
-4 >= 3	   #greather than or equal to
+4 >= 3	   #greater than or equal to
 True 
+
+# Comparisons:
+# Equal:            ==
+# Not Equal:        !=
+# Greater Than:     >
+# Less Than:        <
+# Greater or Equal: >=
+# Less or Equal:    <=
+# Object Identity:  is                       # 
+
+#  == operator compares the value or equality of two objects, whereas the Python "is" operator checks whether two variables point to the same object in memory(same id).
+
+
+# and                   # must be object A and object B
+# or                    # either object A or object B 
+# not                   # switch boolean
+
+# False Values:
+    # False
+    # None
+    # Zero of any numeric type
+    # Any empty sequence. For example, '', (), [].
+    # Any empty mapping. For example, {}.
 
 ---------------------------------------
 IF STATEMENTS (CONTROL FLOW)
 ---------------------------------------
--aloows us to execute code if the condition is True.
+- allows us to execute code if the condition is True.
 
-if condition :
-	code         #execute if condition is True
+if condition:
+	code                        #execute code if condition is True
 --------------------	
 if True:
-    print("It worked")
+    print("It worked, Conditional was True")
+> It worked, Conditional was True
     
 if False:
-    print("It didnt work")
+    print("It didnt work, Conditional was False")         # will not print because conditional evaluated to False
 
---------------------
+language = 'Python'                                       # = means assignment
+
+if language == 'Python':                                  # == (equal) comparing two objects
+    print('Conditional was true')
+
+> Conditional was true
+
+if language:                                  # == (equal) comparing two objects
+    print('Conditional was true')
+
+> Conditional was true
+
+language = 'Java'
+if language == 'Python':
+    print('Conditional was True')
+elif language == 'Java':
+    print('Language is Java')
+else:
+    print("No match")
+
+> Conditional was Java
+
+user = 'Admin'
+logged_in = True
+
+if user == 'Admin' and logged_in:
+    print('Admin Page')
+else:
+    print('Bad Creds')
+
+> Admin Page                          # if IF condition is met
+
+a = [1, 2, 3]
+b = [1, 2, 3]
+c = a 
+
+print(a == b)
+> True 
+
+print(a is b)
+> True
+
+print(id(a))
+> 2639312 
+
+print(id(b))
+> 2640472 
+
+print(id(c))                            # c and a points to the same id
+> 2639312
+
+print(id(a) == id(b))                   # similar to is
+> True
+
+condition = False                       # False, None, 0 , " " , () , {} evaluates to false
+
+if condition:
+    print('Evaluated to True')
+else:
+    print('Evaluated to False')
+
+
 num1 = 100
 num2 = 150
 
@@ -743,24 +828,38 @@ if C > 1 or D > 1:
 
 --------------------------------------------------------------------------------------------
 DATA STRUCTURES(collections) - List, Tuple, Set, Dictionary
-
 ---------------------------------------------------------------------------------------------
-LISTS DATA STRUCTURE (list are ordered(positioning/indexing), mutable(changeable), duplicates
-----------------------------------------------------------------------------------------------
-our_list = [27,46,-5,17,99]
-print(our-list)
+# Lists and Tuples allow us to work with sequential data, and Sets allow us to work with unordered unique values.
 
-type(our_list)
+
+LISTS DATA STRUCTURE (list are ordered (positioning/indexing), mutable(changeable), and have duplicate elements
+----------------------------------------------------------------------------------------------
+# create a list of courses
+courses = ['History', 'Math', 'Physics', 'CompSci']
+print(courses)
+
+# to get first item
+print(courses[0])
+> History
+
+# to get the last item
+print(courses[-1])
+> CompSci
+
+# returns IndexError if index is out of range
+print(courses[5])
+
+type(courses)
 class 'list'
 
 paakow = ["A","B","C",1,2,3 "Do","Rey","Mi",True,False]
 paakow[4]
-2
+> 2
 
 paakow[-2]
-True
+> True
 
-S = [12,"banana"", 5.3,12]              #duplicates
+S = [12,"banana"", 5.3,12]              # duplicates because integer 12 appears twice
 
 ------------------------------------------------
 SLICING        
@@ -835,13 +934,80 @@ while True:
 ------------------------------------------- 
 List Methods
 -------------------------------------------
+courses = ['History', 'Math', 'Physics', 'CompSci']
 
-known_users.pop(index)      #worked with the index of the element
-known_users.pop(3)
+courses.append('Arts')                                          # argument is added to the end of list
+print(courses)
+> ['History', 'Math', 'Physics', 'CompSci', 'Arts']
 
-known.users.remove(name)	# removes the first occurence of the element, the item should be unique otherwise, you may need a loop
+courses.insert(0, 'Chemistry')                                  #2nd argument, chemistry, is added to the first index of the list
+print(courses)
+>  ['Chemistry', 'History', 'Math', 'Physics', 'CompSci']
 
-del known_users[0]          #remove object in the first index
+courses.extend(['Education,'Agric'])                            # used when we want to add multiple values to the end of the list 
+print(courses)
+> ['History', 'Math', 'Physics', 'CompSci','Education,'Agric']
+
+courses.remove('Math')                                           # removes the first occurence of the element, the item should be unique otherwise, you may need a loop
+print(courses)
+> ['History', 'Physics', 'CompSci']
+
+courses.pop()                                                    # will remove the last item of the list
+print(courses)
+> ['History', 'Math', 'Physics']
+
+popped = courses.pop()                                            # can store the remove value into a variable
+print(popped)
+> CompSci
+
+#courses.pop(index)                                               # worked with the index of the element
+courses.pop(3)
+
+courses.reverse()                                                 # reverse the list
+> ['CompSci', 'Physics', 'Math', 'History']
+
+courses.sort()                                                    # arranges the elements in the list in alphabetically order
+> ['CompSci', 'History', 'Math', 'Physics']
+
+nums= [5,3,2,4,1]
+nums.sort()                                                       # arranges the numbers in ascending order, alters the original list
+> [1,2,3,4,5]
+
+courses.sort(reverse=True)                                        # arranges the elements in the list in the reverse  order
+> ['Physics', 'Math', 'History', 'CompSci']
+
+nums.sort()                                                       # arranges the numbers in decending order, alters the original list
+> [5,4,3,2,1]
+
+sorted(courses)                                                   # sorts list but does not alter the original list
+
+sorted_courses = sorted(courses)                                  # storing the sorted list to another variable
+
+print(course.index('ComspSci'))                                   # to find index of the element in the list
+> 3
+
+print('Math' in courses)                                          # returns a bool(True) if expression is true
+> True
+
+#accessing values of list by looping
+for course in courses:
+    print(course)
+
+# accessing index and values by looping with enumerate
+for index,course in enumerate(courses, start=1):
+    print(index, course)
+
+# CHANGING FROM LIST TO STRING
+course_str = ' - '.join(courses)
+print(course_str)
+> History - Math - Physics - CompSci
+
+# CHANGING FROM LIST TO STRING
+new_list = course_str.split(' - ')
+print(new_list)
+> ['History, Math, Physics, CompSci']
+
+del courses[0]                                                    # remove object in the first index
 
 -------------------------------------------
 Adding items to lists
@@ -897,7 +1063,7 @@ A.insert(2,100)
 A.insert(2,[10,20,30])
 [5,12,[10,20,30],100,4,5]
 
-#list are mutable (You do not need to re-assign with list methods, will return NoneType
+#list are mutable (You do not NEED TO RE-ASSIGN WITH LIST METHODS, WILL RETURN NONETYPE )
 
 A = [1,2,3]
 A[0] =5
@@ -905,9 +1071,9 @@ A = [5,2,3]
 
 
 ---------------------------------------------------------------------------
-TUPLES (ordered ; unchangeable(immutable); duplicates)
+TUPLES (ordered ; unchangeable(immutable); can have duplicate elements)
 ---------------------------------------------------------------------------
-#oNCE A tuple is created, you cannot change its contents 
+#once A tuple is created, you cannot change its contents 
 #it is immutable
 
 our_tuple = 1,2,3,"A","B","C"
@@ -965,59 +1131,172 @@ del A   #can delete all items, but can not delete one element(immutable)
 
 T2 = T  #to copy elements
 
+# Mutable (easy to loop through and access)
+list_1 = ['History', 'Math', 'Physics', 'CompSci']
+list_2 = list_1
+
+print(list_1)
+print(list_2)
+> ['History', 'Math', 'Physics', 'CompSci']
+> ['History', 'Math', 'Physics', 'CompSci']
+
+list_1[0] = 'Art'                                 # changing the value of list_1 changes the values of list_2 because they are mutable
+
+print(list_1)
+print(list_2)
+> ['Art', 'Math', 'Physics', 'CompSci']
+> ['Art', 'Math', 'Physics', 'CompSci']
+
+# Immutable (not changed)
+tuple_1 = ('History', 'Math', 'Physics', 'CompSci')
+tuple_2 = tuple_1
+
+print(tuple_1)
+print(tuple_2)
+
+tuple_1[0] = 'Art'                                 # returns TypeError: 'tuple' object does not support item assignment. cannot change or modify
+
+print(tuple_1)
+print(tuple_2)
+
 
 ---------------------------------------------------------
-SETS (Unordered ; addable/removable ; no duplicates)
+SETS (Unordered (the order changes); addable/removable ; no duplicates/unique elements)
 ---------------------------------------------------------
-S = {12,"banana"", 5.3}
+S = {12,"banana"", 5.3, 12}
+print(S)
+{12,"banana"", 5.3}             #all elements are unique
 
-X in S  # returns True or False
+X in S                          # returns bool if expression is true or false
 
 S.add("new item")
+
 S.update({"more","items"})      #more than one element
+
 S.remove("banana")
+
 del S 
 
 S2 = S.copy()
 
+cs_courses = {'History', 'Math', 'Physics', 'CompSci'}
+art_courses = {'History', 'Math', 'Art', 'Design'}
+
+print(cs_courses.intersection(art_courses))
+> {'History', 'Math'}
+
+print(cs_courses.difference(art_courses))
+> {'Physics', 'CompSci'}
+
+print(cs_courses.union(art_courses))
+> {'Art', 'CompSci', 'Physics', 'Design', 'History', 'Math'}
+
+# Empty Lists
+empty_list = []
+empty_list = list()
+
+# Empty Tuples
+empty_tuple = ()
+empty_tuple = tuple()
+
+# Empty Sets
+empty_set = {} # This isn't right! It's a dict
+empty_set = set()
+
 
 ---------------------------------------------------------
-DICTIONARIES (Unordered ; changeable ; no duplicates)
+DICTIONARIES (Unordered ; changeable ; no duplicates)   (word and definition)
 ---------------------------------------------------------
-students = {}
-students
-{}
-type(students)
+student = {}
+print(student)
+> {}
+
+type(student)
 <class 'dict'>
 
+student = {'name':"John', 'age':25, 'courses': ['Math', 'Compsci']}
+
+print(student['courses'])
+> ['Math', 'Compsci']
+
+#the key are mostly string, but they can be any immutable type, string, integer . 
+# the value could be a string, list, integer
+
+student = {1:"John', 'age':25, 'courses': ['Math', 'Compsci']}
+print(student[1])                                                 # key is an integer in this case
+> John 
+
+print(student['phone'])                                           # returns a key error when key is not found
+> Traceback (most recent call last):
+  File "Untitled-1.py", line 3, in <module>
+    print(student['phone'])
+KeyError: 'phone
+
+print(student.get('phone'))                                        # returns None is key is absent
+> None
+
+print(student.get('phone', 'Not found'))                           # returns argument 2 if key is not found
+> Not found 
+
+student['phone'] = '555-5555'                                      #  updates the key with new value
+student['name'] = 'Jane'
+
+print(student)
+> {'name': 'Jane', 'age': 25, 'courses': ['Math', 'Compsci'], 'phone': '555-5555'}
+
+student.update({'name': 'jane', 'age':26, 'phone': '555-5555'})    # updates the dict with new values
+print(student)
+> {'name': 'Paul', 'age': 26, 'courses': ['Math', 'Compsci'], 'phone': '555-5555'}
+
+del student['age']
+print(student)
+>
+
+age = student.pop('age')
+>print(age)
+26
+
+print(len(student))                                                    # count of number of keys
+> 3
+
+print(student.keys())
+> dict_keys(['name', 'age', 'courses'])
+
+print(type(student.keys()))
+> <class 'dict_keys'>
+
+print(student.values())
+> dict_values(['John', 25, ['Math', 'Compsci']])
+
+print(type(student.values()))
+> <class 'dict_values'>
+
+print(student.items())
+> dict_items([('name', 'John'), ('age', 25), ('courses', ['Math', 'Compsci'])])
+
+for key in student:
+    print(key, end=", ")
+> name, age, courses,
+
+for value in student.values():
+    print(value, end=", ")
+> John, 25, ['Math', 'Compsci'],
+
+for key,value in student.items():
+    print(key, value,sep=':', end=", ")
+> name:John, age:25, courses:['Math', 'Compsci'],
+
 students = {"Dan":20, "Bob":30}
-students
-{'Dan': 20, 'Bob': 30}
+print(students)
+> {'Dan': 20, 'Bob': 30}
+
 error_std = {Alice:20, Bob:30}
 Traceback (most recent call last):
   File "<pyshell#6>", line 1, in <module>
     error_std = {Alice:20, Bob:30}
 NameError: name 'Alice' is not defined
 
-students["Dan"]
-20
-
-#adding another key to the dictionary
-students["Fred"] = 40
-students
-{'Dan': 20, 'Bob': 30, 'Fred': 40}
- 
-#to delete a item(key,value
-del students["Fred"]
-students
-{'Dan': 20, 'Bob': 30}
- 
-#to read the keys of the dictionary
-students.keys()
-dict_keys(['Dan', 'Bob'])
- 
 #it is iterable , but not indexable
- 
 students.key()[0]
 Traceback (most recent call last):
   File "<pyshell#21>", line 1, in <module>
@@ -1033,18 +1312,19 @@ students_keys[1]
 >'Bob'
  
 students.values()
-dict_values([20, 30])
+> dict_values([20, 30])
+
 b = list(students.values())
 b
-[20, 30]
+> [20, 30]
 b[1]
-30
+> 30
  
-#Unlike a tuple and list, dictionaries are orderless
+# Unlike a tuple and list, dictionaries are orderless
 students
-{'Dan': 20, 'Bob': 30}
+> {'Dan': 20, 'Bob': 30}
 
-#to concatenate two dictionaries 
+# to concatenate two dictionaries 
 D = {"name": ["Ama","Afia"], "age" : ["20","30"]}
 D2 = {"blood" :["O","AB"]}
 
@@ -1301,6 +1581,52 @@ for j in range(len(L)):
     L[idx] = tmp
 print(L)
 
+# break will end the loop and continue will move onto the next iteration of the loop
+
+num = [1,2,3,4,5]
+
+for num in nums:
+    if num == 3:
+        print('Found!')
+        break
+    print(num)
+> 1, 2, Found!
+
+for num in nums:
+    if num == 3:
+        print('Found!')
+        continue
+    print(num)
+
+> 1, 2, Found!
+4, 5,
+
+for num in nums:
+    for letter in 'abc':
+        print(num, letter)
+
+> 1 a, 1 b, 1 c, 2 a, 2 b, 2 c, 3 a, 3 b, 3 c, 4 a, 4 b, 4 c, 5 a, 5 b, 5 c, 
+
+x = 0
+
+while x < 10:
+    print(x, end=', ')
+    x += 1
+
+> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+
+x= 0
+
+while x < 10:
+    if x == 5:
+        break 
+    print(x) 
+    x += 1 
+
+> 0, 1, 2, 3, 4,
+
+
+
 -------------------------------------------------------------------------
 List comprehension
 -------------------------------------------------------------------------
@@ -1448,31 +1774,115 @@ output = " ".join(new_words)
 print(output)
 
 -------------------------------------------------------
-Functions
+Functions                           DRY( Dont Repeat Yourself)
 -------------------------------------------------------
 #Functions is a block of organized and reusuable code that performs an action
 
 #defining a function    def printMessage(inputArguments):
 
-def functionName(params):
+def functionName(params):                       # pass, so it doesnt throw error
+    pass
+
+# A python function always returns None if there is no return/print in the function
+def hello_func():
+    pass
+
+print(hello_func)                                        # shows that content is in memory                       
+print(hello_func())                                      # outputs None because no return or print function
+
+> <function hello_func at 0x019FD7C8>
+   None
+
+def hello_func():
+    print('Hello Function!')
+
+hello_func()    
+> Hello Function!
+
+def hello_func():
+    return 'Hello Function. '
+
+print(hello_func())
+> Hello Function.
+
+print(hello_func().upper())                            #we can treat what it returns as data type
+> HELLO FUNCTION!
+
+def hello_func(greeting):                              # passing an argument to the function
+    return f'{greeting} Function !'
+
+print(hello_func('Hi'))
+> Hi Function !
+
+def hello_func(greeting, name='You'):                  # passing two arguments and setting the second arg with a default value
+    return f'{greeting}, {name}'
+
+print(hello_func('Hi'))                                # because the second value has a default value, you can call function with only one arg
+> Hi, You
+
+print(hello_func('Hi', name = 'Donald'))               # your required positional args have to come before your keyword args, or else, it will return arror
+> Hi, Donald
+
+def student_info(*args, **kwargs):                     # accept an arbitrary number of args and keyword args
+    priint(args)
+    print(kwargs)
+student_info()
+> ()                                                   # returns an emplty tuple
+  {}                                                   # returns an empty string
+
+student_info('Math', 'Art', name='John', age=22)
+> ('Math', 'Art')
+  {'name': 'John', 'age': 22}
+
+courses = ['Math', 'Art']
+info = {'name': 'John', 'age': 22}
+
+student_info(courses, info)
+> (['Math', 'Art'], {'name': 'John', 'age': 22})                    # unpacks courses and info as arguments, and returns empty dict
+{}
+
+student_info(*courses, **info)
+> ('Math', 'Art')
+{'name': 'John', 'age': 22}
+
+# Number of days per month. First value placeholder for indexing purposes.
+month_days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+
+def is_leap(year):
+    """Return True for leap years, False for non-leap years."""
+
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+def days_in_month(year, month):
+    """Return number of days in that month in that year."""
+
+    if not 1 <= month <= 12:
+        return 'Invalid Month'
+
+    if month == 2 and is_leap(year):
+        return 29
+
+    return month_days[month]
+
+print(is_leap(2000))
+> True
 
 def add(x,y):
 	return x + y
 
-#calling a function
-add(5,3)
+print(add(5,3))                                      #calling a function and returns a value
+> 8                                             
 
-#return a value
-8
-
-#can store in a variable
+# can store in a variable
 answer = add(100,20)
-answer = 120
+print(answer )
+> 120
 
-#returning a value != printing a value
-returning stores in variable name in memory, print just displays the output on screen
-
-return makes a local variable accessible outside the function
+# returning a value != printing a value
+# returning stores in variable name in memory, print just displays the output on screen
+#return makes a local variable accessible outside the function
 
 a= print("hello")
 type(a)
@@ -1492,10 +1902,7 @@ def printSuccess():
 
 printSuccess()        #to call function
 
-help(printSuccess)    # returns the docstring in the function
-
-
-A python function always returns NOne if there is no return/print in the function
+help(printSuccess)                  # returns the docstring in the function
 
 #using return without an argument works like a break function
 def h():
@@ -1520,12 +1927,119 @@ def f(sum=0):
 f() #returns the default,0 
 
 ----------------------------------------------------
-Variable Scope( Global scope and local scope)
+Variable Scope( Global scope and local scope) LEGB
 ----------------------------------------------------
-#Global scope
-#If a variable is in global scope, its called glocal varible and can be seen everywhere.
+# LEGB      # local, Enclosing, Global, Built-in
+# Scope refers to the visibility of variables
+# variable scope determines where our variables can be accessed from within the program and whta values those variables hold in different contexts
 
-#Functions create local scope , whereas loops and if statements don't 
+# A variable declared inside the function's body or in the local scope is known as a local variable.
+
+# global variables are defined at the top level of a module or explicitly declared global using the global keyword
+
+# Enclosing (or nonlocal) scope is a special scope that only exists for nested functions. If the local scope is an inner or nested function, then the enclosing scope is the scope of the outer or enclosing function.
+
+# Built-ins are just names that are preassigned in Python. the special reserved keywords fall under this scope. We can call the keywords anywhere within our program without having to define them before use. e.g try, finally, lambda, return , yield
+
+# Flow of checks > local, enclosing, global and built-in
+
+x = 'global x'                   # global variable because its in the main body of our file
+
+def test():
+    x = 'local x'                # y is a local variable to the test function
+    print(x)
+
+test()
+> local x                       # prints out the local x 
+
+
+def test():
+    y = 'local y'
+    print(x)
+
+test()                          # prints out the global x, because there is no local and enclosing x           
+> global x
+
+print(y)                       # returns error because it doesnt find y in the global or built-in
+print(x)                       # returns the global variable
+
+def test():
+    x = 'local x'
+    print(x)
+
+test()
+print(x)
+
+> local x
+  global x 
+
+def test():
+    global x                      # set the global variable to x
+    x= 'local x'
+    print(x)
+
+test()
+print(x)
+> local x
+  local x 
+
+def test(z):
+    x = 'local x'
+    print(z)
+
+test('local z')
+print(z)
+
+> local z 
+   error 
+
+import builtins
+print(dir(builtins))
+
+print(dir(__builtins__))
+> ['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning', 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError', 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False', 'FileExistsError', 'FileNotFoundError', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError', 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'ModuleNotFoundError', 'NameError', 'None', 'NotADirectoryError', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError', 'RecursionError', 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning', 'StopAsyncIteration', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'WindowsError', 'ZeroDivisionError', '__build_class__', '__debug__', '__doc__', '__import__', '__loader__', '__name__', '__package__', '__spec__', 'abs', 'all', 'any', 'ascii', 'bin', 'bool', 'breakpoint', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars', 'zip']
+
+# enclosing variable scope
+x = 'global x'                   # global scope 
+
+def outer():
+    x = 'outer x'                # enclosing scope 
+
+    def inner():
+        x = 'inner x'            # inner scope     # if commented out, falls back to the enclosing scope 
+        print(x)
+    
+    inner()
+    print(x)
+
+outer()
+> inner x
+  outer x
+  global x
+
+
+
+x = 'global x'                   # global scope 
+
+def outer():
+    x = 'outer x'                # enclosing scope 
+
+    def inner():
+        nonlocal x               # set this variable as an enclosing scope
+        print(x)
+    
+    inner()
+    print(x)
+
+outer()
+> outer x
+  outer x
+  global x
+ 
+# global scope
+#If a variable is in global scope, its called global varible and can be seen everywhere.
+
+#Functions create local scope , whereas LOOPS AND IF STATEMENTS DON'T CREATE LOCAL SCOPE
 
 a =100   #global scope
 
@@ -2738,7 +3252,7 @@ from glob import escape as g_escape
 print(help(h_escape)
 
 
-####ITERATORS AND ITERABLES
+#### ITERATORS AND ITERABLES
 #A List is a iterable, but not an iterator. It doesnt have a state and a __next__() method
 #Iterable is an object, which one can iterate over.
 #Iterator is an object, which is used to iterate over an iterable object using __next__() method. Iterators have __next__() method, which returns the next item of the object. 
@@ -2793,7 +3307,7 @@ nums = MyRange(1,10)
 print(next(nums))
 print(next(nums))
 
-###MODULES ITERTOOLS
+### MODULES ITERTOOLS
 import itertools
 
 counter = itertools.count()
@@ -2864,14 +3378,16 @@ with change_dir('Sample-Dir-Two'):
 # A decorator is a design pattern in Python that allows a user to add new functionality to an existing object without modifying its structure.
 # Decorators are usually called before the definition of a function you want to decorate.
 
-def outer_functions():
-	message = "Hi"
+def outer_function():
+	message = "Hi"                              #local variable message
 	
-	def inner_function():
-		print(message)
+	def inner_function():                       # inner function
+		print(message)                          # the massage wasnt created in the inner function, but the inner function has access to it [free variable]
 	return inner_function()
 
 outer_function()
+
+
 
 def decorator_function(original_function):
 	def wrapper_function():
@@ -2890,6 +3406,10 @@ display()
 
 ##FIRST CLASS FUNCTIONS
 #First-class functions means that the language treats functions as values – that you can assign a function into a variable, pass it around
+
+# Allows us to treat functions like any other object. We can pass functions as arguments to another functions. We can assign functions to variables.
+
+# Closures allow us to take advantage of first-class functions, and return an inner function that remembers and has access to variables local to the scope in which they were created
 
 def square(x):
 	return x*x
@@ -2914,6 +3434,196 @@ print(f)
 f = sqaure      #assign function as variable
 print(f(5))
 
+
+
+--------------------------------------------------------
+# UNITTEST
+--------------------------------------------------------
+# a good unittest will protect your code from breaking when you update your code.
+# it will keep your code running or tell you what is broken 
+
+# a sample test script 
+import unittest
+
+class TestStringMethods(unittest.TestCase):
+
+    def test_upper(self):
+        self.assertEqual('foo'.upper(), 'FOO')
+
+    def test_isupper(self):
+        self.assertTrue('FOO'.isupper())
+        self.assertFalse('Foo'.isupper())
+
+    def test_split(self):
+        s = 'hello world'
+        self.assertEqual(s.split(), ['hello', 'world'])
+        # check that s.split fails when the separator is not a string
+        with self.assertRaises(TypeError):
+            s.split(2)
+
+if __name__ == '__main__':
+    unittest.main()
+
+##--------content of calc.py
+
+def add(x, y):
+    """Add Function"""
+    return x + y
+
+
+def subtract(x, y):
+    """Subtract Function"""
+    return x - y
+
+
+def multiply(x, y):
+    """Multiply Function"""
+    return x * y
+
+
+def divide(x, y):
+    """Divide Function"""
+    if y == 0:
+        raise ValueError('Can not divide by zero!')
+    return x / y
+
+
+# name in convention when writing a test (e.g test_calc.py)
+import unittest
+import calc                             # import module to test
+
+    # we need to create some test cases for the functions we set out to test 
+    # we need to create a test class that inherits from a unittest.TestCase
+    # we need to write a method an the convention is to start with test_
+    # just like any method in a class, this takes self as the first argument 
+
+    # because we inherit from unittest, we have access to all these assert methods (https://docs.python.org/3/library/unittest.html)  
+    # Note that the msg keyword argument can be passed to assertRaises(), assertRaisesRegex(), assertWarns(), assertWarnsRegex() only when they are used as a context manager.
+    # assertEqual(first, second, msg=None) Test that first and second are equal. If the values do not compare equal, the test will fail.
+    # a call to assertEqual() to check for an expected result; assertTrue() or assertFalse() to verify a condition; or assertRaises() to verify that a specific exception gets raised.
+
+    # The setUp() and tearDown() methods allow you to define instructions that will be executed before and after each test method.
+    # using python test_calc.py does not show any output
+    # but python -m unittest test_calc.py shows output
+    # to by pass this we can use the __name__ == "__main__"
+    # you may check for edge cases
+
+
+
+class TestCalc(unittest.TestCase):    
+    def test_add(self):
+        self.assertEqual(calc.add(10,5), 15)                # to test the two args, Pass if equal, Fails if not equal (throws an Assertion error)
+        self.assertEqual(calc.add(-1,1), 0)
+        self.assertEqual(calc.add(-1,-1),-2)
+    
+    def test_subtract(self):
+        self.assertEqual(calc.subtract(10, 5), 5)
+        self.assertEqual(calc.subtract(-1, 1), -2)
+        self.assertEqual(calc.subtract(-1, -1), 0)
+
+    def test_multiply(self):
+        self.assertEqual(calc.multiply(10, 5), 50)
+        self.assertEqual(calc.multiply(-1, 1), -1)
+        self.assertEqual(calc.multiply(-1, -1), 1)
+
+    def test_divide(self):
+        self.assertEqual(calc.divide(10, 5), 2)
+        self.assertEqual(calc.divide(-1, 1), -1)
+        self.assertEqual(calc.divide(-1, -1), 1)
+        self.assertEqual(calc.divide(5, 2), 2.5)
+
+
+        self.assertRaises(ValueError, calc.divide, 10, 0)      # first arg is the exception we expect, second is the function we want to run but we are not passing args to the func(so we leave out the paranthesis)
+        
+        with self.assertRaises(ValueError):                    # the context manager makes it possible to handle and check the exception properly and also call our function normally
+            calc.divide(10, 0)
+
+if __name__ = "__main__":                 # if we ran this module correctly, then run the code with this condition (unittest.main()) p it runs it all
+    unittest.main()
+
+
+#--------> employee.py
+class Employee:
+    """A sample Employee class"""
+
+    raise_amt = 1.05
+
+    def __init__(self, first, last, pay):                           # to creat an instance of employeee
+        self.first = first
+        self.last = last
+        self.pay = pay
+
+    @property
+    def email(self):                                                # method that retruns the employee email address
+        return '{}.{}@email.com'.format(self.first, self.last)
+
+    @property
+    def fullname(self):                                             # method that returns the employee fullname
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):                                          # apply raise
+        self.pay = int(self.pay * self.raise_amt)
+
+    def monthly_schedule(self, month):
+        response = requests.get(f'http://company.com/{self.last}/{month}')
+        if response.ok:
+            return response.text
+        else:
+            return 'Bad Response!'
+
+------------------------------------------------------
+class TestEmployee(unittest.TestCase):
+    def test_email(self):
+        
+        emp_1 = Employee('Corey','Schafer', 50000)
+        emp_2 = Employee('Sue', 'Smith', 60000)
+
+        self.assertEqual(emp_1.email, 'Corey.Schafer@email.com')                  # checkig their email
+        self.assertEqual(emp_2.email, 'Sue.Smith@email.com')
+
+        emp_1.first = 'John'
+        emp_2.first = 'Jane'
+
+        self.assertEqual(emp_1.email, 'John.Schafer@email.com')                    # change name and check their email
+        self.assertEqual(emp_2.email, 'Jane.Smith@email.com')
+
+    def test_fullname(self):
+        emp_1 = Employee('Corey','Schafer', 50000)
+        emp_2 = Employee('Sue', 'Smith', 60000)
+
+        self.assertEqual(emp_1.fullname, 'Corey Schafer')
+        self.assertEqual(emp_2.fullname, 'Sue Smith')
+
+        emp_1.first = 'John'
+        emp_2.first = 'Jane'
+
+        self.assertEqual(emp_1.fullname, 'John Schafer')
+        self.assertEqual(emp_2.fullname, 'Jane Smith')
+
+    def test_apply_raise(self):
+        emp_1 = Employee('Corey','Schafer', 50000)               # create an instance of employee 
+        emp_2 = Employee('Sue', 'Smith', 60000)
+
+        emp_1.apply_raise()                                 # apply a 5% raise
+        emp_2.apply_raise()
+
+        self.assertEqual(emp_1.pay, 52500)                  # check if its equal
+        self.assertEqual(emp_2.pay, 63000)
+
+if __name__ == '__main__':
+    unittest.main()
+
+--------------------------------------------------------------------------------------
+
+
+
+
+
+
+> setupClass
+setUp
+test_apply_raise
+.tearDown
 #####Preparing for Python Interview
 #1. HOW TO WRITE CODE ON WHITEBOARD OR PAPER 
 #how to use for loop to loop through range of numbers
