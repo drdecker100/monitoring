@@ -480,7 +480,7 @@ x.find("birthday")
 x.find("adsfsfdsfgdgfsfsdfs")   # returns -1 if it cant be found, so preferred to index. it doesnt return error when the str is not found
 -1
 
-y = "000000happy0birthday000000"
+y = "000000happy0birthday000000"     y = " Hello   World  "
 y.strip("0")
 'happybirthday'                                 # strip off the arg "0" from both sides
 
@@ -490,11 +490,13 @@ y.lstrip("0")                                   # strip off the arg "0" from lef
 y.rstrip("0")                                   # strip off the arg "0" from right side
 '00000000happy0birthday'
 
-y.strip()                                       # strips the string off spaces
+y.strip()                                       # strips the string off whitespaces
+> Hello   World
 
 new_y = y.replace("0","")                       # replaces the first argument(substring) with the second substring(argument)
 print(new_y)
-> happybirthday                     
+> happybirthday    
+
 print(y)                                        # if a new variable is not set, it will return the same value  
 > 000000happy0birthday000000
 
@@ -625,6 +627,12 @@ True
 4 >= 3	   #greater than or equal to
 True 
 
+print(bool("abc"))
+> True
+
+print(bool(0))
+> False
+
 # Comparisons:
 # Equal:            ==
 # Not Equal:        !=
@@ -655,7 +663,7 @@ IF STATEMENTS (CONTROL FLOW)
 
 if condition:
 	code                        #execute code if condition is True
---------------------	
+	
 if True:
     print("It worked, Conditional was True")
 > It worked, Conditional was True
@@ -692,6 +700,19 @@ if user == 'Admin' and logged_in:
     print('Admin Page')
 else:
     print('Bad Creds')
+
+if 5 < 2: print("Five is greater than two!")                               # short hand syntax
+else: print("I will keep doing my best")
+
+ticket = [5]
+tag_id = None
+
+if tag_id is None: tag_id = ticket                                        # short hand syntax
+else: tag_id += ticket
+
+print(tag_id)
+
+print("Yes") if 5 > 2 else print("No")                                    # short hand syntax   if 5>2 , print(yes) or else print No
 
 > Admin Page                          # if IF condition is met
 
@@ -830,6 +851,15 @@ if C > 1 or D > 1:
 DATA STRUCTURES(collections) - List, Tuple, Set, Dictionary
 ---------------------------------------------------------------------------------------------
 # Lists and Tuples allow us to work with sequential data, and Sets allow us to work with unordered unique values.
+
+# There are four collection data types in the Python programming language:
+
+# List is a collection which is ordered and changeable. Allows duplicate members.
+# Tuple is a collection which is ordered and unchangeable. Allows duplicate members.
+# Set is a collection which is unordered and unindexed. No duplicate members.
+# Dictionary is a collection which is unordered and changeable. No duplicate members
+
+
 
 
 LISTS DATA STRUCTURE (list are ordered (positioning/indexing), mutable(changeable), and have duplicate elements
@@ -1171,9 +1201,11 @@ X in S                          # returns bool if expression is true or false
 
 S.add("new item")
 
-S.update({"more","items"})      #more than one element
+S.update({"more","items"})      # more than one element
 
-S.remove("banana")
+S.remove("banana")              # the remove() method will raise an error if the specified item does not exist
+
+S.discard("bana")               # the discard() method will not raise an error if the specified item does not exist
 
 del S 
 
@@ -1203,6 +1235,13 @@ empty_tuple = tuple()
 empty_set = {} # This isn't right! It's a dict
 empty_set = set()
 
+thisset = set(("apple", "banana", "cherry"))                # note the double round-brackets
+print(thisset)
+
+thisset = set(["apple", "banana", "cherry", "cherry"])      # removed duplicates
+print(thisset)
+
+print(list(thisset))                                        # converts it to a list but loses the index
 
 ---------------------------------------------------------
 DICTIONARIES (Unordered ; changeable ; no duplicates)   (word and definition)
@@ -1255,6 +1294,9 @@ print(student)
 age = student.pop('age')
 >print(age)
 26
+
+print(student.clear())                                               # empties the values of the dictionary
+> {}
 
 print(len(student))                                                    # count of number of keys
 > 3
@@ -2055,8 +2097,7 @@ f2()
 100     # because a is global variable
 100
 --------------
-def f1():
-	a=100
+
 	print(a)
 
 def f2():
@@ -2443,16 +2484,425 @@ print(sortList([2,1,3,4,-5,-6]))
 ---------------------------------------------------------------------
 OBJECT ORIENTED PROGRAMMING(O.O.P)
 ---------------------------------------------------------------------
+# Classes allow us to group our data and functions in a way thats easy to reuse and also easy to build upon if need be .
+# A method is a function that is associated with a class
+# using a class to create a blueprint to create each employee so that we didnt have to do this manually from scratch
+# our class is a blueprint for creating instances and each unique employee that we create using our employee class will be an instance of that 
+
+
+class Employee:
+    pass
+
+emp_1 = Employee()                                      # creating an object/instance of the class Employee
+emp_2 = Employee() 
+
+print(emp_1)                                            # emp_1 and emp_2 will be their own unique instance of Employee class
+print(emp_2)
+print()
+
+emp_1.first = "Corey"                                   # setting values to the attributes/properties of the instamce of class Employee
+emp_1.last = 'Schafer'
+emp_1.email = 'corey.schafer@company.com'
+emp_1.pay = 50000
+
+emp_2.first = "Test"                                    # assigning values to the attributes of the unique  of class Employee
+emp_2.last = "User"
+emp_2.email = "Test.User@company.com"
+emp_2.pay = 60000
+
+print(emp_1.email)                                       # getting the attribute of the instance of class Employee
+print(emp_2.email)
+
+<__main__.Employee object at 0x038301F0>                         
+<__main__.Employee object at 0x038302D0>
+
+> corey.schafer@company.com
+> Test.User@company.com
+
+# set all these info/data for these employess, setting it manually is a lot of code and its also prone to mistakes 
+
+# so we automate by using __init__ method (constructor/initializer)
+
+# When we create methods within a class, they receive the instance as the first argument
+# By convention , we call the instance self    [def __init__(self, first, last, pay):]
+# After self, we can pass other arguments thatwe want to accept
+
+class Employee:
+    
+    num_of_emps = 0
+    raise_amount = 1.04                                           # class variable shared among all instances
+
+    def __init__(self, first, last, pay):
+        self.first =  first                                        #setting attribute / instance variables
+        self.last = last 
+        self.pay = pay 
+        self.email = first + '.' + last + '@company.com'
+
+        Employee.num_of_emps += 1                                 # using class Employee in this case is beneficial than self
+
+    def fullname(self):
+        return f'{self.first} {self.last}'
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amount)              # using self allows any subclass to to oveeride that constant if they want to
+
+emp_1 = Employee('Donald', 'Decker', 50000)       # when u create our employee down here,instance is passed automatically,we can leave off self
+emp_2 = Employee('Test', 'User', 60000) 
+
+
+print(emp_1.email)
+print(emp_2.email)
+
+print(emp_1.fullname())                             # we use () because it is a method, and not an attribute
+print(emp_2.fullname())
+print(Employee.fullname(emp_1))
+
+> corey.schafer@company.com
+> Test.User@company.com
+> Donald Decker
+> Test User
+
+# we can use this format to print out fullname
+print(f'{emp_1.first} {emp_1.last})       > Donald Decker
+
+# but we can efficiently create a method within our class that allows us to put a functionality in one place 
+
+# print(emp_2.fullname())  == print(Employee.fullname(emp_1)) ;  works similar. thats how its working in the background
+passing an arg emp_1 to the method (fullname) of class Employee to return the fullname 
+
+
+--------------------------------------------------------
+Class Variables
+--------------------------------------------------------
+# Class variables are variables that are shared among all the instances of a class so while instance variable can be unique for each instance like our names and email. Class variables should be the same 
+
+# when we access these class variables , we need to access through the class itself or an instance of the class (Employee.raise_amount or self.raise_amount)
+
+# when we try to access an attribute on an instance it will first check if the instance contains that attribute and if it doesnt then it eill see if the class or any class that it inherits from conatins that attribute 
+
+# to see the namespace of the instance variable 
+print(emp_1.__dict__) 
+> {'first': 'Donald', 'last': 'Decker', 'pay': 50000, 'email': 'Donald.Decker@company.com'}
+
+--------------------------------------------------
+CLASS METHODS AND STATIC METHODS
+--------------------------------------------------
+Regular methods and class automatically take the instance as the first argument(self by convention).
+# We can change it to take the class as the first argument using class methods
+# To turn a regular method into a class method, it is easy as adding a decorator to the top
+
+# decorator is altering the functionality of our method to where now we receive the class as our first argument instead of the instance now 
+
+#cls is the name convention for class variable name 
+
+classmethod(function) -> method
+
+Convert a function to be a class method.
+
+A class method receives the class as implicit first argument, just like an instance method receives the instance. To declare a class method, use this idiom:
+
+  class C:
+      @classmethod def f(cls, arg1, arg2, ...):
+
+@classmethod
+def set_raise_amt(cls, amount):
+    cls.raise_amt = amount 
+
+-----------------------------------
+STATIC METHODS
+-----------------------------------
+# static method don't pass the instance or the class automatically, so they behave just like regular functions
+but included because they have logical connection to our class
+
+# Convert a function to be a static method.
+
+# A static method does not receive an implicit first argument.
+
+@staticmethod
+    def is_workday(day):
+        if day.weekday() == 5 or day.weekday() == 6:
+            return False
+        return True
+
+
+-----------------------------------------------------
+INHERITANCE- CREATING SUBCLASSES
+-----------------------------------------------------
+# Inheritance allows us to define a class that inherits all the methods and properties from another class.
+# Parent class is the class being inherited from, also called base class.
+# Child class is the class that inherits from another class, also called derived class.
+
+# Create a class named Person, with firstname and lastname properties(attributes), and a printname method:
+class Person:
+  def __init__(self, fname, lname):
+    self.firstname = fname
+    self.lastname = lname
+
+  def printname(self):
+    print(self.firstname, self.lastname)
+
+# Use the Person class to create an object, and then execute the printname method:
+
+x = Person("John", "Doe")
+x.printname()
+>  John Doe
+
+# Create a class named Student, which will inherit the properties and methods from the Person class:
+
+class Student(Person):
+  pass
+
+# Use the Student class to create an object, and then execute the printname method:
+
+x = Student("Mike", "Olsen")
+x.printname()
+
+help(Student)                                   # shows you the method resolution order, inti method, apply raise mathod, class variables
+
+# When you add the __init__() function, the child class will no longer inherit the parent's __init__() function.
+
+# To keep the inheritance of the parent's __init__() function, add a call to the parent's __init__() function:
+class Student(Person):
+  def __init__(self, fname, lname):
+    Person.__init__(self, fname, lname)
+
+# Python also has a super() function that will make the child class inherit all the methods and properties from its parent:
+class Student(Person):
+  def __init__(self, fname, lname):
+    super().__init__(fname, lname)
+
+# Add a property called graduationyear to the Student class:
+class Student(Person):
+  def __init__(self, fname, lname, year):
+    super().__init__(fname, lname)
+    self.graduationyear = year
+
+x = Student("Mike", "Olsen", 2019)   
+
+# by changing the raise amount in our subclass, it doesnt have any effect on our parent class
+
+
+1. What is inheritence?
+It is a method that allows us to create a new class that shares the same attributes and method with the original function, and add some extra functionality to the new class. It also does not disturb the original class.
+
+
+2. How to make a class inherit from another class?
+class Developer(Employee):
+
+
+3. Structure of classes and subclasses.
+When we input a function to a subclass, python follows the 'method resolution order', which is the chain of classes that it goes through to find what the method is. All classes have the built-in group of methods and attributes as their primary order.
+
+
+4. How to initiate the subclass so that it can handle more information than its original class can?
+There are 2 ways.
+first, using the super method as follows and pass in the arguments in interest.
+super.__init__()
+
+
+Second, call the parent's init method explicitly and pass in the arguments in interest.
+Employee.init(self, first, last, )
+
+
+5. Useful tools when exploring the inheritance system.
+.isinstance(instance, class)
+This method returns the boolean value of whether an instance belongs to a calss
+.issubclass(subclass, class)
+This method returns the boolean value of whether a class has inherited from the second class.
+
+
+6. Example of class inheritance
+Whisky library 
+
+++ when setting a default value for an ungiven argument, avoid using an empty mutable data type.
+
+class Employee:
+
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+
+class Developer(Employee):
+    raise_amt = 1.10
+
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        self.prog_lang = prog_lang
+
+
+class Manager(Employee):
+
+    def __init__(self, first, last, pay, employees=None):
+        super().__init__(first, last, pay)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
+
+    def add_emp(self, emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+
+    def remove_emp(self, emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+
+    def print_emps(self):
+        for emp in self.employees:
+            print('-->', emp.fullname())
+
+
+dev_1 = Developer('Corey', 'Schafer', 50000, 'Python')
+dev_2 = Developer('Test', 'Employee', 60000, 'Java')
+
+mgr_1 = Manager('Sue', 'Smith', 90000, [dev_1])
+
+print(mgr_1.email)
+
+mgr_1.add_emp(dev_2)
+mgr_1.remove_emp(dev_2)
+
+mgr_1.print_emps()
+
+----------------------------------------------------------
+SPECIAL (DUNDER/MAGIC) METHODS
+----------------------------------------------------------
+__init__ = dunder init method
+When a new object is made, it is initialized by calling the __init__ method on the object. __init__ is pronounced “dunder init”: dunder is short for “double-underscore”. The new object is passed as self, and the arguments to the class are passed as arguments after self.
+
+__repr__ 
+is to be an unambiguos representaion of the object and should be used for debugging and logging
+
+__str__
+is to be more of a readable representation of an object and meant to be used as a display to the end-user 
+
+str() is used for creating output for end user while repr() is mainly used for debugging and development. repr’s goal is to be unambiguous and str’s is to be readable.
+
+class Employee:
+
+    raise_amt = 1.04
+
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.email = first + '.' + last + '@email.com'
+        self.pay = pay
+
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    def apply_raise(self):
+        self.pay = int(self.pay * self.raise_amt)
+
+    def __repr__(self):
+        # return "Employee('{}', '{}', {})".format(self.first, self.last, self.pay)
+        return f"Employee('{self.first}', '{self.last}', {self.pay})"
+
+    def __str__(self):
+        # return '{} - {}'.format(self.fullname(), self.email)
+        return f'{self.fullname()} - {self.email}'
+
+    def __add__(self, other):
+        return self.pay + other.pay
+
+    def __len__(self):
+        return len(self.fullname())
+
+
+emp_1 = Employee('Corey', 'Schafer', 50000)
+emp_2 = Employee('Test', 'Employee', 60000)
+
+print(emp_1 + emp_2)
+
+print(emp_1.__repr__())
+print(emp_1.__str__())
+
+print(repr(emp_1))
+print(str(emp_1))
+print(list.__add__([1,2],[3,4]))
+
+print(len(emp_2))
+
+----------------------------------------------------------
+Property Decorators - Getters, Setters, and Deleters
+----------------------------------------------------------
+Use @property decorator on any method in the class to use the method as a property.
+
+You can use the following three decorators to define a property:
+
+@property: Declares the method as a property.
+@<property-name>.setter: Specifies the setter method for a property that sets the value to a property.
+@<property-name>.deleter: Specifies the delete method as a property that deletes a property.
+
+class Employee:
+
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+
+    @property                                       # function to be used for getting an attribute value
+    def email(self):                                # problem is it will break the code everytime you need to make a change
+        return f'{self.first}.{self.last}@email.com'
+        
+    @property
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+    
+    @fullname.setter                               # function to be used for setting an attribute value
+    def fullname(self, name):
+        first, last = name.split(' ')
+        self.first = first
+        self.last = last
+    
+    @fullname.deleter                               # function to be used for del'ing an attribute
+    def fullname(self):
+        print('Delete Name')
+        self.first = None
+        self.last = None
+
+
+emp_1 = Employee('Corey', 'Schafer')
+emp_1.first = 'donald'
+emp_1.fullname = 'Meggy Ohio'
+
+print(emp_1.first)
+print()
+print(emp_1.email)
+print()
+print(emp_1.fullname)
+print()
+del emp_1.fullname
+print(emp_1.fullname)
+
+
+
+
+
+
+
+
 #each template to make a coin in program is a CLASS
 
-#Class -> Object
+# Class -> Object
 
-#Object is an instance of a class
+# Object is an instance of a class
 
-#Object have states and actions(behaviors) they can do
+# Object have states and actions(behaviors) they can do
 
-#To create states, we use class variables 
-#To create behaviors, we use methods 
+# To create states, we use class variables 
+
+# To create behaviors, we use methods 
 
 # Methods are the same as functions, we call them methods when using classes
 
@@ -2469,15 +2919,15 @@ Diameter = 24.5 (mm)
 Thckness = 1.85 (mm)
 Heads = True
 
-#difference between objects and classes
-#classes are the base template from which all objects are made from
+# difference between objects and classes
+# classes are the base template from which all objects are made from
 
-#as object, they can have different behaviors
+# as object, they can have different behaviors
 
-#objects behave independently from each other
+# objects behave independently from each other
 
 --------------------------------------------------
-#defining class
+# defining class
 class Pound:
 
     #create states- value ,color,edges,diameter,thickness, heads
@@ -2487,7 +2937,7 @@ class Pound:
     diameter = 22.5 #mm
     heads = True
 
-#making an object(instance of class)
+# making an object(instance of class)
 coin1 = Pound()
 
 print(type(coin1))
@@ -2498,7 +2948,7 @@ coin1.colour = "greenish"
 
 print(coin1.colour)
 
-#create new object
+# create new object
 coin2 = Pound()
 print(coin2.colour)
 print()
@@ -2506,8 +2956,8 @@ print(coin1.colour)
 ------------------------------------------------
 CLASS METHODS
 ------------------------------------------------
-#Constructor in class
-def __init__(self):    #self as parameter #used to refer to a specific instance of this class when we write the class code
+# Constructor in class
+def __init__(self):                        # self as parameter used to refer to a specific instance of this class when we write the class code
 
 Constructors are generally used for instantiating an object.
 The task of constructors is to initialize(assign values) to the data members of the class when an object of class is created.
@@ -3374,7 +3824,9 @@ with change_dir('Sample-Dir-One'):
 with change_dir('Sample-Dir-Two'):
 	print(os.listdir())
 
+-----------------------------------------------------
 ###DECORATORS
+-----------------------------------------------------
 # A decorator is a design pattern in Python that allows a user to add new functionality to an existing object without modifying its structure.
 # Decorators are usually called before the definition of a function you want to decorate.
 
@@ -3403,8 +3855,9 @@ def decorator_function(original_function):
 
 display()
 
-
+-------------------------------------------------------
 ##FIRST CLASS FUNCTIONS
+-------------------------------------------------------
 #First-class functions means that the language treats functions as values – that you can assign a function into a variable, pass it around
 
 # Allows us to treat functions like any other object. We can pass functions as arguments to another functions. We can assign functions to variables.
@@ -3434,7 +3887,274 @@ print(f)
 f = sqaure      #assign function as variable
 print(f(5))
 
+--------------------------------------------------------------------
+IMPORTING MODULES
+--------------------------------------------------------------------
 
+# ---------> content of my_module.py
+print('Imported my_module...')
+
+test = 'Test String'
+
+
+def find_index(to_search, target):
+    '''Find the index of a value in a sequence'''
+    for i, value in enumerate(to_search):
+        if value == target:
+            return i
+
+    return -1
+
+
+# ----------> intro.py
+
+#import my_module                              # gets access to all functions and variables in the modules
+# import my_module as mm                       # renaming the module 
+# from my_module import find_index             # gives us to only find_index function in the module
+from my_module import find_index, test         # gies us access to the function and variable of the module 
+# from my_module import *                      # makes it harder to track problems
+import sys                                     # when we import modules, it checks multiple locations within a list called sys.path
+                                               # the directories containing the script that we are running ,the next is the directory listed in the python path environment variable
+                                               # the next is the standard library directories , and then the directory for third-party packages 
+                                               # returns ModuleNotFoundError if the module you ar importing is not in the sys path
+                                               # you can manually add it to the sys path or by changing the python path environemnt varible.
+
+
+courses = ['History', 'Math', 'Physics', 'CompSci']
+
+index = find_index(courses, 'Math')
+# print(index)
+# print(test)
+print(sys.path)
+
+
+import sys                                           # The python sys module provides functions and variables which are used to manipulate different parts of the Python Runtime Env.
+sys.path.append('c:\Users\HP.DESKTOP-MVC2C5I\Desktop\py\for_test')       # one way to add the module path to the sys.path 
+
+# to change python path environment variable(setting the environment variable) on MAC
+nano ~/.bash_profile 
+
+export PYTHONPATH="/Users/coreyshafer/Desktop/My-Modules"
+
+source ~/.bash_profile
+
+# setting the environment varibale on Windows
+search for environment varibales and create new 
+variable name = PYTHONPATH   ; variable value =  'c:\Users\HP.DESKTOP-MVC2C5I\Desktop\py\for_test'
+
+import random                                                               # built-in module to generate the pseudo-random variables.
+
+courses = ['History', 'Math', 'Physics', 'CompSci']
+random_course = random.choice(courses)
+print(random_course)                                                        # returns a random course
+> History
+
+import math
+
+rads = math.radians(90)
+print(rad)
+
+import datetime
+impoort calender
+
+today = datetime.date.today()
+print(today)
+
+print(calendar.isleap(2020))
+> True
+
+==========================================
+OS MODULES
+==========================================
+The OS module allows us to interact wiht the underlying operating system in several different ways.
+
+- Navigate the file system
+- Get file information
+- Look up and change the environment variables
+- Move files around
+- Many more
+
+To begin, import the os module. This is a built in module, no third party modules need to be installed.
+
+# Get current working directory
+os.getcwd()
+
+# Change directory, this requires a path to change to
+os.chdir(path)
+
+# List directory, you can pass a path, but by default it is in the current directory
+os.listdir()
+
+# Multiple options for creating directories
+mkdir()  # Use for making one directory
+makedirs(). # Use if you want to create multiple directories at once
+
+# Remove directories
+rmdir(file). # Recommended use case
+removedirs(file)  # Removes intermediate directories if specified
+
+# Rename a file or folder
+os.rename('test.txt', 'demo.txt'). # This renames text.txt to demo.txt
+
+# Look at info about files
+os.stat(test.txt)
+# Useful stat results: st_size (bytes), st_mtime (time stamp)
+
+# To see entire directory tree and files within
+# os.walk is a generator that yields a tuple of 3 values as it walks the directory tree
+
+for dirpath, dirnames, filenames in os.walk(routepath): 
+    print('Current Path:', dirpath)
+    print('Directories:', dirnames)
+    print('Files:', filenames)
+    print()
+
+# This is useful for locating a file that you can't remember where it was
+# If you had a web app, and you wanted to keep track of the file info within a certain directory structure, then you could to thru the os.walk method and go thru all files and folders and collect file information.
+
+
+# Access home directory location by grabbing home environment variable
+os.environ.get('HOME'). # Returns a path
+# To properly join two files together use os.path.join()
+file_path = os.path.join(os.environ.get('HOME'), 'test.txt')
+# the benefit of os.path.join, is it takes the guess work out of inserting a slash
+
+# os.path has other useful methods
+
+os.path.basename
+# This will grab filename of any path we are working on
+
+os.path.dirname('/tmp/test.txt')
+# returns the directory /tmp
+
+os.path.split('/tmp/test.txt')
+# returns both the directory and the file as a tuple
+
+os.path.exists('/tmp/test.txt')
+# returns a boolean
+
+os.path.isdir('/tmp/test.txt')
+# returns False
+
+os.path.isfile('/tmp/test.txt')
+# returns True
+
+os.path.splitext('/tmp/test.txt')
+# Splits file route of the path and the extension
+# returns ('/tmp/test', '.txt')
+# This is alot easier than parsing out the extension. Splitting off and taking the first value is much better.
+# Very useful for file manipulation
+
+print(os.__file__)                                      # prints the location of this file in our filesystem
+> C:\Users\HP.DESKTOP-MVC2C5I\AppData\Local\Programs\Python\Python37-32\lib\os.py
+
+# C:\Users\HP.DESKTOP-MVC2C5I\AppData\Local\Programs\Python\Python37-32\lib\  == is the directory where the standard libraries are
+
+
+==========================================
+DATETIME MODULE
+==========================================
+import datetime
+d = datetime.date(2016, 7, 24)                              # creating a date, with leading zero for single digit, it returns error
+print(d)
+
+import datetime
+datetime.datetime.now()                  # class datetime.datetime A combination of a date and a time. Attributes: year, month, day, hour, minute, second, microsecond, and tzinfo.
+datetime.datetime.now().isoweekday()                        # 1-7, representing Monday to Sunday, the current time is the day of the week;
+
+datetime.datetime.now().weekday()                           # returned 0-6, representing Monday to Sunday
+
+tday = datetime.date.today()
+print(tday.day)
+
+tdelta = datetime.timedelta(days=7)                         # A duration expressing the difference between two date, time, or datetime instances to microsecond resolution.
+print(tday + tdelta)
+
+bday = datetime.date(2021, 6, 10)                           # class datetime.date Attributes: year, month, and day.
+
+till_bday = bday - tday 
+print(till_bday)
+
+t = datetime.time(9,30,45,100000)                           # class datetime.time Attributes: hour, minute, second, microsecond, and tzinfo(timezone)
+print(t)
+
+dt = datetime.datetime(2016,7,26,12,30,45,10000)
+print(dt.time()) 
+print(dt.date())
+
+import datetime
+import pytz
+
+# Naive
+# d = datetime.date(2001, 9, 11)
+
+tday = datetime.date.today()
+
+
+# weekday() - Monday is 0 and Sunday is 6
+# print(tday)
+
+# isoweekday() - Monday is 1 and Sunday is 7
+# print(tday)
+
+
+# datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+
+tdelta = datetime.timedelta(hours=12)
+
+# print(tday + tdelta)
+
+# date2 = date1 + timedelta
+# timedelta = date1 + date2
+
+bday = datetime.date(2016, 9, 24)
+
+till_bday = bday - tday
+
+# print(till_bday.days)
+
+t = datetime.time(9, 30, 45, 100000)
+
+# dt = datetime.datetime.today()
+# dtnow = datetime.datetime.now()
+# print(dir(datetime.datetime))
+# print(dt)
+# print(dtnow)
+
+dt = datetime.datetime(2016, 7, 24, 12, 30, 45, tzinfo=pytz.UTC)
+# print(dir(dt))
+
+dt_utcnow = datetime.datetime.now(tz=pytz.UTC)
+# print(dt_utcnow)
+
+dt_utcnow2 = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+# print(dt_utcnow2)
+
+# dt_mtn = dt_utcnow.astimezone(pytz.timezone('US/Mountain'))
+# print(dt_mtn)
+
+dt_mtn = datetime.datetime.now()
+
+mtn_tz = pytz.timezone('US/Mountain')
+dt_mtn = mtn_tz.localize(dt_mtn)
+
+# print(dt_mtn)
+
+dt_east = dt_mtn.astimezone(pytz.timezone('US/Eastern'))
+# print(dt_east)
+
+print(dt_mtn.strftime('%B %d, %Y'))
+
+dt_str = 'July 24, 2016'
+dt = datetime.datetime.strptime(dt_str, '%B %d, %Y')
+print(dt)
+
+# strftime - Datetime to String
+# strptime - String to Datetime
+
+
+import webbrowser                                       # The webbrowser. open() method will open your default web browser with a given url.
+webbrowser.open_new_tab("https://hesgoal.com")
 
 --------------------------------------------------------
 # UNITTEST
@@ -3616,10 +4336,6 @@ if __name__ == '__main__':
 --------------------------------------------------------------------------------------
 
 
-
-
-
-
 > setupClass
 setUp
 test_apply_raise
@@ -3685,12 +4401,194 @@ for i in range(0,10):
 #
 
 
+==================================================
+lambda
+==================================================
 
+# A lambda function is a small anonymous function.
+
+# A lambda function can take any number of arguments, but can only have one expression.
+
+# lambda arguments : expression
+
+x = lambda a : a + 10
+print(x(5))
+> 15
+
+# Lambda functions can take any number of arguments:
+
+x = lambda a, b, c : a + b + c
+print(x(5, 6, 2))
+ > 13
+
+# The power of lambda is better shown when you use them as an anonymous function inside another function.
+
+def myfunc(n):
+  return lambda a : a * n
+
+mydoubler = myfunc(2)
+
+print(mydoubler(11))
+> 22
+
+
+==================================================
+File Ojects - Readignand writing to Files
+==================================================
+
+Modes 
+r              # Opens a file for reading only. The file pointer is placed at the beginning of the file. This is the default mode.
+rb             # Opens a file for reading only in binary format. The file pointer is placed at the beginning of the file. This is the default mode.
+r+             # Opens a file for both reading and writing. The file pointer placed at the beginning of the file.
+rb+            # Opens a file for both reading and writing in binary format. The file pointer placed at the beginning of the file.
+w              # Opens a file for writing only. Overwrites the file if the file exists. If the file does not exist, creates a new file for writing.	
+wb             # Opens a file for writing only in binary format. Overwrites the file if the file exists. If the file does not exist, creates a new file for writing.	
+w+             # Opens a file for both writing and reading. Overwrites the existing file if the file exists. If the file does not exist, creates a new file for reading and writing.
+wb+            # Opens a file for both writing and reading in binary format. Overwrites the existing file if the file exists. If the file does not exist, creates a new file for reading and writing.	
+a              # Opens a file for appending. The file pointer is at the end of the file if the file exists. That is, the file is in the append mode. If the file does not exist, it creates a new file for writing.	
+ab     Opens a file for appending in binary format. The file pointer is at the end of the file if the file exists. That is, the file is in the append mode. If the file does not exist, it creates a new file for writing.	
+a+      Opens a file for both appending and reading. The file pointer is at the end of the file if the file exists. The file opens in the append mode. If the file does not exist, it creates a new file for reading and writing.	
+ab+     Opens a file for both appending and reading in binary format. The file pointer is at the end of the file if the file exists. The file opens in the append mode. If the file does not exist, it creates a new file for reading and writing.
+
+f = open('test.txt', 'r')                       # using the input function
+
+print(f.name)
+print(f.mode)
+f.close()                                        # to explicitly close the file
+
+>test.txt
+r	
 	
-	
+with open('test.txt','r') as f :                 # using context manager
+    pass
+
+print(f.closed)
+> True                      # Allow us to work with files with this block and after we exit that block of code or an Exception is thrown, it will automatically close the file and 
+
+with open('test.txt','r') as f :   
+    f_contents = f.read()
+    print(f_contents)       # The read() method reads the entire content from an open file 
+
+f.read(100)                 # returns first 100 characters of the file
+f.readline()                # returns the first line of our file
+f.readlines()               # returns a list of lines of the file 
+
+with open('test.txt','r') as f :    
+    for line in f:                      # this is efficient because it goes through and get one line at a time from the file; not reading all at once so its not a memory issue 
+        print(line, end='')
+
+##The Basics:
+#f = open("test.txt", "r")
+#f = open("test.txt", "w")
+#f = open("test.txt", "a")
+#f = open("test.txt", "r+")
+#print(f.name)
+#print(f.mode)
+#f.close()
+
+##Reading Files:
+#with open("test.txt", "r") as f:
+	#pass
+
+	##Small Files:
+	#f_contents = f.read()
+	#print(f_contents)
+
+	##Big Files:
+	#f_contents = f.readlines()
+	#print(f_contents)
+
+    ###With the extra lines:
+	#f_contents = f.readline()
+	#print(f_contents)
+	#f_contents = f.readline()
+	#print(f_contents)
+
+	###Without the extra lines:
+	#f_contents = f.readline()
+	#print(f_contents, end = '')
+	#f_contents = f.readline()
+	#print(f_contents, end = '')
+
+	###Iterating through the file:
+	#for line in f:
+		#print(line, end = '')
+
+	###Going Back....:
+	#f_contents = f.read()
+	#print(f_contents, end = '')
+
+	###Printing by characters:
+	#f_contents = f.read(100)
+	#print(f_contents, end = '')
+	#f_contents = f.read(100)
+	#print(f_contents, end = '')
+	#f_contents = f.read(100)
+	#print(f_contents, end = '')
+
+	###Iterating through small chunks:
+	#size_to_read = 100
+	#f_contents = f.read(size_to_read)
+	#while len(f_contents) > 0:
+		#print(f_contents)
+		#f_contents = f.read(size_to_read)
+
+	###Iterating through small chunks, with 10 characters:
+	#size_to_read = 10
+	#f_contents = f.read(size_to_read)
+	#print(f_contents, end = '')
+	#f.seek(0)
+	#f_contents = f.read(size_to_read)
+	#print(f_contents, end = '')
+	#print(f.tell())
+	#while len(f_contents) > 0:
+		#print(f_contents, end = '*')
+		#f_contents = f.read(size_to_read)
+#print(f.mode)
+#print(f.closed)
+#print(f.read())
 
 
+##Writing Files:
+###The Error:
+#with open("test.txt", "r") as f:
+	#f.write("Test")
 
+###Writing Starts:
+#with open("test2.txt", "w") as f:
+	#pass
+	#f.write("Test")
+	#f.seek(0)
+	#f.write("Test")
+	#f.seek("R")
+
+##Copying Files:
+#with open("test.txt", "r") as rf:
+	#with open("test_copy.txt", "w") as wf:
+		#for line in rf:
+			#wf.write(line)
+
+#Copying the/your image:
+###The Error
+#with open("bronx.jpg", "r") as rf:
+	#with open("bronx_copy.jpg", "w") as wf:
+		#for line in rf:
+			#wf.write(line)
+
+###Copying the image starts, without chunks:
+#with open("bronx.jpg", "rb") as rf:
+	#with open("bronx_copy.jpg", "wb") as wf:
+		#for line in rf:
+			#wf.write(line)
+
+###Copying the image with chunks:
+#with open("bronx.jpg", "rb") as rf:
+	#with open("bronx_copy.jpg", "wb") as wf:
+		#chunk_size = 4096
+        #rf_chunk = rf.read(chunk_size)
+        #while len(rf_chunk) > 0:
+            #wf.write(rf_chunk)
+            #rf_chunk = rf.read(chunk_size)
 
 
 
